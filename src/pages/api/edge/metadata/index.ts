@@ -1,8 +1,9 @@
-import fetchMeta, { type fetchedMeta } from "fetch-meta-tags";
 import { type NextRequest } from "next/server";
 import { isValidUrl } from "~/utils";
+import fetchMeta from "~/utils/fetchMetadata";
+// import fetchMeta from "fetch-meta-tags";
 
-export type FetchedMeta = fetchedMeta;
+export type FetchedMeta = ReturnType<fetchedMeta>;
 
 type ReturnedData = {
 	data: FetchedMeta | null;
@@ -36,7 +37,7 @@ export default async function handler(req: NextRequest) {
 	};
 
 	try {
-		const metadata = (await fetchMeta(url)) as ReturnType<typeof fetchMeta>;
+		const metadata = await fetchMeta(url);
 		result.data = metadata;
 	} catch (error) {
 		result.error = "Error fetching metadata";
