@@ -1,29 +1,7 @@
 import { type GetServerSidePropsContext, type InferGetServerSidePropsType, type NextPage } from "next";
-import { getProviders, signIn, signOut, useSession } from "next-auth/react";
+import { getProviders, signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
-
-// const SignInPage: NextPage = () => {
-// 	const { data: session } = useSession();
-
-// 	return (
-// 		<>
-// 			{session ? (
-// 				<>
-// 					Signed in as {session.user.email} <br />
-// 					<button onClick={() => void signOut()}>Sign out</button>
-// 				</>
-// 			) : (
-// 				<>
-// 					Not signed in <br />
-// 					<button onClick={() => void signIn()}>Sign in</button>
-// 				</>
-// 			)}
-// 		</>
-// 	);
-// };
-
-// export default SignInPage;
 
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	return (
