@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 	const [code, setCode] = useState("");
 	const [codeStyle, setCodeStyle] = useState<keyof typeof CodeStyle>("EMOJI");
 	const [selectedRowIndex, setSelectedRowIndex] = useState<number | undefined>();
-	const [metadata, setMetadata] = useState<FetchedMeta | undefined>();
+	const [metadata, setMetadata] = useState<FetchedMeta | undefined>({});
 
 	const { mutateAsync: createNewUrlMutation } = api.url.create.useMutation({
 		onSuccess: (data) => {
