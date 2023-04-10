@@ -10,23 +10,17 @@ datasource db {
 }
 
 model Url {
-  id         String    @id @default(cuid())
+  id         String   @id @default(cuid())
   longUrl    String
   code       String
-  codePoints String    @unique
-  codeStyle  CodeStyle @default(EMOJI)
-  visits     Int       @default(0)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  userId     String
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  codePoints String   @unique
+  visits     Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-}
-
-enum CodeStyle {
-  EMOJI 
-  ALPHANUMERIC
 }
 
 model Example {
