@@ -1,6 +1,12 @@
-export default function generateShortCode(desiredLength = 6) {
-	const charactersToDecimalPoint = 2;
-	const MAX_LENGTH = 8;
-	const length = Math.min(desiredLength, MAX_LENGTH) + charactersToDecimalPoint;
-	return Math.random().toString(36).substring(charactersToDecimalPoint, length);
+import pickRandomElement from "./pickRandomElement";
+import { topEmojis } from "~/constants/topEmojis";
+
+export default function generateShortCode({ length = 3 }: { length?: number } = {}) {
+	let code = "";
+
+	for (let i = 0; i < length; i++) {
+		code += pickRandomElement(topEmojis);
+	}
+
+	return code;
 }
