@@ -5,31 +5,54 @@ import Head from "next/head";
 import Link from "next/link";
 
 import { api, getBaseUrl } from "~/utils/api";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import { type FetchedMeta } from "./api/edge/metadata";
-import { type CodeStyle } from "@prisma/client";
+
+type Shortlink = {
+	code: string;
+	longUrl: string;
+};
+
+function getShortlinksFromUserStorage() {
+	return JSON.parse(localStorage.getItem("links") ?? "[]") as Shortlink[];
+}
 
 const Home: NextPage = () => {
-	const session = useSession();
-	const { data: users } = api.user.getAll.useQuery();
-	const { data: urls = [] } = api.url.getByUserId.useQuery(undefined, {
-		refetchOnWindowFocus: true,
-	});
-	console.log({ users, urls });
-
-	const ctx = api.useContext();
-
 	const [longUrl, setLongUrl] = useState("");
-	const [code, setCode] = useState("");
-	const [codeStyle, setCodeStyle] = useState<keyof typeof CodeStyle>("EMOJI");
+	const [localUrls, setLocalUrls] = useState<Shortlink[]>([]);
 	const [selectedRowIndex, setSelectedRowIndex] = useState<number | undefined>();
 	const [metadata, setMetadata] = useState<FetchedMeta | undefined>({});
 
-	const { mutateAsync: createNewUrlMutation } = api.url.create.useMutation({
+	useEffect(() => {
+		// Check if window is defined to prevent errors during SSR
+		if (typeof window === undefined || !localStorage) return;
+		setLocalUrls(getShortlinksFromUserStorage());
+	}, []);
+
+	const session = useSession();
+	console.log("🚀 ~ file: index.tsx:15 ~ session:", session);
+	const { data: urlsByUser = [] } = api.url.getByUserId.useQuery(undefined, {
+		refetchOnWindowFocus: true,
+		enabled: Boolean(session.data),
+	});
+
+	const ctx = api.useContext();
+
+	const { mutateAsync: createUrl } = api.url.create.useMutation({
 		onSuccess: (data) => {
 			void ctx.url.getByUserId.invalidate();
 			console.log("🚀 ~ file: index.tsx:22 ~ onSuccess: ~ data", data);
+
+			localStorage.setItem("links", JSON.stringify([...localUrls, { code: data.code, longUrl: data.longUrl }]));
+
+			setLocalUrls((prevLocalUrls) => [
+				...prevLocalUrls,
+				{
+					code: data.code,
+					longUrl: data.longUrl,
+				},
+			]);
 		},
 		onError(error, variables, context) {
 			console.error(`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`);
@@ -39,24 +62,14 @@ const Home: NextPage = () => {
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
-		// TODO: Code should be numbers only or emojis only.
-		// Or convert numbers to emoji numbers if codeStyle is emoji
-		const length = Array.from(new Intl.Segmenter().segment(code)).length;
-
-		if (length < 3) {
-			alert("Code must be at least 3 emojis long");
-			return;
-		}
-
 		try {
-			const newUrl = await createNewUrlMutation({ longUrl, code, codeStyle });
+			const newUrl = await createUrl({ longUrl });
 			console.log("🚀 ~ file: index.tsx:29 ~ handleSubmit ~ newUrl:", newUrl);
 		} catch (error) {
 			console.error(error);
 		}
 
 		setLongUrl("");
-		setCode("");
 	}
 
 	async function handleRowClick(index: number, longUrl: string) {
@@ -76,10 +89,6 @@ const Home: NextPage = () => {
 		void navigator.clipboard.writeText(text).then(() => alert(`Copied ${text}`));
 	}
 
-	// function handleChangeCodeStyle(e: React.ChangeEvent<HTMLInputElement>) {
-	// 	setCodeStyle(e.target.value as CodeStyle);
-	// }
-
 	return (
 		<>
 			<Head>
@@ -89,11 +98,46 @@ const Home: NextPage = () => {
 			</Head>
 			<main className={styles.main} style={{ display: "flex", flexDirection: "column", gap: "2em" }}>
 				<h1 style={{ color: "white" }}>teeny.fun</h1>
-				<Link href="/auth/signin" className={styles.loginButton}>
-					Sign in
-				</Link>
-				{session && (
+				{!session.data ? (
 					<>
+						<Link href="/auth/signin" className={styles.loginButton}>
+							Sign in
+						</Link>
+						{localUrls.length > 0 && (
+							<div style={{ color: "white" }}>
+								<h2>Local URLs</h2>
+								<ul>
+									{localUrls.map(({ code, longUrl }, index) => (
+										<li key={code} style={{ display: "flex", gap: "1em" }}>
+											<a
+												href={`${getBaseUrl()}/${code}`}
+												target="_blank"
+												style={{ display: "inline-block", width: 50 }}>
+												{code}
+											</a>
+											<span
+												onClick={() => void handleRowClick(index, longUrl)}
+												style={{
+													display: "inline-block",
+													width: 150,
+													overflow: "hidden",
+													textOverflow: "ellipsis",
+													whiteSpace: "pre",
+												}}>
+												{longUrl}
+											</span>
+											<button onClick={() => void handleCopy(`${getBaseUrl()}/${code}`)}>Copy</button>
+										</li>
+									))}
+								</ul>
+							</div>
+						)}
+					</>
+				) : (
+					<>
+						<button className={styles.loginButton} onClick={() => void signOut()}>
+							Sign out
+						</button>
 						<form
 							onSubmit={(e) => void handleSubmit(e)}
 							style={{ display: "flex", flexDirection: "column", gap: "0.5em", color: "white" }}>
@@ -106,38 +150,6 @@ const Home: NextPage = () => {
 								placeholder="Enter a URL"
 								value={longUrl}
 								onChange={(e) => setLongUrl(e.target.value)}
-							/>
-							{/* <fieldset>
-								<legend>Code Style</legend>
-								<label>
-									<input
-										type="radio"
-										name="code-style"
-										checked={codeStyle === "EMOJI"}
-										onChange={handleChangeCodeStyle}
-										value={"EMOJI"}
-									/>
-									😁😁😁
-								</label>
-								<label>
-									<input
-										type="radio"
-										name="code-style"
-										checked={codeStyle === "ALPHANUMERIC"}
-										onChange={handleChangeCodeStyle}
-										value={"ALPHANUMERIC"}
-									/>
-									abc123
-								</label>
-							</fieldset> */}
-							<label htmlFor="code">Code</label>
-							<input
-								type="text"
-								id="code"
-								name="code"
-								placeholder="Enter a code"
-								value={code}
-								onChange={(e) => setCode(e.target.value)}
 							/>
 							<button type="submit">Create</button>
 						</form>
@@ -167,11 +179,12 @@ const Home: NextPage = () => {
 								</ul>
 							</div>
 						)}
-						{urls.length > 0 && (
+
+						{urlsByUser.length > 0 && (
 							<div style={{ color: "white" }}>
 								<h2>URLs for {session.data?.user.name}</h2>
 								<ul>
-									{urls?.map(({ id, code, longUrl, visits }, index) => (
+									{urlsByUser?.map(({ id, code, longUrl, visits }, index) => (
 										<li key={id} style={{ display: "flex", gap: "1em" }}>
 											<a
 												href={`${getBaseUrl()}/${code}`}
@@ -199,7 +212,6 @@ const Home: NextPage = () => {
 						)}
 					</>
 				)}
-				<div className={styles.showcaseContainer}></div>
 			</main>
 		</>
 	);
