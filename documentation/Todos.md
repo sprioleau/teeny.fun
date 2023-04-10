@@ -1,0 +1,3 @@
+- [] Add cron mechanism to delete public URLs every 5 minutes
+- [x] Add create public URL mutation
+- [] Create teeny.fun branded OG image
