@@ -1,7 +1,7 @@
 // Modified from https://github.com/luisivan/fetch-meta-tags/blob/master/rulesets.js
 
 import { parse } from "node-html-parser";
-import { metadataRules } from "~/constants/metadata-rulesets";
+import { metadataRules } from "~/constants/metadataRulesets";
 
 function readBody(body: Body["body"]): Promise<string> {
 	/* eslint-disable @typescript-eslint/no-misused-promises */
