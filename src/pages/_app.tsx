@@ -19,7 +19,7 @@ const modak = Modak({
 const spaceGrotesk = Space_Grotesk({
 	variable: "--ff-mono",
 	subsets: ["latin"],
-	weight: ["400", "700"],
+	weight: ["400", "500", "700"],
 	style: "normal",
 	fallback: ["monospace"],
 });

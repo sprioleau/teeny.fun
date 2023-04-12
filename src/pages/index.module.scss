@@ -1,0 +1,6 @@
+@import "~/styles/mixins";
+
+.header {
+	@include center(column);
+	gap: 1em;
+}

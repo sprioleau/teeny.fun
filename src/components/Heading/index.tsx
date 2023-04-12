@@ -18,26 +18,10 @@ function Heading({ tag: Tag = "h2", color, children }: Props) {
 	);
 }
 
-function HeadingSpan({
-	text,
-	// children,
-	color,
-	inline = false,
-}: {
-	text: string;
-	// children: string;
-	color?: ButtonColor | "white";
-	inline?: boolean;
-}) {
+function HeadingSpan({ text, color }: { text: string; color?: ButtonColor | "white" }) {
 	return (
 		<>
-			<span
-				style={{
-					position: "relative",
-					display: "inline-block",
-					whiteSpace: "nowrap",
-				}}
-			>
+			<span className={styles["heading-span"]}>
 				<span
 					className={styles["heading-span-front"]}
 					style={{ color: color ? `var(--color-${color})` : "inherit" }}
@@ -45,7 +29,6 @@ function HeadingSpan({
 					{text}
 				</span>
 				<span className={styles["heading-span-back"]}>{text}</span>
-				{!inline && <br />}
 			</span>
 		</>
 	);

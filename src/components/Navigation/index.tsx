@@ -13,6 +13,7 @@ export default function Navigation() {
 					<Logo />
 				</Link>
 			</div>
+			{/* <p className={styles.heading}>Generate and customize emoji-only shortlinks</p> */}
 			<div className={styles.buttons}>
 				{/* <Button
 					href="/auth/signin"

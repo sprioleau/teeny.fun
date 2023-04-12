@@ -8,7 +8,7 @@
 	align-items: center;
 	font-family: var(--ff-mono);
 	margin: 0 var(--page-padding-x);
-	padding: calc(0.5 * var(--page-padding-x));
+	padding: calc(var(--page-padding-y));
 	background-color: var(--color-pink);
 	overflow-y: auto;
 }

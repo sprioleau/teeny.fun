@@ -5,6 +5,7 @@
 	justify-content: space-between;
 	height: var(--page-padding-y);
 	padding: 0 var(--page-padding-x);
+	gap: 1em;
 }
 
 .logo {
@@ -12,9 +13,8 @@
 
 	a {
 		@include center;
-		width: 130px;
-		aspect-ratio: 504 / 294;
-		margin-top: calc(var(--page-padding-y) / 2);
+		font-size: clamp(9em, 15vw, 15em);
+		margin-top: 0.4em;
 		margin-left: calc(-1 * var(--page-padding-x) / 2);
 
 		svg {
@@ -27,3 +27,8 @@
 	@include center;
 	gap: 0.5em;
 }
+
+// .heading {
+// 	font-size: 0.9em;
+// 	margin-right: auto;
+// }
