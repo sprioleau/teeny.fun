@@ -20,6 +20,7 @@ const config = {
 	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "prettier"],
 	rules: {
 		"prettier/prettier": "error",
+		"react/jsx-max-props-per-line": ["error", { maximum: 1 }],
 		"@typescript-eslint/consistent-type-imports": [
 			"warn",
 			{
