@@ -1,0 +1,52 @@
+@import "~/styles/mixins";
+
+.form {
+	--button-offset: 0.25em;
+	--button-size: 2rem;
+	@include border;
+	// @include drop-shadow;
+	@include center;
+	@include inset-shadow;
+	width: 100%;
+	position: relative;
+	border-radius: var(--border-radius);
+	background-color: var(--color-white);
+	padding-left: 1em;
+	padding-right: calc(var(--button-size) + var(--button-offset) + 0.75em);
+	gap: 0.25em;
+}
+
+.label {
+	font-size: 0.8em;
+	position: absolute;
+	bottom: calc(100% + 0.125em);
+	left: 0;
+	opacity: 0;
+	user-select: none;
+}
+
+.input {
+	flex: 1;
+	padding: 0.25em;
+	border: none;
+	font-family: var(--ff-mono);
+	font-size: 1em;
+	text-overflow: ellipsis;
+	background-color: transparent;
+	padding: 1em 0.5em;
+}
+
+.submit-button {
+	position: absolute;
+	right: var(--button-offset);
+	width: var(--button-size);
+	height: var(--button-size);
+	border-radius: var(--border-radius);
+	font-size: 1.25em;
+}
+
+.link-icon {
+	@include center;
+	font-size: 1.2em;
+	opacity: 0.75;
+}

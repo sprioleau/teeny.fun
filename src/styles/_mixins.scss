@@ -19,7 +19,7 @@
 
 @mixin inset-shadow($size: 1) {
 	box-shadow: inset calc($size * var(--shadow-offset)) calc($size * var(--shadow-offset)) 0
-		rgba(var(--color-black-rgb), 0.1);
+		rgba(var(--color-black-rgb), 0.2);
 }
 
 // @mixin inset-highlight($size: 1) {

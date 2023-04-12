@@ -6,14 +6,12 @@ import Head from "next/head";
 import { api } from "~/utils/api";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { Heading } from "~/components";
+import { Heading, UrlForm } from "~/components";
 
 import styles from "./index.module.scss";
+import { type Url } from "@prisma/client";
 
-type Shortlink = {
-	code: string;
-	longUrl: string;
-};
+type Shortlink = Pick<Url, "code" | "longUrl">;
 
 function getShortlinksFromUserStorage() {
 	return JSON.parse(localStorage.getItem("links") ?? "[]") as Shortlink[];
@@ -110,7 +108,7 @@ const Home: NextPage = () => {
 					type="image/png"
 				/>
 			</Head>
-			<main>
+			<main className={styles.main}>
 				<header className={styles.header}>
 					<Heading tag="h1">
 						<Heading.Span
@@ -126,23 +124,10 @@ const Home: NextPage = () => {
 							color="yellow"
 						/>
 					</Heading>
-					<form
-						onSubmit={(e) => void handleSubmit(e)}
-						style={{ display: "flex", flexDirection: "column", gap: "0.5em", color: "white" }}
-					>
-						<label htmlFor="long-url">Long URL</label>
-						<input
-							type="text"
-							id="long-url"
-							name="long-url"
-							required
-							placeholder="Enter a URL"
-							value={longUrl}
-							onChange={(e) => setLongUrl(e.target.value)}
-						/>
-						<button type="submit">Create</button>
-					</form>
 				</header>
+				<section className={styles.container}>
+					<UrlForm onSubmit={(e) => void handleSubmit(e)} />
+				</section>
 			</main>
 		</>
 	);

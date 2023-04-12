@@ -1,6 +1,17 @@
 @import "~/styles/mixins";
 
+.main {
+	@include center(column);
+}
+
 .header {
 	@include center(column);
 	gap: 1em;
+	margin-bottom: 2.5em;
+}
+
+.container {
+	@include center(column);
+	max-width: 300px;
+	width: 100%;
 }
