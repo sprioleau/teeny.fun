@@ -1,0 +1,8 @@
+.page {
+	font-family: var(--ff-mono);
+	margin: 0 var(--page-padding-x);
+	background-color: var(--color-pink);
+	flex: 1;
+	overflow-y: auto;
+	padding: calc(0.5 * var(--page-padding-x));
+}

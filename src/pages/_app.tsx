@@ -3,7 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Modak, Space_Grotesk } from "next/font/google";
 import { Footer, Navigation } from "~/components";
-
+import { Page } from "~/layout";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.scss";
@@ -32,9 +32,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
 		<SessionProvider session={session}>
 			<div className={["app", modak.variable, spaceGrotesk.variable].join(" ")}>
 				<Navigation />
-				<section className="page">
+				<Page>
 					<Component {...pageProps} />
-				</section>
+				</Page>
 				<Footer />
 			</div>
 		</SessionProvider>

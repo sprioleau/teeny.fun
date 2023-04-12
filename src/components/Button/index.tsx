@@ -2,17 +2,19 @@ import type { ReactNode } from "react";
 import styles from "./index.module.scss";
 import Link from "next/link";
 
+export type ButtonColor = "yellow" | "pink" | "blue";
+
 type Props = {
 	as?: "button" | "a";
 	href?: string;
 	icon?: ReactNode;
-	color: "yellow" | "pink" | "blue";
+	color?: ButtonColor;
 	nextLink?: boolean;
 } & React.ComponentPropsWithoutRef<"button"> &
 	React.ComponentPropsWithoutRef<"a">;
 
 const variantProps: Record<
-	Props["color"],
+	ButtonColor,
 	{
 		color: string;
 		backgroundColor: string;

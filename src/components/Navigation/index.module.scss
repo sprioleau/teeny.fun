@@ -7,14 +7,19 @@
 	padding: 0 var(--page-padding-x);
 }
 
-.logo a {
+.logo {
 	@include center;
-	width: 150px;
-	transform: translateY(8%);
-	margin-left: calc(-1 * var(--page-padding-x) / 2);
 
-	svg {
-		transform: rotate(-5deg);
+	a {
+		@include center;
+		width: 130px;
+		aspect-ratio: 504 / 294;
+		margin-top: calc(var(--page-padding-y) / 2);
+		margin-left: calc(-1 * var(--page-padding-x) / 2);
+
+		svg {
+			transform: rotate(-5deg);
+		}
 	}
 }
 

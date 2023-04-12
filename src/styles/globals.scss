@@ -35,10 +35,3 @@ body {
 	flex-direction: column;
 	height: 100%;
 }
-
-.page {
-	margin: 0 var(--page-padding-x);
-	background-color: var(--color-pink);
-	flex: 1;
-	overflow-y: auto;
-}

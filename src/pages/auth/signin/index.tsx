@@ -1,14 +1,36 @@
-import { type GetServerSidePropsContext, type InferGetServerSidePropsType, type NextPage } from "next";
+import {
+	type GetServerSidePropsContext,
+	type InferGetServerSidePropsType,
+	type NextPage,
+} from "next";
 import { getProviders, signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
+import { Button } from "~/components";
+import { type ButtonColor } from "~/components/Button";
 
-export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function SignIn({
+	providers,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
 	return (
-		<div style={{ padding: "2rem", display: "flex", flexDirection: "column", gap: "0.5em", fontSize: "1.5em" }}>
-			{Object.values(providers).map(({ name, id }) => (
+		<div
+			style={{
+				padding: "2rem",
+				display: "flex",
+				flexDirection: "column",
+				gap: "0.5em",
+				fontSize: "1.5em",
+			}}
+		>
+			<h1>Sign in</h1>
+			{Object.values(providers).map(({ name, id }, index) => (
 				<div key={name}>
-					<button onClick={() => void signIn(id)}>Sign in with {name}</button>
+					<Button
+						onClick={() => void signIn(id)}
+						color={(["blue", "pink", "yellow"] satisfies ButtonColor[])[index % 3]}
+					>
+						with {name}
+					</Button>
 				</div>
 			))}
 		</div>
