@@ -111,18 +111,10 @@ const Home: NextPage = () => {
 				/>
 			</Head>
 			<main>
-				<Heading
-					tag="h1"
-					color="yellow"
-				>
-					teenify
-				</Heading>
-				<Heading tag="h1">URLs with</Heading>
-				<Heading
-					tag="h1"
-					color="yellow"
-				>
-					emojis
+				<Heading tag="h1">
+					<Heading.Span color="yellow">teenify</Heading.Span>
+					<Heading.Span color="white">URLs with</Heading.Span>
+					<Heading.Span color="yellow">emojis</Heading.Span>
 				</Heading>
 				{!session.data ? (
 					<>

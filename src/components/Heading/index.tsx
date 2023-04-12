@@ -7,13 +7,37 @@ type Props = {
 	color?: ButtonColor | "white";
 } & React.HTMLAttributes<HTMLHeadingElement>;
 
-export default function Heading({ tag: Tag = "h2", color = "white", children }: Props) {
+function Heading({ tag: Tag = "h2", color, children }: Props) {
 	return (
 		<Tag
 			className={styles.heading}
-			style={{ color: `var(--color-${color})` }}
+			style={{ color: color ? `var(--color-${color})` : "inherit" }}
 		>
 			{children}
 		</Tag>
 	);
 }
+
+function HeadingSpan({
+	children,
+	color,
+	inline = false,
+}: {
+	children: string;
+	color?: ButtonColor | "white";
+	inline?: boolean;
+}) {
+	return (
+		<span
+			className={styles.headingSpan}
+			style={{ color: color ? `var(--color-${color})` : "inherit" }}
+		>
+			{children}
+			{!inline && <br />}
+		</span>
+	);
+}
+
+Heading.Span = HeadingSpan;
+
+export default Heading;

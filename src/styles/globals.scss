@@ -35,3 +35,7 @@ body {
 	flex-direction: column;
 	height: 100%;
 }
+
+::selection {
+	background-color: rgba(var(--color-pink-rgb), 0.8);
+}
