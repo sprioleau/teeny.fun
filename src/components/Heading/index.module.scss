@@ -1,8 +1,8 @@
 @import "~/styles/mixins";
 
 .heading {
-	@include drop-shadow;
-	@include text-outline;
+	@include center;
+	flex-direction: column;
 	font-family: var(--ff-serif);
 	text-align: center;
 	color: var(--color-white);
@@ -13,4 +13,33 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	position: relative;
+}
+
+.heading-span {
+	position: relative;
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.heading-span-front {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	font-family: var(--ff-serif);
+	z-index: 1;
+}
+
+.heading-span-back {
+	@include drop-shadow;
+	@include text-outline;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	font-family: var(--ff-serif);
+	user-select: none;
+	pointer-events: none;
 }
