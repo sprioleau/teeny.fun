@@ -1,21 +1,27 @@
 import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { Inter, Modak } from "next/font/google";
+import { Modak, Space_Grotesk } from "next/font/google";
+import { Footer, Navigation } from "~/components";
 
 import { api } from "~/utils/api";
 
-import "~/styles/globals.css";
-
-const inter = Inter({
-	subsets: ["latin"],
-	variable: "--ff-sans",
-});
+import "~/styles/globals.scss";
 
 const modak = Modak({
 	variable: "--ff-serif",
 	subsets: ["latin"],
 	weight: "400",
+	style: "normal",
+	fallback: ["serif"],
+});
+
+const spaceGrotesk = Space_Grotesk({
+	variable: "--ff-mono",
+	subsets: ["latin"],
+	weight: ["400", "700"],
+	style: "normal",
+	fallback: ["monospace"],
 });
 
 const MyApp: AppType<{ session: Session | null }> = ({
@@ -24,8 +30,12 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
 	return (
 		<SessionProvider session={session}>
-			<div className={inter.className}>
-				<Component {...pageProps} />
+			<div className={["app", modak.variable, spaceGrotesk.variable].join(" ")}>
+				<Navigation />
+				<section className="page">
+					<Component {...pageProps} />
+				</section>
+				<Footer />
 			</div>
 		</SessionProvider>
 	);

@@ -1,0 +1,58 @@
+@import "~/styles/mixins";
+
+.button {
+	--scale: 1;
+	--translate: 0, 0;
+	@include border;
+	@include shadow;
+	@include center;
+	@include transition(0.2s);
+	gap: 0.25em;
+	font-family: var(--ff-mono);
+	font-weight: 700;
+	position: relative;
+	outline: none;
+	font-size: 1rem;
+	text-transform: lowercase;
+	white-space: nowrap;
+	color: var(--color-white);
+	padding: 0.25rem 0.75rem;
+	background-color: var(--color-pink);
+	transform: scale(var(--scale)) translate(var(--translate));
+	margin: 0;
+	margin-right: calc(2 * var(--border-width));
+	margin-bottom: calc(2 * var(--border-width));
+
+	&.yellow {
+		background-color: var(--color-yellow);
+		color: var(--color-black);
+	}
+
+	&.blue {
+		background-color: var(--color-blue);
+	}
+
+	&:hover {
+		cursor: pointer;
+
+		@include hover-wrapper {
+			--offset: calc(-1 * var(--border-width));
+			--shadow-offset: calc(-3 * var(--offset));
+			--translate: var(--offset), var(--offset);
+		}
+	}
+
+	&:active {
+		--offset: calc(2 * var(--border-width));
+		--translate: var(--offset), var(--offset);
+		--shadow-offset: 0;
+	}
+
+	&:focus-visible {
+		@include focus-ring;
+	}
+}
+
+.icon {
+	@include center;
+}

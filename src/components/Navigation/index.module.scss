@@ -1,0 +1,24 @@
+@import "~/styles/mixins";
+
+.nav {
+	@include center;
+	justify-content: space-between;
+	height: var(--page-padding-y);
+	padding: 0 var(--page-padding-x);
+}
+
+.logo a {
+	@include center;
+	width: 150px;
+	transform: translateY(8%);
+	margin-left: calc(-1 * var(--page-padding-x) / 2);
+
+	svg {
+		transform: rotate(-5deg);
+	}
+}
+
+.buttons {
+	@include center;
+	gap: 0.5em;
+}

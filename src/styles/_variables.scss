@@ -1,0 +1,17 @@
+:root {
+	// Colors
+	--color-blue: #6ca5d7;
+	--color-yellow: #f5dc6e;
+	--color-pink: #ed6e92;
+	--color-black: #232327;
+	--color-white: #fff;
+	--color-off-white: #f9f9f9;
+
+	// Sizes
+	--page-padding-y: 4rem;
+	--page-padding-x: 2.5rem;
+	--border-width: clamp(3px, 0.5vw, 4px);
+	--header-height: 72px;
+	--shadow-offset: calc(1.75 * var(--border-width));
+	--mobile-button-size: 40px;
+}

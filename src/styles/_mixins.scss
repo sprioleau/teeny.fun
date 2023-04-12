@@ -1,0 +1,61 @@
+@use "sass:map";
+
+@mixin border {
+	border: var(--border-width) solid var(--color-black);
+}
+
+@mixin shadow {
+	box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--color-black);
+}
+
+@mixin focus-ring {
+	// prettier-ignore
+	box-shadow: 
+    0 0 0 calc(1 * var(--border-width)) var(--white),
+    0 0 0 calc(2 * var(--border-width)) var(--pink);
+}
+
+@mixin inset-shadow($size: 1) {
+	box-shadow: inset calc($size * var(--shadow-offset)) calc($size * var(--shadow-offset)) 0
+		rgba(var(--color-black-rgb), 0.1);
+}
+
+// @mixin inset-highlight($size: 1) {
+//   box-shadow: inset calc(-1 * $size * var(--shadow-offset)) calc(-1 * $size * var(--shadow-offset))
+//     0 rgba(var(--white-rgb), 0.5);
+// }
+
+@mixin drop-shadow {
+	filter: drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 var(--color-black));
+}
+
+@mixin hover-wrapper {
+	@media (hover: hover) {
+		@content;
+	}
+}
+
+$breakpoints: (
+	"sm": 576px,
+	"md": 768px,
+	"lg": 1024px,
+);
+
+@mixin bp($breakpoint) {
+	@media (max-width: map.get($breakpoints, $breakpoint)) {
+		@content;
+	}
+}
+
+@mixin center($direction: row) {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: $direction;
+}
+
+@mixin transition($duration: 0.3s, $easing: cubic-bezier(0.25, 0.46, 0.45, 0.94)) {
+	transition-property: all;
+	transition-duration: $duration;
+	transition-timing-function: $easing;
+}

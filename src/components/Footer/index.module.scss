@@ -1,0 +1,17 @@
+@import "~/styles/mixins";
+
+.footer {
+	@include center;
+	justify-content: space-between;
+	height: var(--page-padding-y);
+	padding: 0 var(--page-padding-x);
+}
+
+.byline {
+	font-family: var(--ff-mono);
+	font-size: 0.8em;
+}
+
+.buttons {
+	@include center;
+}
