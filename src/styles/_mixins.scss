@@ -1,11 +1,13 @@
 @use "sass:map";
+@use "sass:math";
+@use "sass:list";
 
 @mixin border {
-	border: var(--border-width) solid var(--color-black);
+	border: var(--border-width) solid var(--color-border);
 }
 
 @mixin shadow {
-	box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--color-black);
+	box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--color-border);
 }
 
 @mixin focus-ring {
@@ -58,4 +60,15 @@ $breakpoints: (
 	transition-property: all;
 	transition-duration: $duration;
 	transition-timing-function: $easing;
+}
+
+@mixin text-outline($offset: var(--border-width), $color: var(--color-border), $num-steps: 16) {
+	$shadows: ();
+	@for $i from 0 to $num-steps {
+		$angle: $i * 360deg / $num-steps;
+		$x: calc(#{math.cos($angle)} * #{$offset});
+		$y: calc(#{math.sin($angle)} * #{$offset});
+		$shadows: list.append($shadows, #{$x} #{$y} 0 #{$color}, $separator: comma);
+	}
+	text-shadow: $shadows;
 }

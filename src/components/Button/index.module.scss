@@ -23,15 +23,6 @@
 	margin-right: calc(2 * var(--border-width));
 	margin-bottom: calc(2 * var(--border-width));
 
-	&.yellow {
-		background-color: var(--color-yellow);
-		color: var(--color-black);
-	}
-
-	&.blue {
-		background-color: var(--color-blue);
-	}
-
 	&:hover {
 		cursor: pointer;
 
