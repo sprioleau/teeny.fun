@@ -18,17 +18,30 @@ function Heading({ tag: Tag = "h2", color, children }: Props) {
 	);
 }
 
-function HeadingSpan({ text, color }: { text: string; color?: ButtonColor | "white" }) {
+function HeadingSpan({
+	text,
+	index,
+	color,
+}: {
+	text: string;
+	index: number;
+	color?: ButtonColor | "white";
+}) {
 	return (
 		<>
 			<span className={styles["heading-span"]}>
 				<span
 					className={styles["heading-span-front"]}
-					style={{ color: color ? `var(--color-${color})` : "inherit" }}
+					style={{ color: color ? `var(--color-${color})` : "inherit", zIndex: index * 2 + 1 }}
 				>
 					{text}
 				</span>
-				<span className={styles["heading-span-back"]}>{text}</span>
+				<span
+					className={styles["heading-span-back"]}
+					style={{ zIndex: index * 2 }}
+				>
+					{text}
+				</span>
 			</span>
 		</>
 	);
