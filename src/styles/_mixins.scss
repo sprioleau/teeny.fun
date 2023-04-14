@@ -28,7 +28,7 @@
 // }
 
 @mixin drop-shadow {
-	filter: drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 var(--color-black));
+	filter: drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 var(--color-border));
 }
 
 @mixin hover-wrapper {
