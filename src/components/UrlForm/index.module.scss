@@ -1,19 +1,17 @@
 @import "~/styles/mixins";
 
 .form {
-	--button-offset: 0.25em;
-	--button-size: 2rem;
+	--submit-button-offset: 0.25em;
+	--submit-button-size: 2rem;
+	--link-icon-size: 1.25em;
+	@include drop-shadow;
 	@include border;
-	// @include drop-shadow;
 	@include center;
-	@include inset-shadow;
+	gap: 0.25em;
 	width: 100%;
-	position: relative;
 	border-radius: var(--border-radius);
 	background-color: var(--color-white);
-	padding-left: 1em;
-	padding-right: calc(var(--button-size) + var(--button-offset) + 0.75em);
-	gap: 0.25em;
+	position: relative;
 }
 
 .label {
@@ -34,19 +32,24 @@
 	text-overflow: ellipsis;
 	background-color: transparent;
 	padding: 1em 0.5em;
+	padding-left: calc(var(--link-icon-size) + 1.5em);
+	padding-right: calc(var(--submit-button-size) + var(--submit-button-offset) + 0.75em);
+	border-radius: calc(var(--border-radius) - var(--border-width));
 }
 
 .submit-button {
 	position: absolute;
-	right: var(--button-offset);
-	width: var(--button-size);
-	height: var(--button-size);
+	right: var(--submit-button-offset);
+	width: var(--submit-button-size);
+	height: var(--submit-button-size);
 	border-radius: var(--border-radius);
 	font-size: 1.25em;
 }
 
 .link-icon {
 	@include center;
-	font-size: 1.2em;
+	position: absolute;
+	left: 0.75em;
+	font-size: var(--link-icon-size);
 	opacity: 0.75;
 }
