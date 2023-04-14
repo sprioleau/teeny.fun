@@ -31,6 +31,13 @@
 	filter: drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 var(--color-border));
 }
 
+// prettier-ignore
+@mixin double-drop-shadow {
+	filter:
+		drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 var(--color-border))
+		drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 rgba(var(--color-border-rgb), 0.25));
+}
+
 @mixin hover-wrapper {
 	@media (hover: hover) {
 		@content;
