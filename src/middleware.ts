@@ -7,10 +7,11 @@ export const config = {
 		 * Match all paths except for:
 		 * 1. /api/ routes
 		 * 2. /auth/ routes
-		 * 3. /_next/ (Next.js internals)
-		 * 4. /_vercel (Vercel internals)
+		 * 3. /_static (static files)
+		 * 4. /_next (Next.js internals)
+		 * 5. /_vercel (Vercel internals)
 		 */
-		"/((?!api/|auth/|_next/|_vercel|[\\w-]+\\.\\w+).*)",
+		"/((?!api/|auth/|_static|_next|_vercel|[\\w-]+\\.\\w+).*)",
 	],
 };
 
