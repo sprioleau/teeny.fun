@@ -4,7 +4,7 @@
 	--submit-button-offset: 0.25em;
 	--submit-button-size: 2rem;
 	--link-icon-size: 1.25em;
-	@include drop-shadow;
+	@include double-drop-shadow;
 	@include border;
 	@include center;
 	gap: 0.25em;

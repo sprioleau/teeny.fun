@@ -32,7 +32,7 @@
 }
 
 .heading-span-back {
-	@include drop-shadow;
+	@include double-drop-shadow;
 	@include text-outline;
 	position: absolute;
 	top: 0;
