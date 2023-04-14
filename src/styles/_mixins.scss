@@ -27,8 +27,8 @@
 //     0 rgba(var(--white-rgb), 0.5);
 // }
 
-@mixin drop-shadow {
-	filter: drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 var(--color-border));
+@mixin drop-shadow($color: var(--color-border)) {
+	filter: drop-shadow(var(--shadow-offset) var(--shadow-offset) 0 $color);
 }
 
 // prettier-ignore

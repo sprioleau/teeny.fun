@@ -10,6 +10,7 @@
 
 .logo {
 	@include center;
+	@include drop-shadow(rgba(var(--color-black-rgb), 0.2));
 
 	a {
 		@include center;
