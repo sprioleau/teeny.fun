@@ -13,12 +13,16 @@
 
 	a {
 		@include center;
+		@include transition;
 		font-size: clamp(9em, 15vw, 15em);
 		margin-top: 0.4em;
 		margin-left: calc(-1 * var(--page-padding-x) / 2);
+		transform: rotate(-5deg);
 
-		svg {
-			transform: rotate(-5deg);
+		@include hover-wrapper {
+			&:hover {
+				transform: rotate(0deg);
+			}
 		}
 	}
 }
