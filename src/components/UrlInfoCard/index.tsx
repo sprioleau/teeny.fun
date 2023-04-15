@@ -44,6 +44,7 @@ export default function UrlInfoCard({ url }: Props) {
 						icon={<HiQrcode />}
 					></Button>
 					<Button
+						className={styles["visit-button"]}
 						color="yellow"
 						title="Visit URL"
 						icon={<FiArrowUpRight />}

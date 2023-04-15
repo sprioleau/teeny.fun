@@ -14,7 +14,8 @@
 	display: flex;
 	align-items: center;
 	gap: 1rem;
-	padding: 0.75em;
+	padding: 0.5em;
+	padding-right: 0.75em;
 	border-bottom: var(--border-width) solid var(--color-border);
 }
 
@@ -25,9 +26,14 @@
 	flex: 1;
 }
 
+.favicon {
+	border-radius: calc(var(--border-radius) - var(--border-width));
+}
+
 .short-url {
 	white-space: nowrap;
 	text-overflow: ellipsis;
+	font-size: 1.2em;
 }
 
 .main-right {
@@ -43,14 +49,14 @@
 }
 
 .destination-url {
-	display: flex;
-	align-items: center;
-	padding: 0.5em;
+	padding: 0.5em 0.75em;
+	padding-right: 0.25em;
 	background-color: var(--color-off-white);
-	font-size: 0.8rem;
+	font-size: 0.8em;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
+	color: rgba(var(--color-black-rgb), 0.8);
 }
 
 .action-buttons {
@@ -66,12 +72,6 @@
 		border-bottom: 0;
 		padding: 0 0.5em;
 
-		&:last-child {
-			width: unset;
-			aspect-ratio: unset;
-			padding: 0 0.75em;
-		}
-
 		&:active {
 			transform: none;
 			background-color: var(--color-pink) !important;
@@ -84,6 +84,13 @@
 			}
 		}
 	}
+}
+
+.visit-button {
+	width: unset;
+	aspect-ratio: unset;
+	padding: 0 0.75em;
+	gap: 0.125em;
 }
 
 .visits {
