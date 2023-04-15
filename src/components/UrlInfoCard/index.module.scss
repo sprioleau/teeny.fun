@@ -3,7 +3,6 @@
 .card {
 	@include border;
 	@include double-drop-shadow;
-	@include inset-shadow;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -88,5 +87,5 @@
 }
 
 .visits {
-	font-size: 0.7em;
+	font-size: 0.8em;
 }
