@@ -1,6 +1,6 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
 import styles from "./index.module.scss";
-import Link from "next/link";
 
 export type ButtonColor = "yellow" | "pink" | "blue";
 
@@ -25,7 +25,7 @@ const variantProps: Record<
 		backgroundColor: "var(--color-pink)",
 	},
 	yellow: {
-		color: "var(--color-black)",
+		color: "var(--color-border)",
 		backgroundColor: "var(--color-yellow)",
 	},
 	blue: {

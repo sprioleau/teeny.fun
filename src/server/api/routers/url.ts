@@ -1,11 +1,17 @@
-import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
-import { TRPCError } from "@trpc/server";
 import { emojiToCodePoints, generateShortCode } from "~/utils";
+
+import { TRPCError } from "@trpc/server";
+import fetchMeta from "~/utils/fetchMetadata";
+import { z } from "zod";
 
 export const urlRouter = createTRPCRouter({
 	getAll: publicProcedure.query(({ ctx }) => {
-		return ctx.prisma.url.findMany();
+		return ctx.prisma.url.findMany({
+			include: {
+				metadata: true,
+			},
+		});
 	}),
 
 	getByUserId: protectedProcedure.query(({ ctx }) => {
@@ -15,7 +21,7 @@ export const urlRouter = createTRPCRouter({
 	create: publicProcedure
 		.input(
 			z.object({
-				longUrl: z.string(),
+				destinationUrl: z.string(),
 			})
 		)
 		.mutation(async ({ input, ctx }) => {
@@ -35,16 +41,24 @@ export const urlRouter = createTRPCRouter({
 				});
 			}
 
+			const metadata = await fetchMeta(input.destinationUrl);
+
+			const newMetadata = await ctx.prisma.metadata.create({
+				data: metadata,
+			});
+
 			const newUrl = await ctx.prisma.url.create({
 				data: {
-					longUrl: input.longUrl,
+					destinationUrl: input.destinationUrl,
 					code,
 					codePoints,
 					userId: ctx.session?.user.id,
+					metadataId: newMetadata.id,
 				},
 			});
 
-			if (!newUrl) throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create URL" });
+			if (!newUrl)
+				throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create URL" });
 
 			return newUrl;
 		}),

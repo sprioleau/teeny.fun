@@ -24,7 +24,7 @@ export default async function LinkMiddleware(req: NextRequest) {
 		return NextResponse.redirect(getBaseUrl());
 	}
 
-	return NextResponse.redirect(urlData.longUrl);
+	return NextResponse.redirect(urlData.destinationUrl);
 }
 
 export const parse = (req: NextRequest) => {

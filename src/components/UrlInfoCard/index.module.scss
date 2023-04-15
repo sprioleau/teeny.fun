@@ -1,0 +1,92 @@
+@import "~/styles/mixins";
+
+.card {
+	@include border;
+	@include double-drop-shadow;
+	@include inset-shadow;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	border-radius: var(--border-radius);
+	background-color: var(--color-white);
+}
+
+.main {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.75em;
+	border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.main-left {
+	display: flex;
+	align-items: center;
+	gap: 0.5em;
+	flex: 1;
+}
+
+.short-url {
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.main-right {
+	@include center;
+}
+
+.footer {
+	--footer-border-radius: calc(var(--border-radius) - var(--border-width));
+	display: flex;
+	overflow: hidden;
+	border-bottom-left-radius: var(--footer-border-radius);
+	border-bottom-right-radius: var(--footer-border-radius);
+}
+
+.destination-url {
+	display: flex;
+	align-items: center;
+	padding: 0.5em;
+	background-color: var(--color-off-white);
+	font-size: 0.8rem;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.action-buttons {
+	display: flex;
+
+	button {
+		padding: 0;
+		margin: 0;
+		margin-right: calc(-1 * var(--border-width));
+		filter: none;
+		box-shadow: none;
+		border-top: 0;
+		border-bottom: 0;
+		padding: 0 0.5em;
+
+		&:last-child {
+			width: unset;
+			aspect-ratio: unset;
+			padding: 0 0.75em;
+		}
+
+		&:active {
+			transform: none;
+			background-color: var(--color-pink) !important;
+		}
+
+		@include hover-wrapper {
+			&:hover {
+				transform: none;
+				background-color: var(--color-pink) !important;
+			}
+		}
+	}
+}
+
+.visits {
+	font-size: 0.7em;
+}

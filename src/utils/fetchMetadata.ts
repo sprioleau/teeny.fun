@@ -1,5 +1,6 @@
 // Modified from https://github.com/luisivan/fetch-meta-tags/blob/master/rulesets.js
 
+import { type Metadata } from "@prisma/client";
 import { parse } from "node-html-parser";
 import { metadataRules } from "~/constants/metadataRulesets";
 
@@ -66,5 +67,5 @@ export default async function fetchMeta(url: string) {
 		}
 	}
 
-	return metadata;
+	return metadata as Metadata;
 }

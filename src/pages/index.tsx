@@ -1,93 +1,56 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-// import styles from "./index.module.css";
 import { type NextPage } from "next";
 import Head from "next/head";
 
-import { api } from "~/utils/api";
-import { useEffect, useState } from "react";
+// import { api } from "~/utils/api";
+// import { useState } from "react";
 import { useSession } from "next-auth/react";
-import { Heading, UrlForm } from "~/components";
+import { Heading, UrlForm, UrlList } from "~/components";
 
 import styles from "./index.module.scss";
-import { type Url } from "@prisma/client";
+import { type Metadata, type Url } from "@prisma/client";
+import { api } from "~/utils/api";
 
-type Shortlink = Pick<Url, "code" | "longUrl">;
+export type UrlWithMetadata = Url & {
+	metadata: Metadata | null;
+};
 
-function getShortlinksFromUserStorage() {
-	return JSON.parse(localStorage.getItem("links") ?? "[]") as Shortlink[];
-}
+export type LocalUrl = Pick<Url, "code" | "destinationUrl">;
 
 const Home: NextPage = () => {
-	const [longUrl, setLongUrl] = useState("");
-	const [localUrls, setLocalUrls] = useState<Shortlink[]>([]);
-	// const [metadata, setMetadata] = useState<FetchedMeta | undefined>({});
-
-	useEffect(() => {
-		// Check if window is defined to prevent errors during SSR
-		if (typeof window === undefined || !localStorage) return;
-		setLocalUrls(getShortlinksFromUserStorage());
-	}, []);
+	// const [destinationUrl, setDestinationUrl] = useState("");
 
 	const session = useSession();
 	console.log("🚀 ~ file: index.tsx:15 ~ session:", session);
-	// const { data: urlsByUser = [] } = api.url.getByUserId.useQuery(undefined, {
-	// 	refetchOnWindowFocus: true,
-	// 	enabled: Boolean(session.data),
+
+	// TODO: Get URLs by user ID
+	const { data: urls } = api.url.getAll.useQuery();
+
+	// const ctx = api.useContext();
+
+	// const { mutateAsync: createUrl } = api.url.create.useMutation({
+	// 	onSuccess: (data) => {
+	// 		void ctx.url.getByUserId.invalidate();
+	// 		console.log("🚀 ~ file: index.tsx:22 ~ onSuccess: ~ data", data);
+	// 	},
+	// 	onError(error, variables, context) {
+	// 		console.error(
+	// 			`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`
+	// 		);
+	// 	},
 	// });
 
-	const ctx = api.useContext();
+	// async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+	// 	e.preventDefault();
 
-	const { mutateAsync: createUrl } = api.url.create.useMutation({
-		onSuccess: (data) => {
-			void ctx.url.getByUserId.invalidate();
-			console.log("🚀 ~ file: index.tsx:22 ~ onSuccess: ~ data", data);
+	// 	try {
+	// 		const newUrl = await createUrl({ destinationUrl });
+	// 		console.log("🚀 ~ file: index.tsx:29 ~ handleSubmit ~ newUrl:", newUrl);
+	// 	} catch (error) {
+	// 		console.error(error);
+	// 	}
 
-			localStorage.setItem(
-				"links",
-				JSON.stringify([...localUrls, { code: data.code, longUrl: data.longUrl }])
-			);
-
-			setLocalUrls((prevLocalUrls) => [
-				...prevLocalUrls,
-				{
-					code: data.code,
-					longUrl: data.longUrl,
-				},
-			]);
-		},
-		onError(error, variables, context) {
-			console.error(
-				`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`
-			);
-		},
-	});
-
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-
-		try {
-			const newUrl = await createUrl({ longUrl });
-			console.log("🚀 ~ file: index.tsx:29 ~ handleSubmit ~ newUrl:", newUrl);
-		} catch (error) {
-			console.error(error);
-		}
-
-		setLongUrl("");
-	}
-
-	// async function handleRowClick(index: number, longUrl: string) {
-	// 	setMetadata(undefined);
-	// 	setSelectedRowIndex(index);
-
-	// 	const { data: returnedMetadata } = (await fetch(`/api/edge/metadata?url=${longUrl}`).then(
-	// 		(res) => res.json()
-	// 	)) as {
-	// 		data: FetchedMeta;
-	// 	};
-
-	// 	setMetadata(returnedMetadata);
-
-	// 	console.log("🚀 ~ file: index.tsx:61 ~ handleRowClick ~ metadata:", metadata);
+	// 	setDestinationUrl("");
 	// }
 
 	// function handleCopy(text: string) {
@@ -129,7 +92,27 @@ const Home: NextPage = () => {
 					</Heading>
 				</header>
 				<section className={styles.container}>
-					<UrlForm onSubmit={(e) => void handleSubmit(e)} />
+					<UrlForm
+					// onSubmit={(e) => void handleSubmit(e)}
+					/>
+					{urls && (
+						<UrlList
+							urls={urls}
+							// urls={[
+							// 	{
+							// 		id: "1",
+							// 		destinationUrl: "https://nextjs.org/docs/advanced-features/middleware",
+							// 		code: "👀",
+							// 		codePoints: "1f440",
+							// 		visits: 0,
+							// 		createdAt: new Date(),
+							// 		updatedAt: new Date(),
+							// 		userId: null,
+							// 		metadataId: "1",
+							// 	},
+							// ]}
+						/>
+					)}
 				</section>
 			</main>
 		</>
