@@ -10,23 +10,30 @@ datasource db {
 }
 
 model Url {
-  id         String   @id @default(cuid())
-  longUrl    String
-  code       String
-  codePoints String   @unique
-  visits     Int      @default(0)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  userId     String?
-  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String    @id @default(cuid())
+  destinationUrl String
+  code           String
+  codePoints     String    @unique
+  visits         Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  userId         String?
+  user           User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  metadataId     String?
+  metadata       Metadata? @relation(fields: [metadataId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+  @@index([metadataId])
 }
 
-model Example {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Metadata {
+  id          String @id @default(cuid())
+  title       String
+  description String
+  image       String
+  icon        String
+  url         String
+  Url         Url[]
 }
 
 model Account {
