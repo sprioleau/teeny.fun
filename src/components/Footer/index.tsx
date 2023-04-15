@@ -6,7 +6,13 @@ export default function Footer() {
 	return (
 		<footer className={styles.footer}>
 			<div className={styles.byline}>
-				by <a href="https://github.com/sprioleau">San&apos;Quan Prioleau</a>
+				by{" "}
+				<a
+					href="https://github.com/sprioleau"
+					className={styles.link}
+				>
+					San&apos;Quan Prioleau
+				</a>
 			</div>
 			<div className={styles.buttons}>
 				<Button

@@ -44,6 +44,20 @@
 	}
 }
 
+@mixin link-decoration {
+	position: relative;
+
+	&::after {
+		content: "";
+		position: absolute;
+		bottom: -0.25em;
+		left: 0;
+		width: 100%;
+		height: 1px;
+		background: currentColor;
+	}
+}
+
 $breakpoints: (
 	"sm": 576px,
 	"md": 768px,
