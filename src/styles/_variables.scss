@@ -14,7 +14,7 @@
 
 	// Sizes
 	--page-padding-y: 4rem;
-	--page-padding-x: 2.5rem;
+	--page-padding-x: clamp(1.75rem, 5vw, 2.5rem);
 	--border-width: 3px;
 	--border-radius: 0.5rem;
 	--header-height: 72px;

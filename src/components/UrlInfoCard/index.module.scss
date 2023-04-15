@@ -8,6 +8,7 @@
 	width: 100%;
 	border-radius: var(--border-radius);
 	background-color: var(--color-white);
+	overflow: hidden;
 }
 
 .main {
@@ -17,6 +18,18 @@
 	padding: 0.5em;
 	padding-right: 0.75em;
 	border-bottom: var(--border-width) solid var(--color-border);
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	gap: 0.125em;
+
+	@include bp(sm) {
+		flex-direction: column;
+		align-items: flex-start;
+	}
 }
 
 .main-left {
@@ -31,9 +44,11 @@
 }
 
 .short-url {
+	flex: 1;
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	font-size: 1.2em;
+	font-size: clamp(1em, 4vw, 1.2em);
+	line-height: 1;
 }
 
 .main-right {

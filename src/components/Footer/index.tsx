@@ -1,6 +1,5 @@
 import Button from "../Button";
 import { FiGithub } from "react-icons/fi";
-
 import styles from "./index.module.scss";
 
 export default function Footer() {
@@ -17,7 +16,7 @@ export default function Footer() {
 					icon={<FiGithub />}
 					color="yellow"
 				>
-					Star on GitHub
+					Star project
 				</Button>
 			</div>
 		</footer>

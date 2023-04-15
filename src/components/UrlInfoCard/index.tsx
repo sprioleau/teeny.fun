@@ -24,10 +24,10 @@ export default function UrlInfoCard({ url }: Props) {
 						height={32}
 						className={styles["favicon"]}
 					/>
-					<span className={styles["short-url"]}>teeny.fun/{url.code}</span>
-				</div>
-				<div className={styles["main-right"]}>
-					<span className={styles["visits"]}>{url.visits} visits</span>
+					<header className={styles["header"]}>
+						<span className={styles["short-url"]}>teeny.fun/{url.code}</span>
+						<span className={styles["visits"]}>{url.visits} visits</span>
+					</header>
 				</div>
 			</main>
 			<footer className={styles["footer"]}>
