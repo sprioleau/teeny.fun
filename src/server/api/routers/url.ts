@@ -1,6 +1,7 @@
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { emojiToCodePoints, generateShortCode } from "~/utils";
 
+import { PROJECT_REPO_URL } from "~/constants/projectRepoUrl";
 import { TRPCError } from "@trpc/server";
 import fetchMeta from "~/utils/fetchMetadata";
 import { z } from "zod";
@@ -17,6 +18,19 @@ export const urlRouter = createTRPCRouter({
 	getByUserId: protectedProcedure.query(({ ctx }) => {
 		return ctx.prisma.url.findMany({ where: { userId: ctx.session.user.id } });
 	}),
+
+	getExample: publicProcedure
+		.input(
+			z.object({
+				destinationUrl: z.string(),
+			})
+		)
+		.query(({ ctx }) => {
+			return ctx.prisma.url.findFirstOrThrow({
+				where: { destinationUrl: PROJECT_REPO_URL },
+				include: { metadata: true },
+			});
+		}),
 
 	create: publicProcedure
 		.input(
