@@ -1,6 +1,7 @@
 @import "~/styles/mixins";
 
 .card {
+	--inside-border-radius: calc(var(--border-radius) - var(--border-width));
 	@include border;
 	@include double-drop-shadow;
 	display: flex;
@@ -36,7 +37,7 @@
 }
 
 .favicon {
-	border-radius: calc(var(--border-radius) - var(--border-width));
+	border-radius: var(--inside-border-radius);
 }
 
 .short-url {
@@ -63,11 +64,10 @@
 }
 
 .footer {
-	--footer-border-radius: calc(var(--border-radius) - var(--border-width));
 	display: flex;
 	overflow: hidden;
-	border-bottom-left-radius: var(--footer-border-radius);
-	border-bottom-right-radius: var(--footer-border-radius);
+	border-bottom-left-radius: var(--inside-border-radius);
+	border-bottom-right-radius: var(--inside-border-radius);
 }
 
 .destination-url {
@@ -110,6 +110,7 @@
 
 	.visit-button {
 		padding-right: 0.75em;
+		padding-left: 0.125em;
 	}
 }
 
