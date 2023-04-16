@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { type NextPage } from "next";
 import Head from "next/head";
 
-// import { api } from "~/utils/api";
-// import { useState } from "react";
-import { useSession } from "next-auth/react";
 import { Heading, UrlForm, UrlList } from "~/components";
 
 import styles from "./index.module.scss";
@@ -18,44 +14,8 @@ export type UrlWithMetadata = Url & {
 export type LocalUrl = Pick<Url, "code" | "destinationUrl">;
 
 const Home: NextPage = () => {
-	// const [destinationUrl, setDestinationUrl] = useState("");
-
-	const session = useSession();
-	console.log("🚀 ~ file: index.tsx:15 ~ session:", session);
-
 	// TODO: Get URLs by user ID
 	const { data: urls } = api.url.getAll.useQuery();
-
-	// const ctx = api.useContext();
-
-	// const { mutateAsync: createUrl } = api.url.create.useMutation({
-	// 	onSuccess: (data) => {
-	// 		void ctx.url.getByUserId.invalidate();
-	// 		console.log("🚀 ~ file: index.tsx:22 ~ onSuccess: ~ data", data);
-	// 	},
-	// 	onError(error, variables, context) {
-	// 		console.error(
-	// 			`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`
-	// 		);
-	// 	},
-	// });
-
-	// async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-	// 	e.preventDefault();
-
-	// 	try {
-	// 		const newUrl = await createUrl({ destinationUrl });
-	// 		console.log("🚀 ~ file: index.tsx:29 ~ handleSubmit ~ newUrl:", newUrl);
-	// 	} catch (error) {
-	// 		console.error(error);
-	// 	}
-
-	// 	setDestinationUrl("");
-	// }
-
-	// function handleCopy(text: string) {
-	// 	void navigator.clipboard.writeText(text).then(() => alert(`Copied ${text}`));
-	// }
 
 	return (
 		<>
@@ -92,27 +52,8 @@ const Home: NextPage = () => {
 					</Heading>
 				</header>
 				<section className={styles.container}>
-					<UrlForm
-					// onSubmit={(e) => void handleSubmit(e)}
-					/>
-					{urls && (
-						<UrlList
-							urls={urls}
-							// urls={[
-							// 	{
-							// 		id: "1",
-							// 		destinationUrl: "https://nextjs.org/docs/advanced-features/middleware",
-							// 		code: "👀",
-							// 		codePoints: "1f440",
-							// 		visits: 0,
-							// 		createdAt: new Date(),
-							// 		updatedAt: new Date(),
-							// 		userId: null,
-							// 		metadataId: "1",
-							// 	},
-							// ]}
-						/>
-					)}
+					<UrlForm />
+					{urls && <UrlList urls={urls} />}
 				</section>
 			</main>
 		</>
