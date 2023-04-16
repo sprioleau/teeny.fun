@@ -13,7 +13,7 @@ type Props = {
 	url: UrlWithMetadata;
 };
 
-export default function UrlInfoCard({ url }: Props) {
+export default function UrlInfoCard({ url: { code, metadata, visits, destinationUrl } }: Props) {
 	const fallbackFaviconSource = "/_static/images/emojis/fire.svg";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 
@@ -22,14 +22,14 @@ export default function UrlInfoCard({ url }: Props) {
 		setQRCodeImageUrl(qrCode);
 	}
 
-	const shortUrl = useMemo(() => getShortUrl({ code: url.code }), [url.code]);
+	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
 
 	return (
 		<li className={styles["card"]}>
 			<main className={styles["main"]}>
 				<div className={styles["main-left"]}>
 					<img
-						src={url?.metadata?.icon ?? fallbackFaviconSource}
+						src={metadata?.icon ?? fallbackFaviconSource}
 						alt="Fire emoji"
 						width={32}
 						height={32}
@@ -46,22 +46,22 @@ export default function UrlInfoCard({ url }: Props) {
 							as={"a"}
 							className={styles["short-url"]}
 							target="_blank"
-							href={url.code}
+							href={code}
 							rel="noreferrer"
 							color="yellow"
 							title="Visit URL"
 						>
-							teeny.fun/{url.code}
+							teeny.fun/{code}
 						</Button>
 						<span className={styles["visits"]}>
 							<FiBarChart />{" "}
-							{formatQuantityString({ quantity: url.visits, nouns: ["visit", "visits"] })}
+							{formatQuantityString({ quantity: visits, nouns: ["visit", "visits"] })}
 						</span>
 					</header>
 				</div>
 			</main>
 			<footer className={styles["footer"]}>
-				<span className={styles["destination-url"]}>{url.destinationUrl}</span>
+				<span className={styles["destination-url"]}>{destinationUrl}</span>
 				<div className={styles["action-buttons"]}>
 					<Button
 						color="yellow"
@@ -79,7 +79,7 @@ export default function UrlInfoCard({ url }: Props) {
 						as={"a"}
 						className={styles["visit-button"]}
 						target="_blank"
-						href={url.code}
+						href={code}
 						rel="noreferrer"
 						color="yellow"
 						title="Visit URL"
