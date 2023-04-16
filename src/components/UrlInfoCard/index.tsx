@@ -6,7 +6,8 @@ import { TbCopy } from "react-icons/tb";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import styles from "./index.module.scss";
 import { type UrlWithMetadata } from "~/pages";
-import { copyText, getShortUrl } from "~/utils";
+import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "~/utils";
+import { useMemo, useState } from "react";
 
 type Props = {
 	url: UrlWithMetadata;
@@ -14,20 +15,14 @@ type Props = {
 
 export default function UrlInfoCard({ url }: Props) {
 	const fallbackFaviconSource = "/_static/images/emojis/fire.svg";
+	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 
-	function formatVisits(visits: number) {
-		let unit = "visit";
-		if (visits === 1) return `1 ${unit}`;
-
-		unit = "visits";
-		if (visits < 1_000) {
-			return `${visits} ${unit}`;
-		} else if (visits < 1_000_000) {
-			return `${(visits / 1_000).toFixed(1)}K ${unit}`;
-		} else {
-			return `${(visits / 1_000_000).toFixed(1)}M ${unit}`;
-		}
+	async function handleGenerateQRCode(url: string) {
+		const qrCode = await generateQRCode({ text: url });
+		setQRCodeImageUrl(qrCode);
 	}
+
+	const shortUrl = useMemo(() => getShortUrl({ code: url.code }), [url.code]);
 
 	return (
 		<li className={styles["card"]}>
@@ -40,10 +35,27 @@ export default function UrlInfoCard({ url }: Props) {
 						height={32}
 						className={styles["favicon"]}
 					/>
+					{qrCodeImageUrl && (
+						<img
+							src={qrCodeImageUrl}
+							alt="qr-code"
+						/>
+					)}
 					<header className={styles["header"]}>
-						<span className={styles["short-url"]}>teeny.fun/{url.code}</span>
+						<Button
+							as={"a"}
+							className={styles["short-url"]}
+							target="_blank"
+							href={url.code}
+							rel="noreferrer"
+							color="yellow"
+							title="Visit URL"
+						>
+							teeny.fun/{url.code}
+						</Button>
 						<span className={styles["visits"]}>
-							<FiBarChart /> {formatVisits(url.visits)}
+							<FiBarChart />{" "}
+							{formatQuantityString({ quantity: url.visits, nouns: ["visit", "visits"] })}
 						</span>
 					</header>
 				</div>
@@ -55,12 +67,13 @@ export default function UrlInfoCard({ url }: Props) {
 						color="yellow"
 						title="Copy shortcode"
 						icon={<TbCopy />}
-						onClick={() => void copyText(getShortUrl({ code: url.code }))}
+						onClick={() => void copyText(shortUrl)}
 					></Button>
 					<Button
 						color="yellow"
 						title="View QR code"
 						icon={<HiQrcode />}
+						onClick={() => void handleGenerateQRCode(shortUrl)}
 					></Button>
 					<Button
 						as={"a"}

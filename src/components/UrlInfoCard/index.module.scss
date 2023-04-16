@@ -45,6 +45,17 @@
 	text-overflow: ellipsis;
 	font-size: clamp(1.1em, 4vw, 1.25em);
 	line-height: 1;
+	background-color: transparent !important;
+	border: none;
+	box-shadow: none;
+	justify-content: flex-start;
+	margin: 0;
+	padding: 0;
+	font-weight: 400;
+
+	&:hover {
+		transform: none;
+	}
 }
 
 .main-right {
@@ -96,13 +107,10 @@
 			}
 		}
 	}
-}
 
-.visit-button {
-	width: unset;
-	aspect-ratio: unset;
-	padding: 0 0.75em;
-	gap: 0.125em;
+	.visit-button {
+		padding-right: 0.75em;
+	}
 }
 
 .visits {
