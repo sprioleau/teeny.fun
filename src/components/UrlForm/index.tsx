@@ -60,7 +60,7 @@ export default function UrlForm() {
 				name="long-url"
 				className={styles.input}
 				required
-				placeholder="Enter a URL"
+				placeholder="Paste in your link"
 				value={destinationUrl}
 				onChange={(e) => setDestinationUrl(e.target.value)}
 			/>
