@@ -57,6 +57,17 @@
 	&:hover {
 		transform: none;
 	}
+
+	> div {
+		@include center;
+		gap: 0.125em;
+	}
+
+	img {
+		width: 1em;
+		height: 1em;
+		object-fit: contain;
+	}
 }
 
 .main-right {

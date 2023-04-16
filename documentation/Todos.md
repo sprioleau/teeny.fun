@@ -1,3 +1,4 @@
 - [] Add cron mechanism to delete (update destinationUrl to the github repo URL) public URLs active longer than 30 minutes (run every 5 minutes)
 - [x] Add create public URL mutation
 - [] Create teeny.fun branded OG image
+- [] Convert emojis to images for consistent look across devices

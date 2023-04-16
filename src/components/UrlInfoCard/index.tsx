@@ -8,6 +8,7 @@ import styles from "./index.module.scss";
 import { type UrlWithMetadata } from "~/pages";
 import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "~/utils";
 import { useMemo, useState } from "react";
+import Twemoji from "react-twemoji";
 
 type Props = {
 	url: UrlWithMetadata;
@@ -51,7 +52,7 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 							color="yellow"
 							title="Visit URL"
 						>
-							teeny.fun/{code}
+							teeny.fun/<Twemoji>{code}</Twemoji>
 						</Button>
 						<span className={styles["visits"]}>
 							<FiBarChart />{" "}
