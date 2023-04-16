@@ -5,12 +5,7 @@ import { api } from "~/utils/api";
 import styles from "./index.module.scss";
 import { useState } from "react";
 
-// type Props = {
-// 	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-// };
-
 export default function UrlForm() {
-	// { onSubmit }: Props
 	const [destinationUrl, setDestinationUrl] = useState("");
 
 	const ctx = api.useContext();
