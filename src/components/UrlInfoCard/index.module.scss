@@ -41,7 +41,6 @@
 }
 
 .short-url {
-	flex: 1;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	font-size: clamp(1.1em, 4vw, 1.25em);
@@ -129,4 +128,5 @@
 	gap: 0.25em;
 	font-size: 0.8em;
 	color: rgba(var(--color-black-rgb), 0.8);
+	margin-left: auto;
 }
