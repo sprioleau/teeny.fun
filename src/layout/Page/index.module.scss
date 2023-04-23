@@ -10,4 +10,6 @@
 	font-family: var(--ff-mono);
 	margin: 0 var(--page-padding-x);
 	background-color: var(--color-pink);
+	height: calc(100vh - 2 * var(--page-padding-y));
+	height: calc(100dvh - 2 * var(--page-padding-y));
 }

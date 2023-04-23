@@ -1,7 +1,9 @@
 @import "~/styles/mixins";
 
 .main {
-	@include center(column);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	padding: var(--page-padding-y) calc(0.5 * var(--page-padding-x));
 	width: 100%;
 	overflow-y: auto;
