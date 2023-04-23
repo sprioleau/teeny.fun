@@ -4,6 +4,7 @@ export { default as Heading } from "./Heading";
 export { default as Logo } from "./Logo";
 export { default as Navigation } from "./Navigation";
 export { default as PlaceholderInfoCard } from "./PlaceholderInfoCard";
+export { default as PublicLinkNotice } from "./PublicLinkNotice";
 export { default as UrlForm } from "./UrlForm";
 export { default as UrlList } from "./UrlList";
 export { default as UrlInfoCard } from "./UrlInfoCard";

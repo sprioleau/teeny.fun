@@ -2,3 +2,4 @@
 - [x] Add create public URL mutation
 - [] Create teeny.fun branded OG image
 - [] Convert emojis to images for consistent look across devices
+- [] Create a modal component to display the QR code and other elements

@@ -1,4 +1,4 @@
-import { PlaceholderInfoCard, UrlInfoCard } from "~/components";
+import { PlaceholderInfoCard, PublicLinkNotice, UrlInfoCard } from "~/components";
 import styles from "./index.module.scss";
 import { type UrlWithMetadata } from "~/pages";
 import { api } from "~/utils/api";
@@ -25,6 +25,7 @@ export default function UrlList({ urls = [] }: Props) {
 						url={url}
 					/>
 				))}
+			<PublicLinkNotice />
 		</ul>
 	);
 }

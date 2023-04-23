@@ -1,0 +1,26 @@
+@import "~/styles/mixins";
+
+.main {
+	@include double-drop-shadow;
+	@include border;
+	border-radius: var(--border-radius);
+	background-color: var(--color-off-white);
+	font-size: 0.8em;
+	padding: 0.75em 1em;
+	color: rgba(var(--color-black-rgb), 0.8);
+
+	a {
+		color: var(--color-pink-a11y);
+		position: relative;
+
+		&::after {
+			content: "";
+			position: absolute;
+			bottom: -0.1em;
+			left: 0;
+			width: 100%;
+			height: 0.1em;
+			background-color: currentColor;
+		}
+	}
+}
