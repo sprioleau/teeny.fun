@@ -1,4 +1,4 @@
-import { UrlInfoCard } from "~/components";
+import { PlaceholderInfoCard, UrlInfoCard } from "~/components";
 import styles from "./index.module.scss";
 import { type UrlWithMetadata } from "~/pages";
 import { api } from "~/utils/api";
@@ -9,8 +9,6 @@ type Props = {
 };
 
 export default function UrlList({ urls = [] }: Props) {
-	if (urls.length === 0) return null;
-
 	const { data: projectRepoUrl } = api.url.getExample.useQuery({
 		destinationUrl: PROJECT_REPO_URL,
 	});
@@ -18,6 +16,7 @@ export default function UrlList({ urls = [] }: Props) {
 	return (
 		<ul className={styles["url-list"]}>
 			{projectRepoUrl && <UrlInfoCard url={projectRepoUrl} />}
+			{urls.length === 0 && <PlaceholderInfoCard />}
 			{urls
 				.filter(({ destinationUrl }) => destinationUrl !== PROJECT_REPO_URL)
 				.map((url) => (
