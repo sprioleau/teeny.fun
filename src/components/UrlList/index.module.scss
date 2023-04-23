@@ -3,6 +3,6 @@
 .url-list {
 	display: flex;
 	flex-direction: column;
-	gap: 1em;
+	gap: calc(2.5 * var(--shadow-offset));
 	width: 100%;
 }

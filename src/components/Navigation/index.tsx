@@ -1,11 +1,18 @@
-import Button from "../Button";
-import { AiOutlineUser } from "react-icons/ai";
+import { signOut, useSession } from "next-auth/react";
 
-import styles from "./index.module.scss";
-import Logo from "../Logo";
+import { AiOutlineUser } from "react-icons/ai";
+import Button from "../Button";
 import Link from "next/link";
+import Logo from "../Logo";
+import styles from "./index.module.scss";
 
 export default function Navigation() {
+	const { data: session } = useSession();
+
+	async function handleSignOut() {
+		await signOut();
+	}
+
 	return (
 		<nav className={styles.nav}>
 			<div className={styles.logo}>
@@ -13,7 +20,6 @@ export default function Navigation() {
 					<Logo />
 				</Link>
 			</div>
-			{/* <p className={styles.heading}>Generate and customize emoji-only shortlinks</p> */}
 			<div className={styles.buttons}>
 				{/* <Button
 					href="/auth/signin"
@@ -23,14 +29,25 @@ export default function Navigation() {
 				>
 					Start for free
 				</Button> */}
-				<Button
-					href="/auth/signin"
-					className="button"
-					icon={<AiOutlineUser />}
-					color="yellow"
-				>
-					Sign in
-				</Button>
+				{!session ? (
+					<Button
+						href="/auth/signin"
+						className="button"
+						icon={<AiOutlineUser />}
+						color="yellow"
+					>
+						Sign in
+					</Button>
+				) : (
+					<Button
+						onClick={() => void handleSignOut()}
+						className="button"
+						icon={<AiOutlineUser />}
+						color="yellow"
+					>
+						Sign out
+					</Button>
+				)}
 			</div>
 		</nav>
 	);

@@ -25,7 +25,6 @@ export default function UrlList({ urls = [] }: Props) {
 						url={url}
 					/>
 				))}
-			<PublicLinkNotice />
 		</ul>
 	);
 }

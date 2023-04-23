@@ -1,11 +1,12 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 
-import { Heading, UrlForm, UrlList } from "~/components";
+import { Heading, PublicLinkNotice, UrlForm, UrlList } from "~/components";
 
 import styles from "./index.module.scss";
 import { type Metadata, type Url } from "@prisma/client";
 import { api } from "~/utils/api";
+import { useSession } from "next-auth/react";
 
 export type UrlWithMetadata = Url & {
 	metadata: Metadata | null;
@@ -16,6 +17,9 @@ export type LocalUrl = Pick<Url, "code" | "destinationUrl">;
 const Home: NextPage = () => {
 	// TODO: Get URLs by user ID
 	const { data: urls } = api.url.getAll.useQuery();
+
+	const { data: session } = useSession();
+	console.log("🚀 ~ file: index.tsx:22 ~ session:", session);
 
 	return (
 		<>
@@ -54,6 +58,7 @@ const Home: NextPage = () => {
 				<section className={styles.container}>
 					<UrlForm />
 					{urls && <UrlList urls={urls} />}
+					{!session && <PublicLinkNotice />}
 				</section>
 			</main>
 		</>
