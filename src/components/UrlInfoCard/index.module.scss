@@ -24,6 +24,7 @@
 .header {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	flex-wrap: wrap;
 	width: 100%;
 	gap: 0.125em;
@@ -34,6 +35,13 @@
 	align-items: center;
 	gap: 0.5em;
 	flex: 1;
+}
+
+.visits {
+	@include center;
+	gap: 0.25em;
+	font-size: 0.8em;
+	color: rgba(var(--color-black-rgb), 0.8);
 }
 
 .favicon {
@@ -57,12 +65,15 @@
 		transform: none;
 	}
 
-	> div {
+	span > span {
 		@include center;
-		gap: 0.125em;
+		gap: 0.0625em;
+		transform: translateY(0.1825em);
+		margin-left: 0.125em;
 	}
 
 	img {
+		display: block;
 		width: 1em;
 		height: 1em;
 		object-fit: contain;
@@ -114,6 +125,10 @@
 			&:hover {
 				transform: none;
 				background-color: var(--color-pink) !important;
+
+				> * {
+					color: var(--color-white);
+				}
 			}
 		}
 	}
@@ -121,12 +136,4 @@
 	.visit-button {
 		padding-right: 0.75em;
 	}
-}
-
-.visits {
-	@include center;
-	gap: 0.25em;
-	font-size: 0.8em;
-	color: rgba(var(--color-black-rgb), 0.8);
-	margin-left: auto;
 }

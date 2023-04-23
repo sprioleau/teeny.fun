@@ -52,7 +52,17 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 							color="yellow"
 							title="Visit URL"
 						>
-							teeny.fun/<Twemoji>{code}</Twemoji>
+							teeny.fun/
+							<Twemoji
+								tag="span"
+								options={{
+									ext: ".svg",
+									folder: "svg",
+									className: "twemoji",
+								}}
+							>
+								{code}
+							</Twemoji>
 						</Button>
 						<span className={styles["visits"]}>
 							<FiBarChart />{" "}
@@ -69,13 +79,13 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 						title="Copy shortcode"
 						icon={<TbCopy />}
 						onClick={() => void copyText(shortUrl)}
-					></Button>
+					/>
 					<Button
 						color="yellow"
 						title="View QR code"
 						icon={<HiQrcode />}
 						onClick={() => void handleGenerateQRCode(shortUrl)}
-					></Button>
+					/>
 					<Button
 						as={"a"}
 						className={styles["visit-button"]}

@@ -55,9 +55,7 @@ export default function Button({
 			<Link
 				href={href}
 				className={[styles.button, className].join(" ")}
-				style={{
-					...variantProps[color],
-				}}
+				style={variantProps[color]}
 			>
 				{icon && <span className={styles.icon}>{icon}</span>}
 				{children}
@@ -69,14 +67,16 @@ export default function Button({
 		<Tag
 			href={href}
 			className={[styles.button, className].join(" ")}
-			style={{
-				...variantProps[color],
-			}}
+			style={variantProps[color]}
 			{...additionalAttributes}
 			{...rest}
 		>
 			{icon && <span className={styles.icon}>{icon}</span>}
-			{children}
+			{Tag === "a" ? (
+				<span style={{ display: "flex", alignItems: "baseline" }}>{children}</span>
+			) : (
+				children
+			)}
 		</Tag>
 	);
 }
