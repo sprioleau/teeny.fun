@@ -1,0 +1,40 @@
+@import "~/styles/mixins";
+
+.backdrop {
+	@include center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(var(--color-pink-rgb), 0.5);
+	z-index: 10;
+}
+
+.modal {
+	@include double-drop-shadow;
+	@include border;
+	padding: 0.75em 1em;
+	background-color: var(--color-white);
+	border-radius: var(--border-radius);
+	position: relative;
+}
+
+.close-button {
+	--size: 1.5em;
+	position: absolute;
+	top: calc(-1.25 * var(--size));
+	right: calc(-1.35 * var(--size));
+	width: calc(2.25 * var(--size));
+	height: calc(2.25 * var(--size));
+	border-radius: 100vmax;
+	padding: 0;
+
+	&:focus {
+		background-color: var(--color-blue) !important;
+	}
+
+	svg {
+		font-size: var(--size);
+	}
+}

@@ -2,7 +2,8 @@ import { type AppType } from "next/app";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Modak, Space_Grotesk } from "next/font/google";
-import { Footer, Navigation } from "~/components";
+import { ModalContextProvider } from "~/contexts";
+import { Footer, Modal, Navigation } from "~/components";
 import { Page } from "~/layout";
 import { api } from "~/utils/api";
 
@@ -30,13 +31,16 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
 	return (
 		<SessionProvider session={session}>
-			<div className={["app", modak.variable, spaceGrotesk.variable].join(" ")}>
-				<Navigation />
-				<Page>
-					<Component {...pageProps} />
-				</Page>
-				<Footer />
-			</div>
+			<ModalContextProvider>
+				<div className={["app", modak.variable, spaceGrotesk.variable].join(" ")}>
+					<Navigation />
+					<Page>
+						<Component {...pageProps} />
+					</Page>
+					<Footer />
+					<Modal />
+				</div>
+			</ModalContextProvider>
 		</SessionProvider>
 	);
 };

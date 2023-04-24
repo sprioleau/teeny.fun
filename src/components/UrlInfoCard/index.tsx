@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { useContext, useMemo, useState } from "react";
+import Twemoji from "react-twemoji";
 import Button from "../Button";
 import { HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
@@ -7,8 +9,7 @@ import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import styles from "./index.module.scss";
 import { type UrlWithMetadata } from "~/pages";
 import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "~/utils";
-import { useMemo, useState } from "react";
-import Twemoji from "react-twemoji";
+import { ModalContext } from "~/contexts/ModalContextProvider";
 
 type Props = {
 	url: UrlWithMetadata;
@@ -18,9 +19,17 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 	const fallbackFaviconSource = "/_static/images/emojis/fire.svg";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 
+	const { open: openModal } = useContext(ModalContext);
+
 	async function handleGenerateQRCode(url: string) {
 		const qrCode = await generateQRCode({ text: url });
 		setQRCodeImageUrl(qrCode);
+		openModal(
+			<img
+				src={qrCodeImageUrl}
+				alt="qr-code"
+			/>
+		);
 	}
 
 	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
@@ -36,12 +45,6 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 						height={32}
 						className={styles["favicon"]}
 					/>
-					{qrCodeImageUrl && (
-						<img
-							src={qrCodeImageUrl}
-							alt="qr-code"
-						/>
-					)}
 					<header className={styles["header"]}>
 						<Button
 							as={"a"}

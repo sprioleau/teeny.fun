@@ -2,6 +2,7 @@ export { default as Button } from "./Button";
 export { default as Footer } from "./Footer";
 export { default as Heading } from "./Heading";
 export { default as Logo } from "./Logo";
+export { default as Modal } from "./Modal";
 export { default as Navigation } from "./Navigation";
 export { default as PlaceholderInfoCard } from "./PlaceholderInfoCard";
 export { default as PublicLinkNotice } from "./PublicLinkNotice";
