@@ -1,5 +1,5 @@
-import pickRandomElement from "./pickRandomElement";
 import { topEmojis } from "~/constants/topEmojis";
+import pickRandomElement from "./pickRandomElement";
 
 export default function generateShortCode({ length = 3 }: { length?: number } = {}) {
 	let code = "";

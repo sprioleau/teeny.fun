@@ -1,10 +1,10 @@
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { PROJECT_REPO_URL } from "~/constants/projectRepoUrl";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
 import { emojiToCodePoints, generateShortCode } from "~/utils";
 
-import { PROJECT_REPO_URL } from "~/constants/projectRepoUrl";
-import { TRPCError } from "@trpc/server";
 import fetchMeta from "~/utils/fetchMetadata";
-import { z } from "zod";
 
 export const urlRouter = createTRPCRouter({
 	getAll: publicProcedure.query(({ ctx }) => {

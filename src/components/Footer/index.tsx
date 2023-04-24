@@ -1,6 +1,6 @@
-import Button from "../Button";
 import { FiGithub } from "react-icons/fi";
 import styles from "./index.module.scss";
+import Button from "../Button";
 
 export default function Footer() {
 	return (

@@ -1,5 +1,5 @@
 import { type Url } from "@prisma/client";
-import { NextResponse, type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { getBaseUrl } from "~/utils/api";
 
 // prettier-ignore

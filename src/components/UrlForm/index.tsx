@@ -1,9 +1,9 @@
-import { Button } from "~/components";
+import { useState } from "react";
 import { FiLink2 } from "react-icons/fi";
+import { Button } from "~/components";
 import { SubmitIcon } from "~/icons";
 import { api } from "~/utils/api";
 import styles from "./index.module.scss";
-import { useState } from "react";
 
 export default function UrlForm() {
 	const [destinationUrl, setDestinationUrl] = useState("");
@@ -15,7 +15,7 @@ export default function UrlForm() {
 			void ctx.url.getByUserId.invalidate();
 			console.log("🚀 ~ file: index.tsx:22 ~ onSuccess: ~ data", data);
 		},
-		onError(error, variables, context) {
+		onError(error, variables, _context) {
 			console.error(
 				`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`
 			);
