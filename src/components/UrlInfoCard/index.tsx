@@ -75,7 +75,12 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 				</div>
 			</main>
 			<footer className={styles["footer"]}>
-				<span className={styles["destination-url"]}>{destinationUrl}</span>
+				<span
+					className={styles["destination-url"]}
+					title={destinationUrl}
+				>
+					{destinationUrl}
+				</span>
 				<div className={styles["action-buttons"]}>
 					<Button
 						color="yellow"
