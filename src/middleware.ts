@@ -1,4 +1,5 @@
 import { type NextRequest } from "next/server";
+
 import LinkMiddleware from "~/lib/middleware/link";
 
 export const config = {

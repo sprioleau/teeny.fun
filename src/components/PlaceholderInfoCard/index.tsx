@@ -1,4 +1,4 @@
-import UrlInfoCard from "../UrlInfoCard";
+import { UrlInfoCard } from "~/components";
 import styles from "./index.module.scss";
 
 export default function PlaceholderInfoCard() {

@@ -1,10 +1,10 @@
-import { signOut, useSession } from "next-auth/react";
-
-import { AiOutlineUser } from "react-icons/ai";
-import Button from "../Button";
 import Link from "next/link";
-import Logo from "../Logo";
+import { signOut, useSession } from "next-auth/react";
+import { AiOutlineUser } from "react-icons/ai";
+
 import styles from "./index.module.scss";
+import Button from "../Button";
+import Logo from "../Logo";
 
 export default function Navigation() {
 	const { data: session } = useSession();

@@ -1,10 +1,11 @@
-import { useContext, useEffect } from "react";
-
-import Button from "../Button";
 import FocusTrap from "focus-trap-react";
+import { useContext, useEffect } from "react";
 import { MdOutlineClose } from "react-icons/md";
+
 import { ModalContext } from "~/contexts/ModalContextProvider";
+
 import styles from "./index.module.scss";
+import Button from "../Button";
 
 export default function Modal() {
 	const { close: closeModal, modalContent } = useContext(ModalContext);

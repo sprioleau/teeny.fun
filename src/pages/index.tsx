@@ -1,12 +1,12 @@
+import { type Metadata, type Url } from "@prisma/client";
 import { type NextPage } from "next";
 import Head from "next/head";
 
+import { useSession } from "next-auth/react";
 import { Heading, PublicLinkNotice, UrlForm, UrlList } from "~/components";
 
-import styles from "./index.module.scss";
-import { type Metadata, type Url } from "@prisma/client";
 import { api } from "~/utils/api";
-import { useSession } from "next-auth/react";
+import styles from "./index.module.scss";
 
 export type UrlWithMetadata = Url & {
 	metadata: Metadata | null;

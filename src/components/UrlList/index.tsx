@@ -1,8 +1,8 @@
-import { PlaceholderInfoCard, PublicLinkNotice, UrlInfoCard } from "~/components";
-import styles from "./index.module.scss";
+import { PlaceholderInfoCard, UrlInfoCard } from "~/components";
+import { PROJECT_REPO_URL } from "~/constants/projectRepoUrl";
 import { type UrlWithMetadata } from "~/pages";
 import { api } from "~/utils/api";
-import { PROJECT_REPO_URL } from "~/constants/projectRepoUrl";
+import styles from "./index.module.scss";
 
 type Props = {
 	urls: UrlWithMetadata[];

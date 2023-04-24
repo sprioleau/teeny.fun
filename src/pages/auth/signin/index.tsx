@@ -1,13 +1,9 @@
-import {
-	type GetServerSidePropsContext,
-	type InferGetServerSidePropsType,
-	type NextPage,
-} from "next";
-import { getProviders, signIn } from "next-auth/react";
+import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "~/server/auth";
+import { getProviders, signIn } from "next-auth/react";
 import { Button } from "~/components";
 import { type ButtonColor } from "~/components/Button";
+import { authOptions } from "~/server/auth";
 
 export default function SignIn({
 	providers,

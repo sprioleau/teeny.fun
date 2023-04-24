@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+
 import styles from "./index.module.scss";
 
 export type ButtonColor = "yellow" | "pink" | "blue";

@@ -1,7 +1,6 @@
 import { type NextRequest } from "next/server";
 import { isValidUrl } from "~/utils";
 import fetchMeta from "~/utils/fetchMetadata";
-// import fetchMeta from "fetch-meta-tags";
 
 export type FetchedMeta = Awaited<ReturnType<typeof fetchMeta>>;
 

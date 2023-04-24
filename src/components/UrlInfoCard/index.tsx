@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useContext, useMemo, useState } from "react";
-import Twemoji from "react-twemoji";
-import Button from "../Button";
+import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
-import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
-import styles from "./index.module.scss";
+import Twemoji from "react-twemoji";
+import { ModalContext } from "~/contexts/ModalContextProvider";
 import { type UrlWithMetadata } from "~/pages";
 import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "~/utils";
-import { ModalContext } from "~/contexts/ModalContextProvider";
+import styles from "./index.module.scss";
+import Button from "../Button";
 
 type Props = {
 	url: UrlWithMetadata;

@@ -1,9 +1,9 @@
 import { type AppType } from "next/app";
+import { Modak, Space_Grotesk } from "next/font/google";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { Modak, Space_Grotesk } from "next/font/google";
-import { ModalContextProvider } from "~/contexts";
 import { Footer, Modal, Navigation } from "~/components";
+import { ModalContextProvider } from "~/contexts";
 import { Page } from "~/layout";
 import { api } from "~/utils/api";
 

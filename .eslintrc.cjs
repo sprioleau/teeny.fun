@@ -16,7 +16,7 @@ const config = {
 	parserOptions: {
 		project: path.join(__dirname, "tsconfig.json"),
 	},
-	plugins: ["@typescript-eslint", "prettier"],
+	plugins: ["@typescript-eslint", "prettier", "unused-imports"],
 	extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended", "prettier"],
 	rules: {
 		"prettier/prettier": "error",
@@ -36,6 +36,41 @@ const config = {
 				allowString: true,
 			},
 		],
+		"unused-imports/no-unused-imports": "error",
+		"sort-imports": [
+			"error",
+			{
+				ignoreCase: false,
+				ignoreDeclarationSort: true, // don"t want to sort import lines, use eslint-plugin-import instead
+				ignoreMemberSort: false,
+				memberSyntaxSortOrder: ["none", "all", "multiple", "single"],
+				allowSeparatedGroups: true,
+			},
+		],
+		"import/order": [
+			"error",
+			{
+				groups: [
+					"builtin", // Built-in imports (come from NodeJS native) go first
+					"external", // <- External imports
+					"internal", // <- Absolute imports
+					["sibling", "parent"], // <- Relative imports, the sibling and parent types they can be mingled together
+					"index", // <- index imports
+					"unknown", // <- unknown
+				],
+				alphabetize: {
+					order: "asc",
+					caseInsensitive: true,
+				},
+			},
+		],
+	},
+	settings: {
+		"import/resolver": {
+			typescript: {
+				project: "./tsconfig.json",
+			},
+		},
 	},
 };
 
