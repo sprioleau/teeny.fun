@@ -12,7 +12,7 @@ export default function UrlForm() {
 
 	const { mutateAsync: createUrl } = api.url.create.useMutation({
 		onSuccess: (data) => {
-			void ctx.url.getByUserId.invalidate();
+			void ctx.url.getAll.invalidate();
 			console.log("🚀 ~ file: index.tsx:22 ~ onSuccess: ~ data", data);
 		},
 		onError(error, variables, _context) {
