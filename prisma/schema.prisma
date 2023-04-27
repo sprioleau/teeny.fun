@@ -29,11 +29,11 @@ model Url {
 
 model Metadata {
   id          String @id @default(cuid())
-  title       String
-  description String
-  image       String
-  icon        String
-  url         String
+  title       String @db.VarChar(200)
+  description String @db.VarChar(500)
+  image       String @db.VarChar(500)
+  icon        String @db.VarChar(500)
+  url         String @db.VarChar(2000)
   Url         Url[]
 }
 
