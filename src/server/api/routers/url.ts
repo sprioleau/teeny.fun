@@ -15,22 +15,41 @@ export const urlRouter = createTRPCRouter({
 		});
 	}),
 
+	getPublicUrlsByCode: publicProcedure
+		.input(
+			z.object({
+				combinedCodePoints: z.string(),
+			})
+		)
+		.query(({ ctx, input }) => {
+			const codePointList = input.combinedCodePoints.split(":");
+			console.log("🚀 ~ file: url.ts:28 ~ .query ~ codePointList:", codePointList);
+
+			return ctx.prisma.url.findMany({
+				where: {
+					AND: [
+						{ codePoints: { in: codePointList } },
+						{
+							userId: null,
+						},
+					],
+				},
+				include: {
+					metadata: true,
+				},
+			});
+		}),
+
 	getByUserId: protectedProcedure.query(({ ctx }) => {
 		return ctx.prisma.url.findMany({ where: { userId: ctx.session.user.id } });
 	}),
 
-	getExample: publicProcedure
-		.input(
-			z.object({
-				destinationUrl: z.string(),
-			})
-		)
-		.query(({ ctx }) => {
-			return ctx.prisma.url.findFirstOrThrow({
-				where: { destinationUrl: PROJECT_REPO_URL },
-				include: { metadata: true },
-			});
-		}),
+	getProjectRepoUrl: publicProcedure.query(({ ctx }) => {
+		return ctx.prisma.url.findFirstOrThrow({
+			where: { destinationUrl: PROJECT_REPO_URL },
+			include: { metadata: true },
+		});
+	}),
 
 	create: publicProcedure
 		.input(

@@ -9,9 +9,11 @@ type Props = {
 };
 
 export default function UrlList({ urls = [] }: Props) {
-	const { data: projectRepoUrl } = api.url.getExample.useQuery({
-		destinationUrl: PROJECT_REPO_URL,
-	});
+	// TODO: Show combined URL list (including private URLs for user)
+
+	if (!urls) return null;
+
+	const { data: projectRepoUrl } = api.url.getProjectRepoUrl.useQuery();
 
 	return (
 		<ul className={styles["url-list"]}>

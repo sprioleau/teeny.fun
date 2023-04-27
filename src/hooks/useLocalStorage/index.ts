@@ -4,6 +4,7 @@ export default function useLocalStorage<T>(key: string, initialValue: T): [T, (v
 	const [storedValue, setStoredValue] = useState<T>(initialValue);
 
 	useEffect(() => {
+		if (typeof localStorage === "undefined") return;
 		// Retrieve from localStorage
 		const item = localStorage.getItem(key);
 		if (item) setStoredValue(JSON.parse(item) as T);

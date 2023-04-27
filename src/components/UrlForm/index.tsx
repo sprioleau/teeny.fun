@@ -1,43 +1,19 @@
-import { useState } from "react";
+import { type Url } from "@prisma/client";
 import { FiLink2 } from "react-icons/fi";
 import { Button } from "~/components";
 import { SubmitIcon } from "~/icons";
-import { api } from "~/utils/api";
 import styles from "./index.module.scss";
 
-export default function UrlForm() {
-	const [destinationUrl, setDestinationUrl] = useState("");
+type Props = {
+	onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+	destinationUrl: Url["destinationUrl"];
+	setDestinationUrl: React.Dispatch<React.SetStateAction<Url["destinationUrl"]>>;
+};
 
-	const ctx = api.useContext();
-
-	const { mutateAsync: createUrl } = api.url.create.useMutation({
-		onSuccess: (data) => {
-			void ctx.url.getAll.invalidate();
-			console.log("🚀 ~ file: index.tsx:22 ~ onSuccess: ~ data", data);
-		},
-		onError(error, variables, _context) {
-			console.error(
-				`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`
-			);
-		},
-	});
-
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-
-		try {
-			const newUrl = await createUrl({ destinationUrl });
-			console.log("🚀 ~ file: index.tsx:29 ~ handleSubmit ~ newUrl:", newUrl);
-		} catch (error) {
-			console.error(error);
-		}
-
-		setDestinationUrl("");
-	}
-
+export default function UrlForm({ onSubmit, destinationUrl, setDestinationUrl }: Props) {
 	return (
 		<form
-			onSubmit={(e) => void handleSubmit(e)}
+			onSubmit={(e) => void onSubmit(e)}
 			className={styles.form}
 		>
 			<span className={styles["link-icon"]}>
