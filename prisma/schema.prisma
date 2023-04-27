@@ -12,7 +12,7 @@ datasource db {
 
 model Url {
   id             String    @id @default(cuid())
-  destinationUrl String
+  destinationUrl String    @db.VarChar(2000)
   code           String
   codePoints     String    @unique
   visits         Int       @default(0)
