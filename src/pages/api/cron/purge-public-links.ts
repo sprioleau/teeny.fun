@@ -17,7 +17,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 	const urlsToDelete = await prisma.url.deleteMany({
 		where: {
 			AND: [
-				{ user: null },
+				{ userId: null },
 				{
 					createdAt: {
 						lte: dateExpired,
