@@ -5,12 +5,13 @@ import { SubmitIcon } from "~/icons";
 import styles from "./index.module.scss";
 
 type Props = {
-	onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 	destinationUrl: Url["destinationUrl"];
 	setDestinationUrl: React.Dispatch<React.SetStateAction<Url["destinationUrl"]>>;
+	disabled: boolean;
+	onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
 };
 
-export default function UrlForm({ onSubmit, destinationUrl, setDestinationUrl }: Props) {
+export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestinationUrl }: Props) {
 	return (
 		<form
 			onSubmit={(e) => void onSubmit(e)}
@@ -31,6 +32,7 @@ export default function UrlForm({ onSubmit, destinationUrl, setDestinationUrl }:
 				name="long-url"
 				className={styles.input}
 				required
+				disabled={disabled}
 				placeholder="Paste in your link"
 				value={destinationUrl}
 				onChange={(e) => setDestinationUrl(e.target.value)}

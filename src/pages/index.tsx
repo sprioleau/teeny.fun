@@ -21,7 +21,6 @@ const Home: NextPage = () => {
 	// TODO: Get URLs by user ID
 
 	const { data: session } = useSession();
-	console.log("🚀 ~ file: index.tsx:22 ~ session:", session);
 	const [destinationUrl, setDestinationUrl] = useState("");
 
 	const [localUrls, setLocalUrls] = useLocalStorage<LocalUrl[]>(DEFAULT_LOCAL_URLS_KEY, []);
@@ -34,6 +33,10 @@ const Home: NextPage = () => {
 		// 	enabled: !Boolean(combinedCodePoints),
 		// }
 	);
+
+	const { data: userPrivateUrls } = api.url.getByUserId.useQuery(undefined, {
+		enabled: Boolean(session),
+	});
 
 	const ctx = api.useContext();
 
@@ -75,8 +78,13 @@ const Home: NextPage = () => {
 		},
 	});
 
+	const shouldDisableForm = localUrls.length >= 3;
+
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+
+		if (shouldDisableForm) return;
+
 		await createUrl({ destinationUrl });
 	}
 
@@ -118,9 +126,13 @@ const Home: NextPage = () => {
 					<UrlForm
 						destinationUrl={destinationUrl}
 						setDestinationUrl={setDestinationUrl}
+						disabled={shouldDisableForm}
 						onSubmit={handleSubmit}
 					/>
-					{publicUrls && <UrlList urls={publicUrls} />}
+					<UrlList
+						publicUrls={publicUrls}
+						userPrivateUrls={userPrivateUrls}
+					/>
 					{!session && <PublicLinkNotice />}
 				</section>
 			</main>

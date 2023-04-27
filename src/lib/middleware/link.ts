@@ -9,8 +9,6 @@ export const HOME_HOSTNAMES = new Set([
 ]);
 
 export default async function LinkMiddleware(req: NextRequest) {
-	console.log("process.env.VERCEL_URL:", process.env.VERCEL_URL);
-
 	const { domain, code } = parse(req);
 
 	if (!domain || !code || code.length === 0) {
