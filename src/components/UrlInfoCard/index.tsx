@@ -50,7 +50,7 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 							as={"a"}
 							className={styles["short-url"]}
 							target="_blank"
-							href={code}
+							href={decodeURIComponent(code)}
 							rel="noreferrer"
 							color="yellow"
 							title="Visit URL"
