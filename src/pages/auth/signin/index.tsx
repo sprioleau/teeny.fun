@@ -1,32 +1,25 @@
-import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
-import { getServerSession } from "next-auth";
 import { getProviders, signIn } from "next-auth/react";
-// import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "~/components";
 import { type ButtonColor } from "~/components/Button";
-import { authOptions } from "~/server/auth";
 
-// type ProviderObject = Awaited<ReturnType<typeof getProviders>>;
+type ProviderObject = Awaited<ReturnType<typeof getProviders>>;
 
-// export default function SignIn() {
-export default function SignIn({
-	providers,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-	// const [providers, setProviders] = useState<ProviderObject>(null);
-	console.log("🚀 ~ file: index.tsx:13 ~ providers:", providers);
+export default function SignIn() {
+	const [providers, setProviders] = useState<ProviderObject>(null);
 
-	// useEffect(() => {
-	// 	async function getClientAuthProviders(callback: (providers: ProviderObject) => void) {
-	// 		const clientAuthProviders = await getProviders();
-	// 		callback(clientAuthProviders);
-	// 	}
+	useEffect(() => {
+		async function getClientAuthProviders(callback: (providers: ProviderObject) => void) {
+			const clientAuthProviders = await getProviders();
+			callback(clientAuthProviders);
+		}
 
-	// 	void getClientAuthProviders((returnedProviders) => {
-	// 		if (!returnedProviders) return;
-	// 		setProviders(returnedProviders);
-	// 	});
-	// }, []);
+		void getClientAuthProviders((returnedProviders) => {
+			if (!returnedProviders) return;
+			setProviders(returnedProviders);
+		});
+	}, []);
 
 	return (
 		<>
@@ -77,21 +70,4 @@ export default function SignIn({
 			</div>
 		</>
 	);
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-	const session = await getServerSession(context.req, context.res, authOptions);
-
-	// If the user is already logged in, redirect.
-	// Note: Make sure not to redirect to the same page
-	// To avoid an infinite loop!
-	if (session) {
-		return { redirect: { destination: "/" } };
-	}
-
-	const providers = (await getProviders()) ?? [];
-
-	return {
-		props: { providers },
-	};
 }
