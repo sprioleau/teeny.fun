@@ -39,6 +39,7 @@ const Home: NextPage = () => {
 					}))
 				);
 			},
+			refetchOnWindowFocus: false,
 		}
 	);
 

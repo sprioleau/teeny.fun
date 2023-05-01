@@ -9,7 +9,11 @@
 	width: 100%;
 	border-radius: var(--border-radius);
 	background-color: var(--color-white);
-	overflow: hidden;
+	position: relative;
+
+	// &:global([data-is-project-repo="true"]) {
+	// 	border-color: var(--color-blue);
+	// }
 }
 
 .main {
@@ -137,4 +141,17 @@
 	.visit-button {
 		padding-right: 0.75em;
 	}
+}
+
+.public-url-indicator {
+	--offset: -1em;
+	@include center;
+	@include border;
+	position: absolute;
+	top: var(--offset);
+	right: var(--offset);
+	padding: 0.325em;
+	background-color: var(--color-blue);
+	border-radius: 100vmax;
+	color: var(--color-white);
 }

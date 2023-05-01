@@ -2,7 +2,7 @@
 
 import { useContext, useMemo, useState } from "react";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
-import { HiQrcode } from "react-icons/hi";
+import { HiOutlineClock, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
 import Twemoji from "react-twemoji";
 import { ModalContext } from "~/contexts/ModalContextProvider";
@@ -13,9 +13,17 @@ import Button from "../Button";
 
 type Props = {
 	url: UrlWithMetadata;
+	style?: React.CSSProperties;
+	isPublic?: boolean;
+	isProjectRepo?: boolean;
 };
 
-export default function UrlInfoCard({ url: { code, metadata, visits, destinationUrl } }: Props) {
+export default function UrlInfoCard({
+	url: { code, metadata, visits, destinationUrl },
+	style = {},
+	isPublic = false,
+	isProjectRepo = false,
+}: Props) {
 	const fallbackFaviconSource = "/_static/images/emojis/fire.svg";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 
@@ -35,7 +43,11 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
 
 	return (
-		<li className={styles["card"]}>
+		<li
+			className={styles["card"]}
+			style={style}
+			data-is-project-repo={isProjectRepo}
+		>
 			<main className={styles["main"]}>
 				<div className={styles["main-left"]}>
 					<img
@@ -73,6 +85,14 @@ export default function UrlInfoCard({ url: { code, metadata, visits, destination
 						</span>
 					</header>
 				</div>
+				{isPublic && (
+					<div
+						className={styles["public-url-indicator"]}
+						title="Public link will expire in 24 hours"
+					>
+						<HiOutlineClock />
+					</div>
+				)}
 			</main>
 			<footer className={styles["footer"]}>
 				<span

@@ -1,4 +1,4 @@
-import { PlaceholderInfoCard, UrlInfoCard } from "~/components";
+import { PlaceholderInfoCard, PublicLinkNotice, UrlInfoCard } from "~/components";
 import { type UrlWithMetadata } from "~/pages";
 import { api } from "~/utils/api";
 import styles from "./index.module.scss";
@@ -17,11 +17,15 @@ export default function UrlList({ publicUrls = [], userPrivateUrls = [] }: Props
 
 	return (
 		<ul className={styles["url-list"]}>
-			{shouldDisplayRepoLink && <UrlInfoCard url={projectRepoUrl} />}
+			{shouldDisplayRepoLink && (
+				<UrlInfoCard
+					url={projectRepoUrl}
+					isProjectRepo
+				/>
+			)}
 			{combinedUrls.length === 0 && <PlaceholderInfoCard />}
 			{userPrivateUrls.length > 0 && (
 				<>
-					<h2>Private Links</h2>
 					{userPrivateUrls.map((url) => (
 						<UrlInfoCard
 							key={url.id}
@@ -32,13 +36,14 @@ export default function UrlList({ publicUrls = [], userPrivateUrls = [] }: Props
 			)}
 			{publicUrls.length > 0 && (
 				<>
-					<h2>Public Links</h2>
 					{publicUrls.map((url) => (
 						<UrlInfoCard
 							key={url.id}
 							url={url}
+							isPublic
 						/>
 					))}
+					<PublicLinkNotice />
 				</>
 			)}
 		</ul>
