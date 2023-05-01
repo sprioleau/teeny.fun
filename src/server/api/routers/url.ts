@@ -24,21 +24,19 @@ export const urlRouter = createTRPCRouter({
 		.query(({ ctx, input }) => {
 			const codePointList = input.combinedCodePoints.split(":");
 
-			return (
-				ctx.prisma.url.findMany({
-					where: {
-						AND: [
-							{ codePoints: { in: codePointList } },
-							{
-								userId: null,
-							},
-						],
-					},
-					include: {
-						metadata: true,
-					},
-				}) ?? []
-			);
+			return ctx.prisma.url.findMany({
+				where: {
+					AND: [
+						{ codePoints: { in: codePointList } },
+						{
+							userId: null,
+						},
+					],
+				},
+				include: {
+					metadata: true,
+				},
+			});
 		}),
 
 	getByUserId: protectedProcedure.query(({ ctx }) => {

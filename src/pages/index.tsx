@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Heading, PublicLinkNotice, UrlForm, UrlList } from "~/components";
+import { Heading, UrlForm, UrlList } from "~/components";
 
 import { DEFAULT_LOCAL_URLS_KEY } from "~/constants/localStorageKeys";
 import { useLocalStorage } from "~/hooks";
@@ -18,20 +18,28 @@ export type UrlWithMetadata = Url & {
 export type LocalUrl = Pick<Url, "codePoints" | "destinationUrl">;
 
 const Home: NextPage = () => {
-	// TODO: Get URLs by user ID
-
 	const { data: session } = useSession();
 	const [destinationUrl, setDestinationUrl] = useState("");
 
 	const [localUrls, setLocalUrls] = useLocalStorage<LocalUrl[]>(DEFAULT_LOCAL_URLS_KEY, []);
-	const combinedCodePoints = localUrls.map(({ codePoints }) => codePoints ?? "").join(":");
+	const combinedCodePoints = localUrls.map((localUrl) => localUrl?.codePoints ?? "").join(":");
 
 	const { data: publicUrls } = api.url.getPublicUrlsByCode.useQuery(
-		{ combinedCodePoints }
+		{ combinedCodePoints },
 		// Cannot use the enabled property since it will make the invalidate method not work
-		// {
-		// 	enabled: !Boolean(combinedCodePoints),
-		// }
+		// { enabled: !Boolean(combinedCodePoints) }
+		{
+			onSuccess(data) {
+				if (!localStorage) return;
+
+				setLocalUrls(
+					data.map(({ codePoints, destinationUrl }) => ({
+						codePoints,
+						destinationUrl,
+					}))
+				);
+			},
+		}
 	);
 
 	const { data: userPrivateUrls } = api.url.getByUserId.useQuery(undefined, {
@@ -45,13 +53,20 @@ const Home: NextPage = () => {
 			const { codePoints, destinationUrl } = data;
 
 			if (!session) {
-				setLocalUrls([
-					...localUrls,
-					{
-						codePoints,
-						destinationUrl,
-					},
-				]);
+				const updatedLocalUrls = [...localUrls, { codePoints, destinationUrl }];
+
+				const combinedCodePoints =
+					updatedLocalUrls.map(({ codePoints }) => codePoints).join(":") ?? "";
+
+				void ctx.url.getPublicUrlsByCode.invalidate({
+					combinedCodePoints,
+				});
+
+				setLocalUrls(updatedLocalUrls);
+			}
+
+			if (session) {
+				void ctx.url.getByUserId.invalidate();
 			}
 
 			setDestinationUrl("");
@@ -61,24 +76,9 @@ const Home: NextPage = () => {
 				`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`
 			);
 		},
-		onSettled(data) {
-			if (!data) return;
-
-			const updatedLocalUrls = [
-				...localUrls,
-				{ codePoints: data?.codePoints, destinationUrl: data?.destinationUrl },
-			];
-
-			const combinedCodePoints =
-				updatedLocalUrls.map(({ codePoints }) => codePoints).join(":") ?? "";
-
-			void ctx.url.getPublicUrlsByCode.invalidate({
-				combinedCodePoints,
-			});
-		},
 	});
 
-	const shouldDisableForm = localUrls.length >= 3;
+	const shouldDisableForm = localUrls.length >= 3 && !session;
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -133,7 +133,6 @@ const Home: NextPage = () => {
 						publicUrls={publicUrls}
 						userPrivateUrls={userPrivateUrls}
 					/>
-					{!session && <PublicLinkNotice />}
 				</section>
 			</main>
 		</>
