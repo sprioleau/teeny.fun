@@ -1,4 +1,4 @@
-import { UrlInfoCard } from "~/components";
+import { UrlInfoCard } from "@/components";
 
 export default function PlaceholderInfoCard() {
 	return (

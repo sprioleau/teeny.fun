@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "~/server/db";
-import { emojiToCodePoints } from "~/utils";
+import { prisma } from "@/server/db";
+import { emojiToCodePoints } from "@/utils";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { code } = req.query;

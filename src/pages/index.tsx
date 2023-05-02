@@ -4,11 +4,11 @@ import Head from "next/head";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Heading, UrlForm, UrlList } from "~/components";
+import { Heading, UrlForm, UrlList } from "@/components";
 
-import { DEFAULT_LOCAL_URLS_KEY } from "~/constants/localStorageKeys";
-import { useLocalStorage } from "~/hooks";
-import { api } from "~/utils/api";
+import { DEFAULT_LOCAL_URLS_KEY } from "@/constants/localStorageKeys";
+import { useLocalStorage } from "@/hooks";
+import { api } from "@/utils/api";
 import styles from "./index.module.scss";
 
 export type UrlWithMetadata = Url & {

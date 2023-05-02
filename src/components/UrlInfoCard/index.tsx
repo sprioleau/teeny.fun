@@ -5,9 +5,9 @@ import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
 import Twemoji from "react-twemoji";
-import { ModalContext } from "~/contexts/ModalContextProvider";
-import { type UrlWithMetadata } from "~/pages";
-import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "~/utils";
+import { ModalContext } from "@/contexts/ModalContextProvider";
+import { type UrlWithMetadata } from "@/pages";
+import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "@/utils";
 import styles from "./index.module.scss";
 import Button from "../Button";
 

@@ -1,8 +1,8 @@
 import { type Url } from "@prisma/client";
 import { useState } from "react";
 import { FiArrowUpRight, FiLink2 } from "react-icons/fi";
-import { Button, Tooltip } from "~/components";
-import { SubmitIcon } from "~/icons";
+import { Button, Tooltip } from "@/components";
+import { SubmitIcon } from "@/icons";
 import styles from "./index.module.scss";
 
 type Props = {

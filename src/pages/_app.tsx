@@ -3,12 +3,12 @@ import { type AppType } from "next/app";
 import { Modak, Space_Grotesk } from "next/font/google";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
-import { Footer, Modal, Navigation } from "~/components";
-import { ModalContextProvider } from "~/contexts";
-import { Page } from "~/layout";
-import { api } from "~/utils/api";
+import { Footer, Modal, Navigation } from "@/components";
+import { ModalContextProvider } from "@/contexts";
+import { Page } from "@/layout";
+import { api } from "@/utils/api";
 
-import "~/styles/globals.scss";
+import "@/styles/globals.scss";
 
 const modak = Modak({
 	variable: "--ff-serif",

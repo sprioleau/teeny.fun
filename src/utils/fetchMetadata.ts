@@ -2,7 +2,7 @@
 
 import { type Metadata } from "@prisma/client";
 import { parse } from "node-html-parser";
-import { metadataRules } from "~/constants/metadataRulesets";
+import { metadataRules } from "@/constants/metadataRulesets";
 
 function readBody(body: Body["body"]): Promise<string> {
 	/* eslint-disable @typescript-eslint/no-misused-promises */

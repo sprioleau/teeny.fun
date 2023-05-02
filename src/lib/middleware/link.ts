@@ -1,6 +1,6 @@
 import { type Url } from "@prisma/client";
 import { type NextRequest, NextResponse } from "next/server";
-import { getBaseUrl } from "~/utils/api";
+import { getBaseUrl } from "@/utils/api";
 
 // prettier-ignore
 export const HOME_HOSTNAMES = new Set([

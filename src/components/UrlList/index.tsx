@@ -1,6 +1,6 @@
-import { PlaceholderInfoCard, PublicLinkNotice, UrlInfoCard } from "~/components";
-import { type UrlWithMetadata } from "~/pages";
-import { api } from "~/utils/api";
+import { PlaceholderInfoCard, PublicLinkNotice, UrlInfoCard } from "@/components";
+import { type UrlWithMetadata } from "@/pages";
+import { api } from "@/utils/api";
 import styles from "./index.module.scss";
 
 type Props = {

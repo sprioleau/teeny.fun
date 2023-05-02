@@ -3,8 +3,8 @@ import { type GetServerSidePropsContext } from "next";
 import { type DefaultSession, type NextAuthOptions, getServerSession } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { env } from "~/env.mjs";
-import { prisma } from "~/server/db";
+import { env } from "@/env.mjs";
+import { prisma } from "@/server/db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

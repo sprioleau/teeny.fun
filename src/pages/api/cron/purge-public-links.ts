@@ -1,6 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { PROJECT_REPO_URL } from "~/constants/projectRepoUrl";
-import { prisma } from "~/server/db";
+import { PROJECT_REPO_URL } from "@/constants/projectRepoUrl";
+import { prisma } from "@/server/db";
 
 /*
  * See verce.json for schedule:
