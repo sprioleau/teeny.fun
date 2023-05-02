@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
@@ -29,15 +29,21 @@ export default function UrlInfoCard({
 
 	const { open: openModal } = useContext(ModalContext);
 
-	async function handleGenerateQRCode(url: string) {
-		const qrCode = await generateQRCode({ text: url });
-		setQRCodeImageUrl(qrCode);
+	useEffect(() => {
+		if (!qrCodeImageUrl) return;
+
 		openModal(
 			<img
 				src={qrCodeImageUrl}
 				alt="qr-code"
 			/>
 		);
+	}, [qrCodeImageUrl, openModal]);
+
+	async function handleGenerateQRCode(url: string) {
+		const qrCode = await generateQRCode({ text: url });
+		console.log("🚀 ~ file: index.tsx:34 ~ handleGenerateQRCode ~ qrCode:", qrCode);
+		setQRCodeImageUrl(qrCode);
 	}
 
 	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
@@ -103,18 +109,6 @@ export default function UrlInfoCard({
 				</span>
 				<div className={styles["action-buttons"]}>
 					<Button
-						color="yellow"
-						title="Copy shortcode"
-						icon={<TbCopy />}
-						onClick={() => void copyText(shortUrl)}
-					/>
-					<Button
-						color="yellow"
-						title="View QR code"
-						icon={<HiQrcode />}
-						onClick={() => void handleGenerateQRCode(shortUrl)}
-					/>
-					<Button
 						as={"a"}
 						className={styles["visit-button"]}
 						target="_blank"
@@ -126,6 +120,18 @@ export default function UrlInfoCard({
 					>
 						Visit
 					</Button>
+					<Button
+						color="yellow"
+						title="Copy shortcode"
+						icon={<TbCopy />}
+						onClick={() => void copyText(shortUrl)}
+					/>
+					<Button
+						color="yellow"
+						title="View QR code"
+						icon={<HiQrcode />}
+						onClick={() => void handleGenerateQRCode(shortUrl)}
+					/>
 				</div>
 			</footer>
 		</li>
