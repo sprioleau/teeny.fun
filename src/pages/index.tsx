@@ -30,7 +30,10 @@ const Home: NextPage = () => {
 		// { enabled: !Boolean(combinedCodePoints) }
 		{
 			onSuccess(data) {
-				if (!localStorage) return;
+				console.log("🚀 ~ file: index.tsx:33 ~ onSuccess ~ data:", data);
+
+				// TODO: Remove this check once there is a means to delete a public URL
+				if (!localStorage.getItem(DEFAULT_LOCAL_URLS_KEY)) return;
 
 				setLocalUrls(
 					data.map(({ codePoints, destinationUrl }) => ({
@@ -39,7 +42,6 @@ const Home: NextPage = () => {
 					}))
 				);
 			},
-			refetchOnWindowFocus: false,
 		}
 	);
 
@@ -79,7 +81,7 @@ const Home: NextPage = () => {
 		},
 	});
 
-	const shouldDisableForm = localUrls.length >= 3 && !session;
+	const shouldDisableForm = localUrls.length >= 4 && !session;
 
 	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();

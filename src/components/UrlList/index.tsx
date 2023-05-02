@@ -13,7 +13,7 @@ export default function UrlList({ publicUrls = [], userPrivateUrls = [] }: Props
 
 	const combinedUrls = [...publicUrls, ...userPrivateUrls];
 
-	const shouldDisplayRepoLink = projectRepoUrl && combinedUrls.length < 3;
+	const shouldDisplayRepoLink = projectRepoUrl && combinedUrls.length < 4;
 
 	return (
 		<ul className={styles["url-list"]}>
