@@ -12,7 +12,7 @@ datasource db {
 
 model Url {
   id             String    @id @default(cuid())
-  destinationUrl String    @db.VarChar(2000)
+  destinationUrl String    @db.Text
   code           String
   codePoints     String    @unique
   visits         Int       @default(0)
@@ -29,11 +29,11 @@ model Url {
 
 model Metadata {
   id          String @id @default(cuid())
-  title       String @db.VarChar(200)
-  description String @db.VarChar(500)
-  image       String @db.VarChar(500)
-  icon        String @db.VarChar(500)
-  url         String @db.VarChar(2000)
+  title       String @db.Text
+  description String @db.Text
+  image       String @db.Text
+  icon        String @db.Text
+  url         String @db.Text
   Url         Url[]
 }
 
@@ -43,12 +43,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?
-  access_token      String?
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?
+  id_token          String? @db.Text
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
