@@ -36,6 +36,10 @@
 	padding-left: calc(var(--link-icon-size) + 1.5em);
 	padding-right: calc(var(--submit-button-size) + var(--submit-button-offset) + 0.75em);
 	border-radius: calc(var(--border-radius) - var(--border-width));
+
+	&:disabled {
+		cursor: not-allowed;
+	}
 }
 
 .submit-button {

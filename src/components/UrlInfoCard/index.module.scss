@@ -64,6 +64,7 @@
 	margin: 0;
 	padding: 0;
 	font-weight: 400;
+	user-select: none;
 
 	&:hover {
 		transform: none;
@@ -154,4 +155,8 @@
 	background-color: var(--color-blue);
 	border-radius: 100vmax;
 	color: var(--color-white);
+
+	@include bp("sm") {
+		right: -0.5em;
+	}
 }
