@@ -1,6 +1,7 @@
 import { type Url } from "@prisma/client";
-import { FiLink2 } from "react-icons/fi";
-import { Button } from "~/components";
+import { useState } from "react";
+import { FiArrowUpRight, FiLink2 } from "react-icons/fi";
+import { Button, Tooltip } from "~/components";
 import { SubmitIcon } from "~/icons";
 import styles from "./index.module.scss";
 
@@ -12,10 +13,14 @@ type Props = {
 };
 
 export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestinationUrl }: Props) {
+	const [formIsHovered, setFormIsHovered] = useState(false);
+
 	return (
 		<form
 			onSubmit={(e) => void onSubmit(e)}
 			className={styles.form}
+			onMouseEnter={() => setFormIsHovered(true)}
+			onMouseLeave={() => setFormIsHovered(false)}
 		>
 			<span className={styles["link-icon"]}>
 				<FiLink2 />
@@ -43,6 +48,20 @@ export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestina
 				className={styles["submit-button"]}
 				icon={<SubmitIcon />}
 			/>
+			<Tooltip isVisible={disabled && formIsHovered}>
+				<>
+					<p>
+						Maximum number of links reached. Either delete existing links or create a free account.
+					</p>
+					<Button
+						color="blue"
+						href="/auth/signin"
+						icon={<FiArrowUpRight />}
+					>
+						start for free
+					</Button>
+				</>
+			</Tooltip>
 		</form>
 	);
 }

@@ -3,4 +3,4 @@
 - [] Create teeny.fun branded OG image
 - [] Convert emojis to images for consistent look across devices
 - [] Create a modal component to display the QR code and other elements
-- [] Maximum number of links reached. Delete an existing link or create a free account. "Start for Free" button
+- [x] Add a tooltip to indicate when the maximum number of links has been reached.

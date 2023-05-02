@@ -1,0 +1,31 @@
+@import "~/styles/mixins";
+
+.tooltip {
+	--opacity: 0;
+	--translateY: 1em;
+	@include border;
+	@include transition;
+	@include center(column);
+	position: absolute;
+	background-color: var(--color-off-white);
+	bottom: calc(100% + 0.25em);
+	padding: 1em;
+	font-size: 0.8em;
+	color: rgba(var(--color-black-rgb), 0.8);
+	width: max(80%, 250px);
+	border-radius: var(--border-radius);
+	z-index: 20;
+	opacity: var(--opacity);
+	transform: translateY(var(--translateY));
+	pointer-events: none;
+
+	p {
+		margin-bottom: 1em;
+	}
+}
+
+.visible {
+	--opacity: 1;
+	--translateY: 0;
+	pointer-events: all;
+}
