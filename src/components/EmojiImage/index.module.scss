@@ -1,0 +1,16 @@
+@import "@/styles/mixins";
+
+.main {
+	span {
+		@include center;
+		gap: 0.0625em;
+		margin-left: 0.125em;
+	}
+
+	img {
+		display: block;
+		width: 1em;
+		height: 1em;
+		object-fit: contain;
+	}
+}

@@ -1,0 +1,10 @@
+@import "@/styles/mixins";
+
+.main {
+	@include center(column);
+}
+
+.short-url {
+	font-size: 0.8em;
+	color: rgba(var(--color-black-rgb), 0.8);
+}

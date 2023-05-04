@@ -4,12 +4,13 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
-import Twemoji from "react-twemoji";
 import { ModalContext } from "@/contexts/ModalContextProvider";
 import { type UrlWithMetadata } from "@/pages";
 import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "@/utils";
 import styles from "./index.module.scss";
 import Button from "../Button";
+import EmojiImage from "../EmojiImage";
+import QrCodeModal from "../QrCodeModal";
 
 type Props = {
 	url: UrlWithMetadata;
@@ -31,18 +32,16 @@ export default function UrlInfoCard({
 
 	useEffect(() => {
 		if (!qrCodeImageUrl) return;
-
 		openModal(
-			<img
-				src={qrCodeImageUrl}
-				alt="qr-code"
+			<QrCodeModal
+				code={code}
+				qrCodeImageUrl={qrCodeImageUrl}
 			/>
 		);
-	}, [qrCodeImageUrl, openModal]);
+	}, [qrCodeImageUrl, openModal, code]);
 
 	async function handleGenerateQRCode(url: string) {
 		const qrCode = await generateQRCode({ text: url });
-		console.log("🚀 ~ file: index.tsx:34 ~ handleGenerateQRCode ~ qrCode:", qrCode);
 		setQRCodeImageUrl(qrCode);
 	}
 
@@ -74,16 +73,7 @@ export default function UrlInfoCard({
 							title="Visit URL"
 						>
 							teeny.fun/
-							<Twemoji
-								tag="span"
-								options={{
-									ext: ".svg",
-									folder: "svg",
-									className: "twemoji",
-								}}
-							>
-								{code}
-							</Twemoji>
+							<EmojiImage>{code}</EmojiImage>
 						</Button>
 						<span className={styles["visits"]}>
 							<FiBarChart />{" "}
@@ -124,13 +114,19 @@ export default function UrlInfoCard({
 						color="yellow"
 						title="Copy shortcode"
 						icon={<TbCopy />}
-						onClick={() => void copyText(shortUrl)}
+						onClick={() => {
+							console.log("Made it to the copy button");
+							void copyText(shortUrl);
+						}}
 					/>
 					<Button
 						color="yellow"
 						title="View QR code"
 						icon={<HiQrcode />}
-						onClick={() => void handleGenerateQRCode(shortUrl)}
+						onClick={() => {
+							setQRCodeImageUrl(undefined);
+							void handleGenerateQRCode(shortUrl);
+						}}
 					/>
 				</div>
 			</footer>

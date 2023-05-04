@@ -1,6 +1,7 @@
 - [] Add cron mechanism to delete (update destinationUrl to the github repo URL) public URLs active longer than 30 minutes (run every 5 minutes)
 - [x] Add create public URL mutation
 - [] Create teeny.fun branded OG image
-- [] Convert emojis to images for consistent look across devices
-- [] Create a modal component to display the QR code and other elements
+- [x] Convert emojis to images for consistent look across devices
+- [x] Create a modal component to display the QR code and other elements
 - [x] Add a tooltip to indicate when the maximum number of links has been reached.
+- [ ] Add delete URL functionality
