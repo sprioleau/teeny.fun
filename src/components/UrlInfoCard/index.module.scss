@@ -10,10 +10,6 @@
 	border-radius: var(--border-radius);
 	background-color: var(--color-white);
 	position: relative;
-
-	// &:global([data-is-project-repo="true"]) {
-	// 	border-color: var(--color-blue);
-	// }
 }
 
 .main {
@@ -91,7 +87,6 @@
 
 .footer {
 	display: flex;
-	overflow: hidden;
 	border-bottom-left-radius: var(--inside-border-radius);
 	border-bottom-right-radius: var(--inside-border-radius);
 }
@@ -132,7 +127,7 @@
 				transform: none;
 				background-color: var(--color-pink) !important;
 
-				> * {
+				> *:not([class*="tooltip"]) {
 					color: var(--color-white);
 				}
 			}
@@ -159,4 +154,8 @@
 	@include bp("sm") {
 		right: -0.5em;
 	}
+}
+
+.copy-button {
+	position: relative;
 }

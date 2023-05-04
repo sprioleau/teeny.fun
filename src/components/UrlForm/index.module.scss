@@ -62,3 +62,11 @@
 	font-size: var(--link-icon-size);
 	opacity: 0.75;
 }
+
+.tooltip {
+	width: max(80%, 250px);
+}
+
+.tooltip-main {
+	padding: 0.5em;
+}

@@ -11,6 +11,7 @@ type Props = {
 	icon?: ReactNode;
 	color?: ButtonColor;
 	nextLink?: boolean;
+	tooltip?: JSX.Element;
 } & React.ComponentPropsWithoutRef<"button"> &
 	React.ComponentPropsWithoutRef<"a">;
 
@@ -46,6 +47,7 @@ export default function Button({
 	icon,
 	color = "pink",
 	className,
+	tooltip,
 	children,
 	...rest
 }: Props) {
@@ -60,6 +62,7 @@ export default function Button({
 			>
 				{icon && <span className={styles.icon}>{icon}</span>}
 				{children}
+				{tooltip && tooltip}
 			</Link>
 		);
 	}
@@ -67,17 +70,20 @@ export default function Button({
 	return (
 		<Tag
 			href={href}
-			className={[styles.button, className].join(" ")}
+			className={[styles.button, className, tooltip ? styles["tooltip-button"] : ""].join(" ")}
 			style={variantProps[color]}
 			{...additionalAttributes}
 			{...rest}
 		>
 			{icon && <span className={styles.icon}>{icon}</span>}
 			{Tag === "a" ? (
-				<span style={{ display: "flex", alignItems: "baseline" }}>{children}</span>
+				<>
+					<span style={{ display: "flex", alignItems: "baseline" }}>{children}</span>
+				</>
 			) : (
-				children
+				<>{children}</>
 			)}
+			{tooltip && tooltip}
 		</Tag>
 	);
 }

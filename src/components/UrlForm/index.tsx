@@ -48,8 +48,11 @@ export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestina
 				className={styles["submit-button"]}
 				icon={<SubmitIcon />}
 			/>
-			<Tooltip isVisible={disabled && formIsHovered}>
-				<>
+			<Tooltip
+				className={styles["tooltip"]}
+				isVisible={disabled && formIsHovered}
+			>
+				<main className={styles["tooltip-main"]}>
 					<p>
 						Maximum number of links reached. Either delete existing links or create a free account.
 					</p>
@@ -60,7 +63,7 @@ export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestina
 					>
 						start for free
 					</Button>
-				</>
+				</main>
 			</Tooltip>
 		</form>
 	);

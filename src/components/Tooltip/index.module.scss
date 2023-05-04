@@ -9,10 +9,9 @@
 	position: absolute;
 	background-color: var(--color-off-white);
 	bottom: calc(100% + 0.25em);
-	padding: 1em;
+	padding: 0.5em;
 	font-size: 0.8em;
 	color: rgba(var(--color-black-rgb), 0.8);
-	width: max(80%, 250px);
 	border-radius: var(--border-radius);
 	z-index: 20;
 	opacity: var(--opacity);

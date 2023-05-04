@@ -11,6 +11,7 @@ import styles from "./index.module.scss";
 import Button from "../Button";
 import EmojiImage from "../EmojiImage";
 import QrCodeModal from "../QrCodeModal";
+import Tooltip from "../Tooltip";
 
 type Props = {
 	url: UrlWithMetadata;
@@ -27,6 +28,7 @@ export default function UrlInfoCard({
 }: Props) {
 	const fallbackFaviconSource = "/_static/images/emojis/fire.svg";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
+	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
 
 	const { open: openModal } = useContext(ModalContext);
 
@@ -43,6 +45,12 @@ export default function UrlInfoCard({
 	async function handleGenerateQRCode(url: string) {
 		const qrCode = await generateQRCode({ text: url });
 		setQRCodeImageUrl(qrCode);
+	}
+
+	function handleCopyShortUrl() {
+		setCopyTooltipIsVisible(true);
+		void copyText(shortUrl);
+		setTimeout(() => setCopyTooltipIsVisible(false), 1500);
 	}
 
 	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
@@ -111,13 +119,12 @@ export default function UrlInfoCard({
 						Visit
 					</Button>
 					<Button
+						className={styles["copy-button"]}
 						color="yellow"
 						title="Copy shortcode"
 						icon={<TbCopy />}
-						onClick={() => {
-							console.log("Made it to the copy button");
-							void copyText(shortUrl);
-						}}
+						tooltip={<Tooltip isVisible={copyTooltipIsVisible}>Copied!</Tooltip>}
+						onClick={handleCopyShortUrl}
 					/>
 					<Button
 						color="yellow"
