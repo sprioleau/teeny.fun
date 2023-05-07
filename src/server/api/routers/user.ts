@@ -1,7 +1,8 @@
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { createTRPCRouter } from "@/server/api/trpc";
 
 export const userRouter = createTRPCRouter({
-	getAll: publicProcedure.query(({ ctx }) => {
-		return ctx.prisma.user.findMany();
-	}),
+	// TODO: Allow user to delete account from DB
+	// getAll: publicProcedure.query(({ ctx }) => {
+	// 	return ctx.prisma.user.findMany();
+	// }),
 });

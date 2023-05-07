@@ -1,12 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { useSession } from "next-auth/react";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
-import { HiOutlineClock, HiQrcode } from "react-icons/hi";
+import { HiOutlineClock, HiOutlineTrash, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
 import { ModalContext } from "@/contexts/ModalContextProvider";
 import { type UrlWithMetadata } from "@/pages";
 import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "@/utils";
+import { api } from "@/utils/api";
 import styles from "./index.module.scss";
 import Button from "../Button";
 import EmojiImage from "../EmojiImage";
@@ -21,7 +23,7 @@ type Props = {
 };
 
 export default function UrlInfoCard({
-	url: { code, metadata, visits, destinationUrl },
+	url: { id, code, metadata, visits, destinationUrl },
 	style = {},
 	isPublic = false,
 	isProjectRepo = false,
@@ -31,6 +33,14 @@ export default function UrlInfoCard({
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
 
 	const { open: openModal } = useContext(ModalContext);
+	const { data: session } = useSession();
+	const ctx = api.useContext();
+
+	const { mutateAsync: deleteById } = api.url.deleteById.useMutation({
+		onSuccess(_data, _variables, _context) {
+			void ctx.url.invalidate();
+		},
+	});
 
 	useEffect(() => {
 		if (!qrCodeImageUrl) return;
@@ -51,6 +61,10 @@ export default function UrlInfoCard({
 		setCopyTooltipIsVisible(true);
 		void copyText(shortUrl);
 		setTimeout(() => setCopyTooltipIsVisible(false), 1500);
+	}
+
+	function handleDeletePrivateUrl() {
+		void deleteById({ id });
 	}
 
 	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
@@ -135,6 +149,14 @@ export default function UrlInfoCard({
 							void handleGenerateQRCode(shortUrl);
 						}}
 					/>
+					{session && (
+						<Button
+							color="yellow"
+							title="Delete URL"
+							icon={<HiOutlineTrash />}
+							onClick={handleDeletePrivateUrl}
+						/>
+					)}
 				</div>
 			</footer>
 		</li>

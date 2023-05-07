@@ -7,13 +7,13 @@ import { emojiToCodePoints, generateShortCode } from "@/utils";
 import fetchMeta from "@/utils/fetchMetadata";
 
 export const urlRouter = createTRPCRouter({
-	getAll: publicProcedure.query(({ ctx }) => {
-		return ctx.prisma.url.findMany({
-			include: {
-				metadata: true,
-			},
-		});
-	}),
+	// getAll: publicProcedure.query(({ ctx }) => {
+	// 	return ctx.prisma.url.findMany({
+	// 		include: {
+	// 			metadata: true,
+	// 		},
+	// 	});
+	// }),
 
 	getPublicUrlsByCode: publicProcedure
 		.input(
@@ -94,9 +94,30 @@ export const urlRouter = createTRPCRouter({
 				},
 			});
 
-			if (!newUrl)
+			if (!newUrl) {
 				throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to create URL" });
+			}
 
 			return newUrl;
+		}),
+
+	deleteById: protectedProcedure
+		.input(
+			z.object({
+				id: z.string(),
+			})
+		)
+		.mutation(async ({ input, ctx }) => {
+			const deletedUrl = await ctx.prisma.url.delete({
+				where: {
+					id: input.id,
+				},
+			});
+
+			if (!deletedUrl) {
+				throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to delete URL" });
+			}
+
+			return deletedUrl;
 		}),
 });

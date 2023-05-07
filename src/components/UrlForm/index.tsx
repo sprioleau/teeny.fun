@@ -1,4 +1,5 @@
 import { type Url } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { FiArrowUpRight, FiLink2 } from "react-icons/fi";
 import { Button, Tooltip } from "@/components";
@@ -13,6 +14,7 @@ type Props = {
 };
 
 export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestinationUrl }: Props) {
+	const { data: session } = useSession();
 	const [formIsHovered, setFormIsHovered] = useState(false);
 
 	return (
@@ -48,23 +50,26 @@ export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestina
 				className={styles["submit-button"]}
 				icon={<SubmitIcon />}
 			/>
-			<Tooltip
-				className={styles["tooltip"]}
-				isVisible={disabled && formIsHovered}
-			>
-				<main className={styles["tooltip-main"]}>
-					<p>
-						Maximum number of links reached. Either delete existing links or create a free account.
-					</p>
-					<Button
-						color="blue"
-						href="/auth/signin"
-						icon={<FiArrowUpRight />}
-					>
-						start for free
-					</Button>
-				</main>
-			</Tooltip>
+			{!session && (
+				<Tooltip
+					className={styles["tooltip"]}
+					isVisible={disabled && formIsHovered}
+				>
+					<main className={styles["tooltip-main"]}>
+						<p>
+							Maximum number of links reached. Either delete existing links or create a free
+							account.
+						</p>
+						<Button
+							color="blue"
+							href="/auth/signin"
+							icon={<FiArrowUpRight />}
+						>
+							start for free
+						</Button>
+					</main>
+				</Tooltip>
+			)}
 		</form>
 	);
 }
