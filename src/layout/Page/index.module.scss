@@ -12,3 +12,7 @@
 	height: calc(100vh - 2 * var(--page-padding-y));
 	height: calc(100dvh - 2 * var(--page-padding-y));
 }
+
+.authenticated {
+	background-color: var(--color-blue);
+}

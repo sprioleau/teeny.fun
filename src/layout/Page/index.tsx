@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import React from "react";
 import styles from "./index.module.scss";
 
@@ -6,5 +7,11 @@ type Props = {
 };
 
 export default function Page({ children }: Props) {
-	return <section className={styles.page}>{children}</section>;
+	const { data: session } = useSession();
+
+	return (
+		<section className={[styles.page, session ? styles["authenticated"] : ""].join(" ")}>
+			{children}
+		</section>
+	);
 }
