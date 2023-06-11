@@ -1,0 +1,10 @@
+@import "@/styles/mixins";
+
+.user-avatar {
+	@include center;
+
+	img {
+		border-radius: 50%;
+		margin-right: 0.25em;
+	}
+}

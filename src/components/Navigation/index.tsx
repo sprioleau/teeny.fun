@@ -5,6 +5,7 @@ import { AiOutlineUser } from "react-icons/ai";
 import styles from "./index.module.scss";
 import Button from "../Button";
 import Logo from "../Logo";
+import UserAvatar from "../UserAvatar";
 
 export default function Navigation() {
 	const { data: session } = useSession();
@@ -24,7 +25,6 @@ export default function Navigation() {
 				{!session ? (
 					<Button
 						href="/auth/signin"
-						className="button"
 						icon={<AiOutlineUser />}
 						color="yellow"
 					>
@@ -33,8 +33,7 @@ export default function Navigation() {
 				) : (
 					<Button
 						onClick={() => void handleSignOut()}
-						className="button"
-						icon={<AiOutlineUser />}
+						icon={<UserAvatar />}
 						color="yellow"
 					>
 						Sign out

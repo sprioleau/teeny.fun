@@ -5,3 +5,4 @@
 - [x] Create a modal component to display the QR code and other elements
 - [x] Add a tooltip to indicate when the maximum number of links has been reached.
 - [x] Add delete URL functionality
+- [x] Add github user image domain
