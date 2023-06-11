@@ -42,6 +42,7 @@ export default function SignIn() {
 					flexDirection: "column",
 					gap: "0.5em",
 					fontSize: "1.5em",
+					color: "#fff",
 				}}
 			>
 				<h1>Sign in</h1>
