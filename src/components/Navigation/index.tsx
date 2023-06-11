@@ -21,14 +21,6 @@ export default function Navigation() {
 				</Link>
 			</div>
 			<div className={styles.buttons}>
-				{/* <Button
-					href="/auth/signin"
-					className="button"
-					icon={<FiArrowUpRight />}
-					color="yellow"
-				>
-					Start for free
-				</Button> */}
 				{!session ? (
 					<Button
 						href="/auth/signin"
