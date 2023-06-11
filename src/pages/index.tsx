@@ -2,6 +2,7 @@ import { type Metadata, type Url } from "@prisma/client";
 import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Heading, UrlForm, UrlList } from "@/components";
 
@@ -20,6 +21,10 @@ export type UrlWithMetadata = Url & {
 export type LocalUrl = Pick<Url, "codePoints" | "destinationUrl">;
 
 export default function Home({ session }: Props) {
+	// session prop is showing as undefined on client,
+	// so get a clientSession from useSession hook
+	const { data: clientSession } = useSession();
+
 	const [destinationUrl, setDestinationUrl] = useState("");
 
 	const [localUrls, setLocalUrls] = useLocalStorage<LocalUrl[]>(DEFAULT_LOCAL_URLS_KEY, []);
@@ -31,8 +36,6 @@ export default function Home({ session }: Props) {
 		// { enabled: !Boolean(combinedCodePoints) }
 		{
 			onSuccess(data) {
-				console.log("🚀 ~ file: index.tsx:33 ~ onSuccess ~ data:", data);
-
 				// TODO: Remove this check once there is a means to delete a public URL
 				if (!localStorage.getItem(DEFAULT_LOCAL_URLS_KEY)) return;
 
@@ -47,7 +50,7 @@ export default function Home({ session }: Props) {
 	);
 
 	const { data: userPrivateUrls } = api.url.getByUserId.useQuery(undefined, {
-		enabled: Boolean(session),
+		enabled: Boolean(clientSession),
 	});
 
 	const ctx = api.useContext();
@@ -69,8 +72,9 @@ export default function Home({ session }: Props) {
 				setLocalUrls(updatedLocalUrls);
 			}
 
-			if (session) {
+			if (clientSession) {
 				void ctx.url.getByUserId.invalidate();
+				// void ctx.url.invalidate();
 			}
 
 			setDestinationUrl("");

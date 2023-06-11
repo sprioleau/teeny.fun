@@ -70,6 +70,9 @@ export const urlRouter = createTRPCRouter({
 				userId: null,
 				metadataId: newMetadata.id,
 			},
+			include: {
+				metadata: true,
+			},
 		});
 
 		return newProjectRepoUrl;
