@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { PROJECT_REPO_URL } from "@/constants/projectRepoUrl";
+import { PROJECT_REPO } from "@/constants/projectRepoUrl";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { emojiToCodePoints, generateShortCode } from "@/utils";
 
@@ -48,11 +48,31 @@ export const urlRouter = createTRPCRouter({
 		});
 	}),
 
-	getProjectRepoUrl: publicProcedure.query(({ ctx }) => {
-		return ctx.prisma.url.findFirstOrThrow({
-			where: { destinationUrl: PROJECT_REPO_URL },
+	getProjectRepoUrl: publicProcedure.query(async ({ ctx }) => {
+		const existingProjectRepoUrl = await ctx.prisma.url.findFirst({
+			where: { destinationUrl: PROJECT_REPO.URL },
 			include: { metadata: true },
 		});
+
+		if (existingProjectRepoUrl) return existingProjectRepoUrl;
+
+		const metadata = await fetchMeta(PROJECT_REPO.URL);
+
+		const newMetadata = await ctx.prisma.metadata.create({
+			data: metadata,
+		});
+
+		const newProjectRepoUrl = await ctx.prisma.url.create({
+			data: {
+				destinationUrl: PROJECT_REPO.URL,
+				code: PROJECT_REPO.CODE,
+				codePoints: emojiToCodePoints(PROJECT_REPO.CODE),
+				userId: null,
+				metadataId: newMetadata.id,
+			},
+		});
+
+		return newProjectRepoUrl;
 	}),
 
 	create: publicProcedure

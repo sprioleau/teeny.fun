@@ -8,5 +8,6 @@
 - [x] Add github user image domain
 - [x] Add social card
 - [x] Update placeholder card
-- [ ] Ensure project repo link is always available in DB or hardcode
+- [x] Ensure project repo link is always available in DB or hardcode
 - [ ] Get session server side
+- [ ] Update metadata if entry already exists to prevent duplicate metadata

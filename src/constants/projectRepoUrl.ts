@@ -1,1 +1,4 @@
-export const PROJECT_REPO_URL = "https://github.com/sprioleau/teeny.fun-v2";
+export const PROJECT_REPO = Object.freeze({
+	URL: "https://github.com/sprioleau/teeny.fun-v2",
+	CODE: "🌈🥳🔗",
+});

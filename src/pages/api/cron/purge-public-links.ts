@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { PROJECT_REPO_URL } from "@/constants/projectRepoUrl";
+import { PROJECT_REPO } from "@/constants/projectRepoUrl";
 import { prisma } from "@/server/db";
 
 /*
@@ -26,7 +26,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 			],
 			NOT: [
 				{
-					destinationUrl: PROJECT_REPO_URL,
+					destinationUrl: PROJECT_REPO.URL,
 				},
 			],
 		},
