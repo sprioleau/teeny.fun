@@ -28,7 +28,7 @@ export default function UrlInfoCard({
 	isPublic = false,
 	isProjectRepo = false,
 }: Props) {
-	const fallbackFaviconSource = "/_static/images/favicon.png";
+	const fallbackFaviconSource = "/favicon.png";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
 
