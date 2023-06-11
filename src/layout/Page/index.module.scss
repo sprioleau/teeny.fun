@@ -11,6 +11,8 @@
 	background-color: var(--color-pink);
 	height: calc(100vh - 2 * var(--page-padding-y));
 	height: calc(100dvh - 2 * var(--page-padding-y));
+	background-image: url("/_static/images/patterns/wiggle.svg");
+	background-size: 5em;
 }
 
 .authenticated {
