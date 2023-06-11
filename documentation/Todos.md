@@ -10,4 +10,4 @@
 - [x] Update placeholder card
 - [x] Ensure project repo link is always available in DB or hardcode
 - [x] Get session server side
-- [ ] Update metadata if entry already exists to prevent duplicate metadata
+- [x] Update metadata if entry already exists to prevent duplicate metadata

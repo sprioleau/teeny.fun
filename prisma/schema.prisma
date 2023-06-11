@@ -33,7 +33,7 @@ model Metadata {
   description String @db.Text
   image       String @db.Text
   icon        String @db.Text
-  url         String @db.Text
+  url         String @unique
   Url         Url[]
 }
 

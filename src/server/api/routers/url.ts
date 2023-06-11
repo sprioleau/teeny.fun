@@ -100,8 +100,12 @@ export const urlRouter = createTRPCRouter({
 
 			const metadata = await fetchMeta(input.destinationUrl);
 
-			const newMetadata = await ctx.prisma.metadata.create({
-				data: metadata,
+			const newMetadata = await ctx.prisma.metadata.upsert({
+				where: {
+					url: input.destinationUrl,
+				},
+				update: metadata,
+				create: metadata,
 			});
 
 			const newUrl = await ctx.prisma.url.create({
