@@ -1,15 +1,17 @@
 import { type Metadata, type Url } from "@prisma/client";
-import { type NextPage } from "next";
+import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { Heading, UrlForm, UrlList } from "@/components";
 
 import { DEFAULT_LOCAL_URLS_KEY } from "@/constants/localStorageKeys";
 import { useLocalStorage } from "@/hooks";
+import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/utils/api";
 import styles from "./index.module.scss";
+
+type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
 export type UrlWithMetadata = Url & {
 	metadata: Metadata | null;
@@ -17,8 +19,7 @@ export type UrlWithMetadata = Url & {
 
 export type LocalUrl = Pick<Url, "codePoints" | "destinationUrl">;
 
-const Home: NextPage = () => {
-	const { data: session } = useSession();
+export default function Home({ session }: Props) {
 	const [destinationUrl, setDestinationUrl] = useState("");
 
 	const [localUrls, setLocalUrls] = useLocalStorage<LocalUrl[]>(DEFAULT_LOCAL_URLS_KEY, []);
@@ -189,6 +190,9 @@ const Home: NextPage = () => {
 			</main>
 		</>
 	);
-};
+}
 
-export default Home;
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+	const session = await getServerAuthSession(context);
+	return { props: { session } };
+};
