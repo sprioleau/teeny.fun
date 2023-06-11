@@ -7,6 +7,6 @@
 - [x] Add delete URL functionality
 - [x] Add github user image domain
 - [x] Add social card
-- [ ] Update placeholder card
+- [x] Update placeholder card
 - [ ] Ensure project repo link is always available in DB or hardcode
 - [ ] Get session server side

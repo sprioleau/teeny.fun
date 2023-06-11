@@ -3,7 +3,7 @@ import { UrlInfoCard } from "@/components";
 export default function PlaceholderInfoCard() {
 	return (
 		<UrlInfoCard
-			style={{ opacity: 0.5 }}
+			style={{ opacity: 0.8 }}
 			url={{
 				id: "placeholder",
 				destinationUrl: "https://your-destination-url.com/a-path?and-mumbo=jumbo",
