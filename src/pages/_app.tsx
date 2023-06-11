@@ -1,4 +1,3 @@
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { type AppType } from "next/app";
 import { Modak, Space_Grotesk } from "next/font/google";
 import { type Session } from "next-auth";
@@ -42,7 +41,6 @@ const MyApp: AppType<{ session: Session | null }> = ({
 					<Modal />
 				</div>
 			</ModalContextProvider>
-			<ReactQueryDevtools initialIsOpen={false} />
 		</SessionProvider>
 	);
 };
