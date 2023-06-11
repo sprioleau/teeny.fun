@@ -8,9 +8,9 @@ Use [teeny.fun][deployed-url] to generate emoji-powered short links. Login to cu
 
 - 🚀 Deployed at [teeny.fun][deployed-url]
 
-<!-- ## Screenshots
+## Screenshots
 
-![Homepage Screenshot][homepage-screenshot-url] -->
+![Homepage Screenshot][homepage-screenshot-url]
 
 ## 💿 Installation
 
@@ -79,5 +79,4 @@ Give a ⭐️ if you like this project!
 
 [deployed-url]: https://teeny.fun
 [social-card-url]: https://teeny.fun/_static/images/social-card.png "Social Card"
-
-<!-- [homepage-screenshot-url]: {url} "Homepage Screenshot" -->
+[homepage-screenshot-url]: https://teeny.fun/_static/images/homepage-screenshot.png "Homepage Screenshot"
