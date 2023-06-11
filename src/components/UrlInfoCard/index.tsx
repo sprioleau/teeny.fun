@@ -28,7 +28,7 @@ export default function UrlInfoCard({
 	isPublic = false,
 	isProjectRepo = false,
 }: Props) {
-	const fallbackFaviconSource = "/_static/images/emojis/fire.svg";
+	const fallbackFaviconSource = "/_static/images/favicon.png";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
 
@@ -79,7 +79,7 @@ export default function UrlInfoCard({
 				<div className={styles["main-left"]}>
 					<img
 						src={metadata?.icon ?? fallbackFaviconSource}
-						alt="Fire emoji"
+						alt={metadata?.url ? `favicon for ${metadata?.url}` : "favicon"}
 						width={32}
 						height={32}
 						className={styles["favicon"]}
