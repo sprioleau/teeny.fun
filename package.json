@@ -31,7 +31,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@prisma/client": "^4.13.0",
+    "@prisma/client": "^4.15.0",
     "@types/eslint": "^8.21.3",
     "@types/node": "^18.15.5",
     "@types/qrcode": "^1.5.0",
