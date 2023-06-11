@@ -95,14 +95,63 @@ const Home: NextPage = () => {
 		<>
 			<Head>
 				<title>teeny.fun</title>
-				<meta
-					name="description"
-					content="Shortlinks with emojis"
-				/>
 				<link
 					rel="icon"
 					href="/favicon.png"
 					type="image/png"
+				/>
+				<meta
+					name="description"
+					content="Create shortlinks with emojis 😁"
+				/>
+
+				<meta
+					itemProp="name"
+					content="teeny.fun"
+				/>
+				<meta
+					itemProp="description"
+					content="Create shortlinks with emojis 😁"
+				/>
+				<meta
+					itemProp="image"
+					content="/_static/images/social-card.png"
+				/>
+				<meta
+					property="og:url"
+					content="https://www.teeny.fun"
+				/>
+				<meta
+					property="og:type"
+					content="website"
+				/>
+				<meta
+					property="og:title"
+					content="teeny.fun"
+				/>
+				<meta
+					property="og:description"
+					content="Create shortlinks with emojis 😁"
+				/>
+				<meta
+					property="og:image"
+					content="/_static/images/social-card.png"
+				/>
+				<meta
+					name="twitter:card"
+					content="summary_large_image"
+				/>
+				<meta
+					name="twitter:title"
+					content="teeny.fun"
+				/>
+				<meta
+					name="twitter:description"
+					content="Create shortlinks with emojis 😁"
+				/>
+				<meta
+					name="twitter:image"
+					content="/_static/images/social-card.png"
 				/>
 			</Head>
 			<main className={styles.main}>

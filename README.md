@@ -1,28 +1,83 @@
-# Create T3 App
+![Social Card][social-card-url]
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+# Make teeny tiny URLs with emojis 😂!
 
-## What's next? How do I make an app with this?
+Use [teeny.fun][deployed-url] to generate emoji-powered short links. Login to customize your teeny link.
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## 🔗 Links
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- 🚀 Deployed at [teeny.fun][deployed-url]
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+<!-- ## Screenshots
 
-## Learn More
+![Homepage Screenshot][homepage-screenshot-url] -->
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+## 💿 Installation
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Clone this repo
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+```bash
+git clone https://github.com/sprioleau/teeny.fun.git
+```
 
-## How do I deploy this?
+Install via npm
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+```bash
+npm install
+```
+
+Run developemnt server
+
+```bash
+npm run dev
+```
+
+## 🛠 Built With
+
+This app was botstrapped using [Create T3 App](https://create.t3.gg/)⭐️, which accelerated its development. It was important to have type safety across the network chasm and within a single repository, so I reached for the T3 stack and I was not disappointed. The specific tools I used are below.
+
+### T3 Stack Technology
+
+| Technology                             | Used For                                                    |
+| :------------------------------------- | :---------------------------------------------------------- |
+| TypeScript                             | -                                                           |
+| [tRPC](https://trpc.io/)               | End-to-end type safety across the network chasm             |
+| [Next.js](https://nextjs.org/docs)     | Server/client communication, routing, server-side rendering |
+| [Next Auth](https://next-auth.js.org/) | User authentication                                         |
+| [Prisma](https://www.prisma.io/)       | PostgreSQL database                                         |
+
+<!-- ## ⬆️ Future Updates
+
+- [ ] How I built this website page -->
+
+## 👨🏾‍💻 Author
+
+**San'Quan Prioleau**
+
+- [Profile][github-url]
+- [Website][website]
+- [LinkedIn][linkedin]
+
+## 🎗 Support
+
+Issues, and feature requests are welcome!
+
+Give a ⭐️ if you like this project!
+
+<!-- ## Acknowledgements
+
+- Inspired by [Brittany Chiang](https://github.com/bchiang7/v4) -->
+
+<!-- Author Details -->
+
+[github-url]: https://github.com/spriolau "San'Quan Prioleau on Github"
+[website]: https://sprioleau.dev "San'Quan Prioleau's personal website"
+[headshot_url]: https://avatars.githubusercontent.com/u/49278940?v=4 "San'Quan Prioleau headshot"
+[linkedin]: https://www.linkedin.com/in/sanquanprioleau/
+
+<!-- Project Details -->
+
+[deployed-url]: https://teeny.fun
+[social-card-url]: https://teeny.fun/_static/images/social-card.png "Social Card"
+
+<!-- [homepage-screenshot-url]: {url} "Homepage Screenshot" -->
