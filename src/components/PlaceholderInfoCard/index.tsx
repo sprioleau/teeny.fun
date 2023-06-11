@@ -16,6 +16,7 @@ export default function PlaceholderInfoCard() {
 				metadataId: null,
 				metadata: null,
 			}}
+			isPlaceholder
 		/>
 	);
 }

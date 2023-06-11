@@ -20,6 +20,7 @@ type Props = {
 	style?: React.CSSProperties;
 	isPublic?: boolean;
 	isProjectRepo?: boolean;
+	isPlaceholder?: boolean;
 };
 
 export default function UrlInfoCard({
@@ -27,6 +28,7 @@ export default function UrlInfoCard({
 	style = {},
 	isPublic = false,
 	isProjectRepo = false,
+	isPlaceholder = false,
 }: Props) {
 	const fallbackFaviconSource = "/favicon.png";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
@@ -97,10 +99,12 @@ export default function UrlInfoCard({
 							teeny.fun/
 							<EmojiImage>{code}</EmojiImage>
 						</Button>
-						<span className={styles["visits"]}>
-							<FiBarChart />{" "}
-							{formatQuantityString({ quantity: visits, nouns: ["visit", "visits"] })}
-						</span>
+						{!isPlaceholder && (
+							<span className={styles["visits"]}>
+								<FiBarChart />{" "}
+								{formatQuantityString({ quantity: visits, nouns: ["visit", "visits"] })}
+							</span>
+						)}
 					</header>
 				</div>
 				{isPublic && (
@@ -119,45 +123,47 @@ export default function UrlInfoCard({
 				>
 					{destinationUrl}
 				</span>
-				<div className={styles["action-buttons"]}>
-					<Button
-						as={"a"}
-						className={styles["visit-button"]}
-						target="_blank"
-						href={code}
-						rel="noreferrer"
-						color="yellow"
-						title="Visit URL"
-						icon={<FiArrowUpRight />}
-					>
-						Visit
-					</Button>
-					<Button
-						className={styles["copy-button"]}
-						color="yellow"
-						title="Copy shortcode"
-						icon={<TbCopy />}
-						tooltip={<Tooltip isVisible={copyTooltipIsVisible}>Copied!</Tooltip>}
-						onClick={handleCopyShortUrl}
-					/>
-					<Button
-						color="yellow"
-						title="View QR code"
-						icon={<HiQrcode />}
-						onClick={() => {
-							setQRCodeImageUrl(undefined);
-							void handleGenerateQRCode(shortUrl);
-						}}
-					/>
-					{session && (
+				{!isPlaceholder && (
+					<div className={styles["action-buttons"]}>
+						<Button
+							as={"a"}
+							className={styles["visit-button"]}
+							target="_blank"
+							href={code}
+							rel="noreferrer"
+							color="yellow"
+							title="Visit URL"
+							icon={<FiArrowUpRight />}
+						>
+							Visit
+						</Button>
+						<Button
+							className={styles["copy-button"]}
+							color="yellow"
+							title="Copy shortcode"
+							icon={<TbCopy />}
+							tooltip={<Tooltip isVisible={copyTooltipIsVisible}>Copied!</Tooltip>}
+							onClick={handleCopyShortUrl}
+						/>
 						<Button
 							color="yellow"
-							title="Delete URL"
-							icon={<HiOutlineTrash />}
-							onClick={handleDeletePrivateUrl}
+							title="View QR code"
+							icon={<HiQrcode />}
+							onClick={() => {
+								setQRCodeImageUrl(undefined);
+								void handleGenerateQRCode(shortUrl);
+							}}
 						/>
-					)}
-				</div>
+						{session && !isProjectRepo && (
+							<Button
+								color="yellow"
+								title="Delete URL"
+								icon={<HiOutlineTrash />}
+								onClick={handleDeletePrivateUrl}
+							/>
+						)}
+					</div>
+				)}
 			</footer>
 		</li>
 	);
