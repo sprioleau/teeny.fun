@@ -11,11 +11,12 @@
 	background-color: var(--color-pink);
 	height: calc(100vh - 2 * var(--page-padding-y));
 	height: calc(100dvh - 2 * var(--page-padding-y));
-	background-image: url("/_static/images/patterns/wiggle.svg");
+	background-image: url("/_static/images/background/plus-pink.svg");
 	background-size: 5em;
 }
 
 .authenticated {
 	background-color: var(--color-blue);
+	background-image: url("/_static/images/background/plus-blue.svg");
 	--color-scrollbar-bg: var(--color-blue);
 }

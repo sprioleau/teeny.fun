@@ -1,0 +1,20 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="200" height="200" fill="#5B94D2"/>
+  <path class="plus" fill-rule="evenodd" clip-rule="evenodd" d="M54 200H46V214H32L32 222H46V236H54V222H68V214H54V200Z" />
+  <path class="plus" fill-rule="evenodd" clip-rule="evenodd" d="M153.6 300H146.4V314.4L132 314.4V321.6H146.4V336H153.6V321.6H168V314.4L153.6 314.4V300Z" />
+  <path class="plus" fill-rule="evenodd" clip-rule="evenodd" d="M54 0H46V14L32 14L32 22H46V36H54V22H68V14L54 14V0Z" />
+  <path class="plus" fill-rule="evenodd" clip-rule="evenodd" d="M154 100H146V114L132 114L132 122H146V136H154V122H168V114L154 114V100Z" />
+  <style>
+    .plus {
+      animation: move 12s linear forwards infinite;
+      fill: #3676ad;
+    }
+
+    @keyframes move {
+      0% { transform: translateY(0%); }
+      50% { transform: translateY(-100%); }
+      50.00001% { transform: translateY(0%); }
+      100% { transform: translateY(-100%); }
+    }
+  </style>
+</svg>
