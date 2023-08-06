@@ -1,14 +1,15 @@
 import FocusTrap from "focus-trap-react";
-import { useContext, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { MdOutlineClose } from "react-icons/md";
-
-import { ModalContext } from "@/contexts/ModalContextProvider";
+import useModal from "@/hooks/useModal";
 
 import styles from "./index.module.scss";
 import Button from "../Button";
 
 export default function Modal() {
-	const { close: closeModal, modalContent } = useContext(ModalContext);
+	const { data: session } = useSession();
+	const { close: closeModal, modalContent } = useModal();
 
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent) => {
@@ -26,6 +27,7 @@ export default function Modal() {
 		<FocusTrap>
 			<div
 				className={styles["backdrop"]}
+				data-is-authenticated={Boolean(session?.user?.id)}
 				onClick={closeModal}
 			>
 				<div
