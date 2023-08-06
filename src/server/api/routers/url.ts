@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { PROJECT_REPO } from "@/constants/projectRepoUrl";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
-import { emojiToCodePoints, generateShortCode } from "@/utils";
+import { emojiToCodePoints, generateShortCode, getEmojiStringLength } from "@/utils";
 
 import fetchMeta from "@/utils/fetchMetadata";
 
@@ -146,5 +146,54 @@ export const urlRouter = createTRPCRouter({
 			}
 
 			return deletedUrl;
+		}),
+
+	updateCodeById: protectedProcedure
+		.input(
+			z.object({
+				id: z.string(),
+				code: z.string().emoji(),
+			})
+		)
+		.mutation(async ({ input, ctx }) => {
+			const codePoints = emojiToCodePoints(input.code);
+			const emojiStringLength = getEmojiStringLength(input.code);
+
+			if (emojiStringLength < 3 || emojiStringLength > 6) {
+				throw new TRPCError({
+					code: "BAD_REQUEST",
+					message: "Code must be between 3 and 6 emojis in length.",
+				});
+			}
+
+			const existingUrl = await ctx.prisma.url.findUnique({
+				where: {
+					codePoints,
+				},
+			});
+
+			if (existingUrl) {
+				throw new TRPCError({
+					code: "CONFLICT",
+					message: "Code already exists",
+				});
+			}
+
+			const updatedUrl = await ctx.prisma.url.update({
+				where: {
+					id: input.id,
+				},
+				data: {
+					code: input.code,
+					codePoints,
+				},
+			});
+
+			// TODO: Confirm return type of prisma.update function
+			if (!updatedUrl) {
+				throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "Failed to update URL" });
+			}
+
+			return updatedUrl;
 		}),
 });
