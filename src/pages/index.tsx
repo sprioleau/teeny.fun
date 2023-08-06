@@ -7,7 +7,7 @@ import { useState } from "react";
 import { UrlForm, UrlList } from "@/components";
 
 import HeroHeading from "@/components/HeroHeading";
-import { DEFAULT_LOCAL_URLS_KEY } from "@/constants/localStorageKeys";
+import { DEFAULT_LOCAL_URLS_KEY } from "@/constants";
 import { useLocalStorage } from "@/hooks";
 import { getServerAuthSession } from "@/server/auth";
 import { api } from "@/utils/api";

@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { PROJECT_REPO } from "@/constants/projectRepoUrl";
+import { PROJECT_REPO } from "@/constants";
 import { prisma } from "@/server/db";
 
 /*

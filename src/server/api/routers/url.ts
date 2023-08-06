@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { PROJECT_REPO } from "@/constants/projectRepoUrl";
+import { PROJECT_REPO } from "@/constants";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { emojiToCodePoints, generateShortCode, getEmojiStringLength } from "@/utils";
 
