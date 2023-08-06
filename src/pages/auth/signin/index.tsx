@@ -39,10 +39,14 @@ export default function SignIn() {
 				style={{
 					padding: "2rem",
 					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
 					flexDirection: "column",
 					gap: "0.5em",
 					fontSize: "1.5em",
 					color: "#fff",
+					marginBottom: "4em",
+					height: "100%",
 				}}
 			>
 				<h1>Sign in</h1>

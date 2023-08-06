@@ -4,8 +4,9 @@ import Head from "next/head";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
-import { Heading, UrlForm, UrlList } from "@/components";
+import { UrlForm, UrlList } from "@/components";
 
+import HeroHeading from "@/components/HeroHeading";
 import { DEFAULT_LOCAL_URLS_KEY } from "@/constants/localStorageKeys";
 import { useLocalStorage } from "@/hooks";
 import { getServerAuthSession } from "@/server/auth";
@@ -161,23 +162,7 @@ export default function Home({ session }: Props) {
 			</Head>
 			<main className={styles.main}>
 				<header className={styles.header}>
-					<Heading tag="h1">
-						<Heading.Span
-							text="teenify"
-							color="yellow"
-							index={0}
-						/>
-						<Heading.Span
-							text="URLs with"
-							color="white"
-							index={1}
-						/>
-						<Heading.Span
-							text="emojis"
-							color="yellow"
-							index={2}
-						/>
-					</Heading>
+					<HeroHeading />
 				</header>
 				<section className={styles.container}>
 					<UrlForm
