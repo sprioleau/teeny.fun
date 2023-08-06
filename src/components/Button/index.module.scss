@@ -23,6 +23,19 @@
 	margin-right: calc(2 * var(--border-width));
 	margin-bottom: calc(2 * var(--border-width));
 
+	&:global(.blue) {
+		background-color: var(--color-blue);
+	}
+
+	&:global(.pink) {
+		background-color: var(--color-pink);
+	}
+
+	&:global(.yellow) {
+		background-color: var(--color-yellow);
+		color: var(--color-black);
+	}
+
 	&:hover {
 		cursor: pointer;
 
@@ -41,6 +54,20 @@
 
 	&:focus-visible {
 		@include focus-ring;
+	}
+
+	&:disabled {
+		background-color: rgb(var(--color-black-rgb), 0.25);
+		color: rgb(var(--color-black-rgb), 0.75);
+
+		&:hover {
+			--shadow-offset: calc(-1.75 * var(--offset));
+			cursor: not-allowed;
+
+			@include hover-wrapper {
+				--translate: none;
+			}
+		}
 	}
 }
 

@@ -15,27 +15,6 @@ type Props = {
 } & React.ComponentPropsWithoutRef<"button"> &
 	React.ComponentPropsWithoutRef<"a">;
 
-const variantProps: Record<
-	ButtonColor,
-	{
-		color: string;
-		backgroundColor: string;
-	}
-> = {
-	pink: {
-		color: "var(--color-white)",
-		backgroundColor: "var(--color-pink)",
-	},
-	yellow: {
-		color: "var(--color-border)",
-		backgroundColor: "var(--color-yellow)",
-	},
-	blue: {
-		color: "var(--color-white)",
-		backgroundColor: "var(--color-blue)",
-	},
-};
-
 const externalLinkAttributes: Pick<React.ComponentPropsWithoutRef<"a">, "target" | "rel"> = {
 	target: "_blank",
 	rel: "noopener noreferrer",
@@ -57,8 +36,7 @@ export default function Button({
 		return (
 			<Link
 				href={href}
-				className={[styles.button, className].join(" ")}
-				style={variantProps[color]}
+				className={[styles.button, className, color].join(" ").trim()}
 			>
 				{icon && <span className={styles.icon}>{icon}</span>}
 				{children}
@@ -70,8 +48,9 @@ export default function Button({
 	return (
 		<Tag
 			href={href}
-			className={[styles.button, className, tooltip ? styles["tooltip-button"] : ""].join(" ")}
-			style={variantProps[color]}
+			className={[styles.button, className, color, tooltip ? styles["tooltip-button"] : ""]
+				.join(" ")
+				.trim()}
 			{...additionalAttributes}
 			{...rest}
 		>
