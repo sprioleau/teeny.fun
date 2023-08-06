@@ -16,7 +16,7 @@ function text() {
 	};
 }
 
-export type MetadataRules = {
+type MetadataRules = {
 	dataKey: string;
 	rules: [string, (element: HTMLElement) => string | null][];
 	default?: string;
