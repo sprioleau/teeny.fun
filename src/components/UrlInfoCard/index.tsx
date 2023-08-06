@@ -1,16 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
 
+import { type Url } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { BiEditAlt } from "react-icons/bi";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiOutlineTrash, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
-import { ModalContext } from "@/contexts/ModalContextProvider";
+import useModal from "@/hooks/useModal";
 import { type UrlWithMetadata } from "@/pages";
 import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "@/utils";
 import { api } from "@/utils/api";
 import styles from "./index.module.scss";
 import Button from "../Button";
+import EditShortcodeModal from "../EditShortcodeModal";
 import EmojiImage from "../EmojiImage";
 import QrCodeModal from "../QrCodeModal";
 import Tooltip from "../Tooltip";
@@ -34,7 +37,7 @@ export default function UrlInfoCard({
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
 
-	const { open: openModal } = useContext(ModalContext);
+	const { open: openModal } = useModal();
 	const { data: session } = useSession();
 	const ctx = api.useContext();
 
@@ -46,6 +49,7 @@ export default function UrlInfoCard({
 
 	useEffect(() => {
 		if (!qrCodeImageUrl) return;
+
 		openModal(
 			<QrCodeModal
 				code={code}
@@ -53,6 +57,10 @@ export default function UrlInfoCard({
 			/>
 		);
 	}, [qrCodeImageUrl, openModal, code]);
+
+	function handleOpenEditShortcodeModal(id: Url["id"]) {
+		openModal(<EditShortcodeModal id={id} />);
+	}
 
 	async function handleGenerateQRCode(url: string) {
 		const qrCode = await generateQRCode({ text: url });
@@ -154,6 +162,14 @@ export default function UrlInfoCard({
 								void handleGenerateQRCode(shortUrl);
 							}}
 						/>
+						{!isProjectRepo && (
+							<Button
+								color="yellow"
+								title="Edit shortcode"
+								icon={<BiEditAlt />}
+								onClick={() => handleOpenEditShortcodeModal(id)}
+							/>
+						)}
 						{session && !isProjectRepo && (
 							<Button
 								color="yellow"
