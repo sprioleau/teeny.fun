@@ -6,3 +6,4 @@ export { default as formatQuantityString } from "./formatQuantityString";
 export { default as generateShortCode } from "./generateShortCode";
 export { default as generateQRCode } from "./generateQRCode";
 export { default as getShortUrl } from "./getShortUrl";
+export { default as getEmojiStringLength } from "./getEmojiStringLength";
