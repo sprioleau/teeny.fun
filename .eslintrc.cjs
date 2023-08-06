@@ -21,6 +21,7 @@ const config = {
 	rules: {
 		"prettier/prettier": "error",
 		"react/jsx-max-props-per-line": ["error", { maximum: 1 }],
+		"import/no-anonymous-default-export": 0,
 		"@typescript-eslint/consistent-type-imports": [
 			"warn",
 			{
