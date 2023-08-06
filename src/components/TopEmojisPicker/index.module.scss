@@ -1,0 +1,16 @@
+@import "@/styles/mixins";
+
+.top-emojis {
+	display: flex;
+	justify-content: center;
+	gap: 0.5em;
+	flex-wrap: wrap;
+	max-height: 200px;
+	padding: 0.25em 1em 1em;
+	overflow-y: auto;
+}
+
+.top-emoji-button {
+	padding: 0.5em;
+	font-size: 1.25em;
+}
