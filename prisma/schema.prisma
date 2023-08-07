@@ -28,12 +28,12 @@ model Url {
 }
 
 model Metadata {
-  id          String @id @default(cuid())
-  title       String @db.Text
-  description String @db.Text
-  image       String @db.Text
-  icon        String @db.Text
-  url         String @unique
+  id          String  @id @default(cuid())
+  title       String? @db.Text
+  description String? @db.Text
+  image       String? @db.Text
+  icon        String? @db.Text
+  url         String  @unique
   Url         Url[]
 }
 
