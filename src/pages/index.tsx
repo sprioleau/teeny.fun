@@ -165,7 +165,6 @@ export default function Home({ session }: Props) {
 					<HeroHeading />
 				</header>
 				<section className={styles.container}>
-					<button onClick={() => toast.success("A message")}>Toast me</button>
 					<UrlForm
 						destinationUrl={destinationUrl}
 						setDestinationUrl={setDestinationUrl}
