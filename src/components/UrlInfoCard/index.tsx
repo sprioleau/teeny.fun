@@ -3,6 +3,7 @@
 import { type Url } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
+import toast from "react-hot-toast";
 import { BiEditAlt } from "react-icons/bi";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiOutlineTrash, HiQrcode } from "react-icons/hi";
@@ -44,6 +45,7 @@ export default function UrlInfoCard({
 	const { mutateAsync: deleteById } = api.url.deleteById.useMutation({
 		onSuccess(_data, _variables, _context) {
 			void ctx.url.invalidate();
+			toast.success("Successfully deleted");
 		},
 	});
 

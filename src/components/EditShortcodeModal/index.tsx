@@ -1,5 +1,6 @@
 import { type Url } from "@prisma/client";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { FiArrowLeft } from "react-icons/fi";
 import useModal from "@/hooks/useModal";
 import { api } from "@/utils/api";
@@ -21,12 +22,12 @@ export default function EditShortcodeModal({ id }: Props) {
 	const { mutateAsync: updateCodeById } = api.url.updateCodeById.useMutation({
 		onSuccess(_data, _variables, _context) {
 			void ctx.url.invalidate();
+			toast.success("Successfully updated");
 			closeModal();
 		},
 		onError(error) {
 			if (!error?.shape) return;
-			console.error(error);
-			alert(error?.shape?.message);
+			toast.error(error.message);
 		},
 	});
 

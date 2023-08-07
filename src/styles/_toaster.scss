@@ -1,0 +1,8 @@
+@import "./mixins";
+
+div.toaster {
+	@include border;
+	@include shadow;
+	background-color: var(--color-off-white);
+	padding-left: 1em;
+}

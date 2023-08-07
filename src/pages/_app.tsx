@@ -2,6 +2,7 @@ import { type AppType } from "next/app";
 import { Modak, Space_Grotesk } from "next/font/google";
 import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 import { Footer, Modal, Navigation } from "@/components";
 import { ModalContextProvider } from "@/contexts";
 import { Page } from "@/layout";
@@ -39,6 +40,17 @@ const MyApp: AppType<{ session: Session | null }> = ({
 					</Page>
 					<Footer />
 					<Modal />
+					<Toaster
+						containerStyle={{ top: "calc(1.5em + var(--page-padding-y))" }}
+						toastOptions={{
+							className: "toaster",
+							duration: 3500,
+							ariaProps: {
+								role: "status",
+								"aria-live": "polite",
+							},
+						}}
+					/>
 				</div>
 			</ModalContextProvider>
 		</SessionProvider>

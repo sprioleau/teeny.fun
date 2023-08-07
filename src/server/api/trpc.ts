@@ -16,15 +16,18 @@
  */
 import { TRPCError, initTRPC } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
+import ip from "ip";
 import { type Session } from "next-auth";
 
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { env } from "@/env.mjs";
 import { getServerAuthSession } from "@/server/auth";
 import { prisma } from "@/server/db";
 
 type CreateContextOptions = {
 	session: Session | null;
+	ip: string;
 };
 
 /**
@@ -37,9 +40,10 @@ type CreateContextOptions = {
  *
  * @see https://create.t3.gg/en/usage/trpc#-serverapitrpcts
  */
-const createInnerTRPCContext = (opts: CreateContextOptions) => {
+const createInnerTRPCContext = ({ ip, session }: CreateContextOptions) => {
 	return {
-		session: opts.session,
+		ip,
+		session,
 		prisma,
 	};
 };
@@ -58,6 +62,7 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
 	return createInnerTRPCContext({
 		session,
+		ip: ip.address() ?? env.LOCALHOST_IP,
 	});
 };
 

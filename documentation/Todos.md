@@ -12,3 +12,6 @@
 - [x] Get session server side
 - [x] Update metadata if entry already exists to prevent duplicate metadata
 - [x] Enable editing shortlink
+- [x] Add rate limiting for link creation
+- [x] Add toast notification system
+- [ ] Fix OG Images not being pulled in correctly (See result for apple.com)

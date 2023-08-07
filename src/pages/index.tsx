@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import { useSession } from "next-auth/react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { UrlForm, UrlList } from "@/components";
 
 import HeroHeading from "@/components/HeroHeading";
@@ -78,12 +79,11 @@ export default function Home({ session }: Props) {
 				// void ctx.url.invalidate();
 			}
 
+			toast.success("Created successfully");
 			setDestinationUrl("");
 		},
-		onError(error, variables, _context) {
-			console.error(
-				`Error: ${error.message} \n\n Variables: ${JSON.stringify(variables, null, 2)}`
-			);
+		onError(error, _variables, _context) {
+			toast.error(error.message);
 		},
 	});
 
@@ -165,6 +165,7 @@ export default function Home({ session }: Props) {
 					<HeroHeading />
 				</header>
 				<section className={styles.container}>
+					<button onClick={() => toast.success("A message")}>Toast me</button>
 					<UrlForm
 						destinationUrl={destinationUrl}
 						setDestinationUrl={setDestinationUrl}

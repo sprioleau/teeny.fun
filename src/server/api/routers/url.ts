@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { PROJECT_REPO } from "@/constants";
+import { ratelimit } from "@/lib/upstash";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "@/server/api/trpc";
 import { emojiToCodePoints, generateShortCode, getEmojiStringLength } from "@/utils";
 
@@ -85,6 +86,15 @@ export const urlRouter = createTRPCRouter({
 			})
 		)
 		.mutation(async ({ input, ctx }) => {
+			const { success } = await ratelimit().limit(ctx.ip);
+
+			if (!success) {
+				throw new TRPCError({
+					code: "TOO_MANY_REQUESTS",
+					message: "Too many requests. Try again later.",
+				});
+			}
+
 			const code = generateShortCode();
 			const codePoints = emojiToCodePoints(code);
 
@@ -103,6 +113,7 @@ export const urlRouter = createTRPCRouter({
 
 			const metadata = await fetchMeta(input.destinationUrl);
 
+			// Add metadata entry
 			const newMetadata = await ctx.prisma.metadata.upsert({
 				where: {
 					url: input.destinationUrl,
@@ -111,6 +122,7 @@ export const urlRouter = createTRPCRouter({
 				create: metadata,
 			});
 
+			// Add URL
 			const newUrl = await ctx.prisma.url.create({
 				data: {
 					destinationUrl: input.destinationUrl,
