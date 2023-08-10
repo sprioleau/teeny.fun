@@ -19,8 +19,9 @@ export default function QrCodeModal({ qrCodeImageUrl, code }: Props) {
 				alt="qr-code"
 			/>
 			<p className={styles["short-url"]}>
-				<span>{`${getBaseUrl()}/`}</span>
-				<EmojiImage>{code}</EmojiImage>
+				<span>
+					{getBaseUrl()}/{<EmojiImage>{code}</EmojiImage>}
+				</span>
 			</p>
 		</div>
 	);

@@ -1,7 +1,6 @@
 generator client {
-  provider        = "prisma-client-js"
-  url             = "(function)"
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
+  url      = "(function)"
 }
 
 datasource db {

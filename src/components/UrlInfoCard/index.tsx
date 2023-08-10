@@ -69,6 +69,8 @@ export default function UrlInfoCard({
 		setQRCodeImageUrl(qrCode);
 	}
 
+	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
+
 	function handleCopyShortUrl() {
 		setCopyTooltipIsVisible(true);
 		void copyText(shortUrl);
@@ -78,8 +80,6 @@ export default function UrlInfoCard({
 	function handleDeletePrivateUrl() {
 		void deleteById({ id });
 	}
-
-	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
 
 	return (
 		<li
