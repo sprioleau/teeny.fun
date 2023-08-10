@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { type Url } from "@prisma/client";
+import { type Url } from "@prisma/client/edge";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";

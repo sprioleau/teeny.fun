@@ -1,4 +1,4 @@
-import { type Url } from "@prisma/client";
+import { type Url } from "@prisma/client/edge";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FiArrowLeft } from "react-icons/fi";

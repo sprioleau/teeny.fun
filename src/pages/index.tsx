@@ -1,4 +1,4 @@
-import { type Metadata, type Url } from "@prisma/client";
+import { type Metadata, type Url } from "@prisma/client/edge";
 import { type GetServerSidePropsContext, type InferGetServerSidePropsType } from "next";
 import Head from "next/head";
 

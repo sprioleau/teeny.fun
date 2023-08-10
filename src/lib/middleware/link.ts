@@ -1,4 +1,4 @@
-import { type Url } from "@prisma/client";
+import { type Url } from "@prisma/client/edge";
 import { type NextRequest, NextResponse } from "next/server";
 import { getBaseUrl } from "@/utils/api";
 
@@ -38,7 +38,7 @@ export const parse = (req: NextRequest) => {
 };
 
 export async function getUrlAndIncrementHits(code: string) {
-	const requestUrl = new URL("/api/url/increment", getBaseUrl());
+	const requestUrl = new URL("/api/edge/url/increment", getBaseUrl());
 	requestUrl.searchParams.set("code", code);
 	const res = await fetch(requestUrl.toString());
 	return (await res.json()) as { data: Url; error: string };

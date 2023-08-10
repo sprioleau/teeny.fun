@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
-import { type Url } from "@prisma/client";
+import { type Url } from "@prisma/client/edge";
 
 import { getBaseUrl } from "@/utils/api";
 import styles from "./index.module.scss";

@@ -1,6 +1,6 @@
 // Modified from https://github.com/luisivan/fetch-meta-tags/blob/master/rulesets.js
 
-import { type Metadata } from "@prisma/client";
+import { type Metadata } from "@prisma/client/edge";
 import { parse } from "node-html-parser";
 import { metadataRules } from "@/constants";
 

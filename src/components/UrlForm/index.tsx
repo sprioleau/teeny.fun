@@ -1,4 +1,4 @@
-import { type Url } from "@prisma/client";
+import { type Url } from "@prisma/client/edge";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import { FiArrowUpRight, FiLink2 } from "react-icons/fi";
