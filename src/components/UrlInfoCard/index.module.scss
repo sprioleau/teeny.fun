@@ -1,4 +1,4 @@
-@import "@/styles/mixins";
+@import "../../styles/mixins";
 
 .card {
 	--inside-border-radius: calc(var(--border-radius) - var(--border-width));

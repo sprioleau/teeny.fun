@@ -1,5 +1,5 @@
 import { Button, EmojiImage } from "@/components";
-import { topEmojis } from "@/constants";
+import { TOP_EMOJIS, TOP_EMOJIS } from "@/constants";
 
 import styles from "./index.module.scss";
 
@@ -8,7 +8,7 @@ type Props = { onEmojiClick: (emoji: string) => void };
 export default function TopEmojisPicker({ onEmojiClick }: Props) {
 	return (
 		<ul className={styles["top-emojis"]}>
-			{topEmojis.map((emoji) => (
+			{TOP_EMOJIS.map((emoji) => (
 				<li key={emoji}>
 					<Button
 						className={styles["top-emoji-button"]}

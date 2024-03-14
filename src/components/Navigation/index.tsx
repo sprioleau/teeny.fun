@@ -1,19 +1,13 @@
 import Link from "next/link";
-import { signOut, useSession } from "next-auth/react";
-import { AiOutlineUser } from "react-icons/ai";
+import Logo from "@/components/Logo";
+// import { AiOutlineUser } from "react-icons/ai";
+// import Button from "../Button";
+// import UserAvatar from "../UserAvatar";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import styles from "./index.module.scss";
-import Button from "../Button";
-import Logo from "../Logo";
-import UserAvatar from "../UserAvatar";
 
 export default function Navigation() {
-	const { data: session } = useSession();
-
-	async function handleSignOut() {
-		await signOut();
-	}
-
 	return (
 		<nav className={styles.nav}>
 			<div className={styles.logo}>
@@ -22,7 +16,13 @@ export default function Navigation() {
 				</Link>
 			</div>
 			<div className={styles.buttons}>
-				{!session ? (
+				<SignedOut>
+					<SignInButton mode="modal" />
+				</SignedOut>
+				<SignedIn>
+					<UserButton />
+				</SignedIn>
+				{/* {!session ? (
 					<Button
 						href="/auth/signin"
 						icon={<AiOutlineUser />}
@@ -38,7 +38,7 @@ export default function Navigation() {
 					>
 						Sign out
 					</Button>
-				)}
+				)} */}
 			</div>
 		</nav>
 	);

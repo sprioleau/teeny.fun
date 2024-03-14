@@ -1,43 +1,42 @@
-import { type Url } from "@prisma/client/edge";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FiArrowLeft } from "react-icons/fi";
 import useModal from "@/hooks/useModal";
-import { api } from "@/utils/api";
 import styles from "./index.module.scss";
 import Button from "../Button";
 import EmojiImage from "../EmojiImage";
 import TopEmojisPicker from "../TopEmojisPicker";
 
 type Props = {
-	id: Url["id"];
+	id: string;
+	// id: Url["id"];
 };
 
 export default function EditShortcodeModal({ id }: Props) {
 	const [emojiStringArray, setEmojiStringArray] = useState<string[]>([]);
 	const { close: closeModal } = useModal();
 
-	const ctx = api.useContext();
+	// const ctx = api.useContext();
 
-	const { mutateAsync: updateCodeById } = api.url.updateCodeById.useMutation({
-		onSuccess(_data, _variables, _context) {
-			void ctx.url.invalidate();
-			toast.success("Successfully updated");
-			closeModal();
-		},
-		onError(error) {
-			if (!error?.shape) return;
-			toast.error(error.message);
-		},
-	});
+	// const { mutateAsync: updateCodeById } = api.url.updateCodeById.useMutation({
+	// 	onSuccess(_data, _variables, _context) {
+	// 		void ctx.url.invalidate();
+	// 		toast.success("Successfully updated");
+	// 		closeModal();
+	// 	},
+	// 	onError(error) {
+	// 		if (!error?.shape) return;
+	// 		toast.error(error.message);
+	// 	},
+	// });
 
 	async function handleSubmit() {
 		if (emojiStringArray.length < 3 || emojiStringArray.length >= 6) return;
 
-		await updateCodeById({
-			id,
-			code: emojiStringArray.join(""),
-		});
+		// await updateCodeById({
+		// 	id,
+		// 	code: emojiStringArray.join(""),
+		// });
 	}
 
 	function handleRemoveEmoji() {

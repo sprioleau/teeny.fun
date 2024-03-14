@@ -1,32 +1,47 @@
 import { PlaceholderInfoCard, PublicLinkNotice, UrlInfoCard } from "@/components";
-import { type UrlWithMetadata } from "@/pages";
-import { api } from "@/utils/api";
+import { db } from "@/db";
+import { auth } from "@clerk/nextjs/server";
+
 import styles from "./index.module.scss";
 
-type Props = {
-	publicUrls: UrlWithMetadata[] | undefined;
-	userPrivateUrls: UrlWithMetadata[] | undefined;
-};
+// type Props = {
+// 	publicUrls: any[] | undefined; //UrlWithMetadata[] | undefined;
+// 	userPrivateUrls: any[] | undefined; //UrlWithMetadata[] | undefined;
+// };
 
-export default function UrlList({ publicUrls = [], userPrivateUrls = [] }: Props) {
-	const { data: projectRepoUrl } = api.url.getProjectRepoUrl.useQuery();
+export default async function UrlList() {
+	const { userId: authenticatedUserId } = auth();
 
-	const combinedUrls = [...publicUrls, ...userPrivateUrls];
+	if (!authenticatedUserId) return null;
 
-	const shouldDisplayRepoLink = projectRepoUrl && combinedUrls.length < 4;
+	const urls = await db.query.urls.findMany({
+		where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUserId),
+		with: {
+			metadata: true,
+		},
+	});
+
+	// const { data: projectRepoUrl } = api.url.getProjectRepoUrl.useQuery();
+
+	// const combinedUrls = [...publicUrls, ...userPrivateUrls];
+
+	// const shouldDisplayRepoLink = projectRepoUrl && combinedUrls.length < 4;
 
 	return (
 		<ul className={styles["url-list"]}>
-			{shouldDisplayRepoLink && (
+			<li>
+				<p>URLs</p>
+			</li>
+			{/* {shouldDisplayRepoLink && (
 				<UrlInfoCard
 					url={projectRepoUrl}
 					isProjectRepo
 				/>
-			)}
-			{combinedUrls.length === 0 && <PlaceholderInfoCard />}
-			{userPrivateUrls.length > 0 && (
+			)} */}
+			{/* {combinedUrls.length === 0 && <PlaceholderInfoCard />} */}
+			{urls?.length > 0 && (
 				<>
-					{userPrivateUrls.map((url) => (
+					{urls.map((url) => (
 						<UrlInfoCard
 							key={url.id}
 							url={url}
@@ -34,7 +49,7 @@ export default function UrlList({ publicUrls = [], userPrivateUrls = [] }: Props
 					))}
 				</>
 			)}
-			{publicUrls.length > 0 && (
+			{/* {publicUrls.length > 0 && (
 				<>
 					{publicUrls.map((url) => (
 						<UrlInfoCard
@@ -45,7 +60,7 @@ export default function UrlList({ publicUrls = [], userPrivateUrls = [] }: Props
 					))}
 					<PublicLinkNotice />
 				</>
-			)}
+			)} */}
 		</ul>
 	);
 }

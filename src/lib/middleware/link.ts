@@ -1,12 +1,15 @@
-import { type Url } from "@prisma/client/edge";
 import { type NextRequest, NextResponse } from "next/server";
-import { getBaseUrl } from "@/utils/api";
 
 // prettier-ignore
 export const HOME_HOSTNAMES = new Set([
 	"localhost:3000",
 	"teeny.fun",
 ]);
+
+// TODO: Update
+function getBaseUrl() {
+	return "/";
+}
 
 export default async function LinkMiddleware(req: NextRequest) {
 	const { domain, code } = parse(req);
@@ -41,5 +44,9 @@ export async function getUrlAndIncrementHits(code: string) {
 	const requestUrl = new URL("/api/edge/url/increment", getBaseUrl());
 	requestUrl.searchParams.set("code", code);
 	const res = await fetch(requestUrl.toString());
-	return (await res.json()) as { data: Url; error: string };
+	return (await res.json()) as {
+		// data: Url;
+		data: any;
+		error: string;
+	};
 }

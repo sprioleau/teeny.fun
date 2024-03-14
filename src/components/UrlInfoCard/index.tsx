@@ -1,7 +1,7 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 
-import { type Url } from "@prisma/client/edge";
-import { useSession } from "next-auth/react";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import { BiEditAlt } from "react-icons/bi";
@@ -9,18 +9,20 @@ import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiOutlineTrash, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
 import useModal from "@/hooks/useModal";
-import { type UrlWithMetadata } from "@/pages";
+// import { type UrlWithMetadata } from "@/__pages";
 import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "@/utils";
-import { api } from "@/utils/api";
 import styles from "./index.module.scss";
 import Button from "../Button";
 import EditShortcodeModal from "../EditShortcodeModal";
 import EmojiImage from "../EmojiImage";
 import QrCodeModal from "../QrCodeModal";
 import Tooltip from "../Tooltip";
+import { auth } from "@clerk/nextjs/server";
+import { useAuth } from "@clerk/nextjs";
 
 type Props = {
-	url: UrlWithMetadata;
+	url: any; // UrlWithMetadata;
+	// isAuthenticated: boolean;
 	style?: React.CSSProperties;
 	isPublic?: boolean;
 	isProjectRepo?: boolean;
@@ -29,6 +31,7 @@ type Props = {
 
 export default function UrlInfoCard({
 	url: { id, code, metadata, visits, destinationUrl },
+	// isAuthenticated = false,
 	style = {},
 	isPublic = false,
 	isProjectRepo = false,
@@ -39,15 +42,15 @@ export default function UrlInfoCard({
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
 
 	const { open: openModal } = useModal();
-	const { data: session } = useSession();
-	const ctx = api.useContext();
+	const { isLoaded: isAuthLoaded, userId } = useAuth();
+	// const ctx = api.useContext();
 
-	const { mutateAsync: deleteById } = api.url.deleteById.useMutation({
-		onSuccess(_data, _variables, _context) {
-			void ctx.url.invalidate();
-			toast.success("Successfully deleted");
-		},
-	});
+	// const { mutateAsync: deleteById } = api.url.deleteById.useMutation({
+	// 	onSuccess(_data, _variables, _context) {
+	// 		void ctx.url.invalidate();
+	// 		toast.success("Successfully deleted");
+	// 	},
+	// });
 
 	useEffect(() => {
 		if (!qrCodeImageUrl) return;
@@ -60,16 +63,20 @@ export default function UrlInfoCard({
 		);
 	}, [qrCodeImageUrl, openModal, code]);
 
-	function handleOpenEditShortcodeModal(id: Url["id"]) {
-		openModal(<EditShortcodeModal id={id} />);
+	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
+
+	if (!isAuthLoaded || !userId) {
+		return null;
 	}
+
+	// function handleOpenEditShortcodeModal(id: Url["id"]) {
+	// 	openModal(<EditShortcodeModal id={id} />);
+	// }
 
 	async function handleGenerateQRCode(url: string) {
 		const qrCode = await generateQRCode({ text: url });
 		setQRCodeImageUrl(qrCode);
 	}
-
-	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
 
 	function handleCopyShortUrl() {
 		setCopyTooltipIsVisible(true);
@@ -77,9 +84,9 @@ export default function UrlInfoCard({
 		setTimeout(() => setCopyTooltipIsVisible(false), 1500);
 	}
 
-	function handleDeletePrivateUrl() {
-		void deleteById({ id });
-	}
+	// function handleDeletePrivateUrl() {
+	// 	void deleteById({ id });
+	// }
 
 	return (
 		<li
@@ -169,15 +176,15 @@ export default function UrlInfoCard({
 								color="yellow"
 								title="Edit shortcode"
 								icon={<BiEditAlt />}
-								onClick={() => handleOpenEditShortcodeModal(id)}
+								// onClick={() => handleOpenEditShortcodeModal(id)}
 							/>
 						)}
-						{session && !isProjectRepo && (
+						{userId && !isProjectRepo && (
 							<Button
 								color="yellow"
 								title="Delete URL"
 								icon={<HiOutlineTrash />}
-								onClick={handleDeletePrivateUrl}
+								// onClick={handleDeletePrivateUrl}
 							/>
 						)}
 					</div>

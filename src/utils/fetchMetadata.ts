@@ -1,8 +1,8 @@
 // Modified from https://github.com/luisivan/fetch-meta-tags/blob/master/rulesets.js
 
-import { type Metadata } from "@prisma/client/edge";
 import { parse } from "node-html-parser";
 import { metadataRules } from "@/constants";
+import { Metadata } from "next";
 
 function readBody(body: Body["body"]): Promise<string> {
 	/* eslint-disable @typescript-eslint/no-misused-promises */
