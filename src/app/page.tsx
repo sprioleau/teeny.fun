@@ -1,6 +1,5 @@
-import { Modal, ServerUrlForm, UrlList } from "@/components";
+import { Modal, UrlForm, UrlList } from "@/components";
 import HeroHeading from "@/components/HeroHeading";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
 import styles from "./index.module.scss";
@@ -10,27 +9,23 @@ export default async function Home() {
 
 	const isAuthenticated = Boolean(authenticatedUserId);
 
+	const shouldDisableForm = false;
+	// const shouldDisableForm = localUrls.length >= 4 && !session;
+
 	return (
 		<>
 			<main className={styles.main}>
 				<header className={styles.header}>
 					<HeroHeading />
-					<SignedOut>
-						<SignInButton mode="modal" />
-					</SignedOut>
-					<SignedIn>
-						<UserButton />
-					</SignedIn>
 				</header>
-				<h1>teeny.fun</h1>
 				<section className={styles.container}>
-					<ServerUrlForm />
-					{/* <UrlForm
-						destinationUrl={destinationUrl}
-						setDestinationUrl={setDestinationUrl}
+					<UrlForm
+						// destinationUrl={destinationUrl}
+						// setDestinationUrl={setDestinationUrl}
+						isAuthenticated={Boolean(authenticatedUserId)}
 						disabled={shouldDisableForm}
-						onSubmit={handleSubmit}
-					/> */}
+						// onSubmit={handleSubmit}
+					/>
 					<UrlList />
 				</section>
 			</main>

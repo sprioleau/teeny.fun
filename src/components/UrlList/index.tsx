@@ -29,9 +29,6 @@ export default async function UrlList() {
 
 	return (
 		<ul className={styles["url-list"]}>
-			<li>
-				<p>URLs</p>
-			</li>
 			{/* {shouldDisplayRepoLink && (
 				<UrlInfoCard
 					url={projectRepoUrl}

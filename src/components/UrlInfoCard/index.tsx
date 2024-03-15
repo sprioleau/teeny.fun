@@ -17,7 +17,6 @@ import EditShortcodeModal from "../EditShortcodeModal";
 import EmojiImage from "../EmojiImage";
 import QrCodeModal from "../QrCodeModal";
 import Tooltip from "../Tooltip";
-import { auth } from "@clerk/nextjs/server";
 import { useAuth } from "@clerk/nextjs";
 
 type Props = {

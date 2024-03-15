@@ -1,11 +1,11 @@
 import Link from "next/link";
-import Logo from "@/components/Logo";
-// import { AiOutlineUser } from "react-icons/ai";
-// import Button from "../Button";
+import { Logo, Button } from "@/components";
+import { AiOutlineUser } from "react-icons/ai";
 // import UserAvatar from "../UserAvatar";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 
 import styles from "./index.module.scss";
+import UserAvatar from "../UserAvatar";
 
 export default function Navigation() {
 	return (
@@ -18,11 +18,25 @@ export default function Navigation() {
 			<div className={styles.buttons}>
 				<SignedOut>
 					<SignInButton mode="modal" />
+					<Button
+						href="/auth/signin"
+						icon={<AiOutlineUser />}
+						color="yellow"
+					>
+						Sign in
+					</Button>
 				</SignedOut>
 				<SignedIn>
 					<UserButton />
+					<Button
+						// onClick={() => console.log("sign out")}
+						icon={<UserAvatar />}
+						color="yellow"
+					>
+						Sign out
+					</Button>
 				</SignedIn>
-				{/* {!session ? (
+				{/* {isLoaded && !isSignedIn ? (
 					<Button
 						href="/auth/signin"
 						icon={<AiOutlineUser />}

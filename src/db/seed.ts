@@ -1,4 +1,3 @@
-// import { ENV } from "@/constants";
 import { db } from "@/db";
 import { emojiToCodePoints } from "@/utils";
 import { metadata, urls, users } from "./schema";

@@ -58,7 +58,10 @@ export default async function createUrl(formData: FormData) {
 	// TODO: abstract to function that includes fallbacks for title, image and icon, etc.
 	// Reference for fallbacks: https://github.com/mozilla/page-metadata-parser/blob/master/parser.js
 	const fetchedMetadata = await urlMetadata(destinationUrl);
-	const parsedMetadata = metadataSchema.safeParse({ ...fetchedMetadata, icon: fetchedMetadata.favicons?.[0].href });
+	const parsedMetadata = metadataSchema.safeParse({
+		...fetchedMetadata,
+		icon: fetchedMetadata.favicons?.[0].href,
+	});
 
 	if (!parsedMetadata.success || !parsedMetadata?.data) {
 		throw new Error("Metadata parsing unsuccessful");
