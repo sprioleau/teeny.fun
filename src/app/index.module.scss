@@ -6,7 +6,7 @@
 	align-items: center;
 	padding: var(--page-padding-y) calc(0.5 * var(--page-padding-x));
 	width: 100%;
-	overflow-y: auto;
+	height: calc(100dvh - 2 * var(--page-padding-y));
 	overflow-x: hidden;
 }
 
