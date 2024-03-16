@@ -9,9 +9,6 @@ export default async function Home() {
 
 	const isAuthenticated = Boolean(authenticatedUserId);
 
-	const shouldDisableForm = false;
-	// const shouldDisableForm = localUrls.length >= 4 && !session;
-
 	return (
 		<>
 			<main className={styles.main}>
@@ -19,13 +16,7 @@ export default async function Home() {
 					<HeroHeading />
 				</header>
 				<section className={styles.container}>
-					<UrlForm
-						// destinationUrl={destinationUrl}
-						// setDestinationUrl={setDestinationUrl}
-						isAuthenticated={Boolean(authenticatedUserId)}
-						disabled={shouldDisableForm}
-						// onSubmit={handleSubmit}
-					/>
+					<UrlForm />
 					<UrlList />
 				</section>
 			</main>
