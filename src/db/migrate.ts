@@ -1,8 +1,5 @@
-import { drizzle } from "drizzle-orm/neon-http";
 import { migrate } from "drizzle-orm/neon-http/migrator";
-import { sql } from "@/db";
-
-const db = drizzle(sql);
+import { db } from "@/db";
 
 async function runMigration() {
 	try {

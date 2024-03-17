@@ -23,7 +23,7 @@ export const urls = pgTable("urls", {
 	destinationUrl: text("destination_url").notNull(),
 	code: text("code").notNull(),
 	codePoints: text("code_points").unique().notNull(),
-	visits: integer("visits").default(0),
+	visits: integer("visits").default(0).notNull(),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 
