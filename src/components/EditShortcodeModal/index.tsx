@@ -1,20 +1,20 @@
+"use client";
+
+// import type { Url } from "@/db/types";
+// import useModal from "@/hooks/useModal";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { FiArrowLeft } from "react-icons/fi";
-import useModal from "@/hooks/useModal";
+import { Button, EmojiImage, TopEmojisPicker } from "@/components";
+
 import styles from "./index.module.scss";
-import Button from "../Button";
-import EmojiImage from "../EmojiImage";
-import TopEmojisPicker from "../TopEmojisPicker";
 
-type Props = {
-	id: string;
-	// id: Url["id"];
-};
+// type Props = {
+// 	id: Url["id"];
+// };
 
-export default function EditShortcodeModal({ id }: Props) {
+export default function EditShortcodeModal({ id }: any) {
 	const [emojiStringArray, setEmojiStringArray] = useState<string[]>([]);
-	const { close: closeModal } = useModal();
+	// const { close: closeModal } = useModal();
 
 	// const ctx = api.useContext();
 
@@ -30,14 +30,14 @@ export default function EditShortcodeModal({ id }: Props) {
 	// 	},
 	// });
 
-	async function handleSubmit() {
-		if (emojiStringArray.length < 3 || emojiStringArray.length >= 6) return;
+	// async function handleSubmit() {
+	// 	if (emojiStringArray.length < 3 || emojiStringArray.length >= 6) return;
 
-		// await updateCodeById({
-		// 	id,
-		// 	code: emojiStringArray.join(""),
-		// });
-	}
+	// 	await updateCodeById({
+	// 		id,
+	// 		code: emojiStringArray.join(""),
+	// 	});
+	// }
 
 	function handleRemoveEmoji() {
 		if (emojiStringArray.length === 0) return;
@@ -73,7 +73,7 @@ export default function EditShortcodeModal({ id }: Props) {
 						</Button>
 					)}
 					<Button
-						onClick={() => void handleSubmit()}
+						// onClick={() => void handleSubmit()}
 						disabled={emojiStringArray.length < 3}
 					>
 						Submit

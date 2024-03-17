@@ -1,31 +1,20 @@
-import { PlaceholderInfoCard, PublicLinkNotice, UrlInfoCard } from "@/components";
+import { UrlInfoCard } from "@/components";
 import { db } from "@/db";
-import { auth } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 
 import styles from "./index.module.scss";
 
-// type Props = {
-// 	publicUrls: any[] | undefined; //UrlWithMetadata[] | undefined;
-// 	userPrivateUrls: any[] | undefined; //UrlWithMetadata[] | undefined;
-// };
-
 export default async function UrlList() {
-	const { userId: authenticatedUserId } = auth();
+	const authenticatedUser = await currentUser();
 
-	if (!authenticatedUserId) return null;
+	if (!authenticatedUser) return null;
 
 	const urls = await db.query.urls.findMany({
-		where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUserId),
+		where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUser.id),
 		with: {
 			metadata: true,
 		},
 	});
-
-	// const { data: projectRepoUrl } = api.url.getProjectRepoUrl.useQuery();
-
-	// const combinedUrls = [...publicUrls, ...userPrivateUrls];
-
-	// const shouldDisplayRepoLink = projectRepoUrl && combinedUrls.length < 4;
 
 	return (
 		<ul className={styles["url-list"]}>
