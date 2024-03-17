@@ -1,5 +1,5 @@
 import { Button, EmojiImage } from "@/components";
-import { TOP_EMOJIS, TOP_EMOJIS } from "@/constants";
+import { TOP_EMOJIS } from "@/constants";
 
 import styles from "./index.module.scss";
 
