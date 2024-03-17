@@ -1,4 +1,4 @@
-import { TOP_EMOJIS, TOP_EMOJIS } from "@/constants";
+import { TOP_EMOJIS } from "@/constants";
 import pickRandomElement from "./pickRandomElement";
 
 export default function generateShortCode({ length = 3 }: { length?: number } = {}) {
