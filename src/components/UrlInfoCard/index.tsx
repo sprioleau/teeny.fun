@@ -1,20 +1,24 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { deleteUserUrlById } from "@/actions";
-import { UrlWithMetadata } from "@/db/types";
+/* eslint-disable @next/next/no-img-element */
+
+import { deleteUrlById } from "@/actions";
+import Button from "@/components/Button";
+import EditShortcodeModal from "@/components/EditShortcodeModal";
+import EmojiImage from "@/components/EmojiImage";
+import QrCodeModal from "@/components/QrCodeModal";
+import Tooltip from "@/components/Tooltip";
+import type { Url, UrlWithMetadata } from "@/db/types";
 import useModal from "@/hooks/useModal";
 import { copyText, formatQuantityString, generateQRCode } from "@/utils";
 import { useAuth } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiOutlineTrash, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
-import Button from "../Button";
-import EmojiImage from "../EmojiImage";
-import QrCodeModal from "../QrCodeModal";
-import Tooltip from "../Tooltip";
+import getShortUrl from "@/utils/getShortUrl";
+
 import styles from "./index.module.scss";
 
 type Props = {
@@ -35,7 +39,6 @@ export default function UrlInfoCard({
 	const fallbackFaviconSource = "/favicon.png";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
-	const [isVisible, setIsVisible] = useState(false);
 
 	const { open: openModal } = useModal();
 	const { isLoaded: isAuthLoaded, userId } = useAuth();
@@ -51,8 +54,7 @@ export default function UrlInfoCard({
 		);
 	}, [qrCodeImageUrl, openModal, code]);
 
-	// const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
-	const shortUrl = "https://short.com";
+	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
 
 	if (!isAuthLoaded || !userId) {
 		return null;
@@ -69,10 +71,9 @@ export default function UrlInfoCard({
 		setQRCodeImageUrl(qrCode);
 	}
 
-	// function handleOpenEditShortcodeModal(id: Url["id"]) {
-	// 	// console.log("Editing shortcode", id);
-	// 	// openModal(<EditShortcodeModal id={id} />);
-	// }
+	function handleOpenEditShortcodeModal(id: Url["id"]) {
+		openModal(<EditShortcodeModal id={id} />);
+	}
 
 	return (
 		<li
@@ -158,49 +159,15 @@ export default function UrlInfoCard({
 							}}
 						/>
 						{!isProjectRepo && (
-							// <form action={editUserUrlById}>
-							// 	<input
-							// 		type="hidden"
-							// 		hidden
-							// 		aria-hidden
-							// 		name="url-id"
-							// 		value={urlId}
-							// 	/>
-							// 	<input
-							// 		type="hidden"
-							// 		hidden
-							// 		aria-hidden
-							// 		name="code"
-							// 		value={urlId}
-							// 	/>
-							// 	<Button
-							// 		color="yellow"
-							// 		title="Edit shortcode"
-							// 		icon={<BiEditAlt />}
-							// 		type="submit"
-							// 	/>
-							// </form>
 							<Button
 								color="yellow"
 								title="Edit shortcode"
 								icon={<BiEditAlt />}
-								onClick={() => {
-									console.log("Edit shortcode");
-
-									setIsVisible(!isVisible);
-
-									// openModal(
-									// 	<p>
-									// 		Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci non
-									// 		repellendus quia mollitia dolor, at aut ad unde exercitationem explicabo!
-									// 	</p>
-									// );
-								}}
-								// type="submit"
+								onClick={() => handleOpenEditShortcodeModal(urlId)}
 							/>
 						)}
 						{userId && !isProjectRepo && (
-							<form action={deleteUserUrlById}>
+							<form action={deleteUrlById}>
 								<input
 									type="hidden"
 									hidden
@@ -218,7 +185,6 @@ export default function UrlInfoCard({
 						)}
 					</div>
 				)}
-				{/* {isVisible && <EditShortcodeModal id={urlId} />} */}
 			</footer>
 		</li>
 	);

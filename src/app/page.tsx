@@ -1,6 +1,9 @@
-import { Modal, UrlForm, UrlList } from "@/components";
 import HeroHeading from "@/components/HeroHeading";
+import Modal from "@/components/Modal";
+import UrlForm from "@/components/UrlForm";
+import UrlList from "@/components/UrlList";
 import { auth } from "@clerk/nextjs/server";
+import { Suspense } from "react";
 
 import styles from "./index.module.scss";
 
@@ -17,7 +20,9 @@ export default async function Home() {
 				</header>
 				<section className={styles.container}>
 					<UrlForm />
-					<UrlList />
+					<Suspense fallback={<p>Loading...</p>}>
+						<UrlList />
+					</Suspense>
 				</section>
 			</main>
 			<Modal isAuthenticated={isAuthenticated} />

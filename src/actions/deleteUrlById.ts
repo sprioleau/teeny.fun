@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { urls } from "@/db/schema";
-import { emojiToCodePoints, getParsedFormData } from "@/utils";
+import { getParsedFormData } from "@/utils";
 import { auth } from "@clerk/nextjs/server";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -10,10 +10,9 @@ import { z } from "zod";
 
 const formDataSchema = z.object({
 	"url-id": z.coerce.number(),
-	code: z.string().emoji("Only emojis are allowed").min(3).max(6),
 });
 
-export default async function editUserUrlById(formData: FormData) {
+export default async function deleteUrlById(formData: FormData) {
 	try {
 		const { userId: authenticatedUserId } = auth();
 
@@ -27,11 +26,7 @@ export default async function editUserUrlById(formData: FormData) {
 		});
 
 		await db
-			.update(urls)
-			.set({
-				code: parsedFormData["code"],
-				codePoints: emojiToCodePoints(parsedFormData["code"]),
-			})
+			.delete(urls)
 			.where(
 				and(eq(urls.id, parsedFormData["url-id"]), eq(urls.userAuthProviderId, authenticatedUserId))
 			);

@@ -1,5 +1,5 @@
-import { emojiToCodePoints } from "@/utils";
-import Image from "next/image";
+import Twemoji from "react-twemoji";
+
 import styles from "./index.module.scss";
 
 type Props = {
@@ -12,17 +12,16 @@ export default function EmojiImage({ children, className }: Props) {
 
 	return (
 		<span className={[styles["main"], className].join(" ").trim()}>
-			{emojiToCodePoints(children)
-				.split(" ")
-				.map((codePoints, index) => (
-					<Image
-						key={`${codePoints}-${index}`}
-						src={`https://cdn.jsdelivr.net/npm/@twemoji/svg@latest/${codePoints}.svg`}
-						alt={`${codePoints} emoji`}
-						width={24}
-						height={24}
-					/>
-				))}
+			<Twemoji
+				tag="span"
+				options={{
+					ext: ".svg",
+					folder: "svg",
+					className: "twemoji",
+				}}
+			>
+				{children}
+			</Twemoji>
 		</span>
 	);
 }

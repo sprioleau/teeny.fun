@@ -1,4 +1,5 @@
-import { Button, EmojiImage } from "@/components";
+import Button from "@/components/Button";
+import EmojiImage from "@/components/EmojiImage";
 import { TOP_EMOJIS } from "@/constants";
 
 import styles from "./index.module.scss";

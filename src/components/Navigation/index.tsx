@@ -1,5 +1,6 @@
+import Logo from "@/components/Logo";
+import SignInOutButtons from "@/components/SignInOutButtons";
 import Link from "next/link";
-import { Logo, SignInOutButtons } from "@/components";
 
 import styles from "./index.module.scss";
 

@@ -1,4 +1,4 @@
-import { UrlInfoCard } from "@/components";
+import UrlInfoCard from "@/components/UrlInfoCard";
 import { db } from "@/db";
 import { currentUser } from "@clerk/nextjs/server";
 

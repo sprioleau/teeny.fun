@@ -1,4 +1,5 @@
-import { Button, UserAvatar } from "@/components";
+import Button from "@/components/Button";
+import UserAvatar from "@/components/UserAvatar";
 import {
 	ClerkLoaded,
 	ClerkLoading,

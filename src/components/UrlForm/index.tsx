@@ -1,5 +1,6 @@
 import { createUrl } from "@/actions";
-import { Button, Tooltip } from "@/components";
+import Button from "@/components/Button";
+import Tooltip from "@/components/Tooltip";
 import { SubmitIcon } from "@/icons";
 import { auth } from "@clerk/nextjs/server";
 import { FiArrowUpRight, FiLink2 } from "react-icons/fi";

@@ -1,10 +1,10 @@
-import { Footer, Navigation } from "@/components";
+import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
 import { ModalContextProvider } from "@/contexts";
 import Page from "@/layout/Page";
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Modak, Space_Grotesk } from "next/font/google";
-import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 
 import "@/styles/globals.scss";

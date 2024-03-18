@@ -1,3 +1,3 @@
 export { default as createUrl } from "./createUrl";
-export { default as deleteUserUrlById } from "./deleteUserUrlById";
-export { default as editUserUrlById } from "./editUserUrlById";
+export { default as deleteUrlById } from "./deleteUrlById";
+export { default as updateShortcodeById } from "./updateShortcodeById";
