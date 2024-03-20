@@ -1,10 +1,10 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 
-// import { type Url } from "@prisma/client/edge";
-
-// import { getBaseUrl } from "@/utils/api";
-import styles from "./index.module.scss";
 import EmojiImage from "../EmojiImage";
+
+import styles from "./index.module.scss";
 
 type Props = {
 	qrCodeImageUrl: string;
@@ -20,7 +20,7 @@ export default function QrCodeModal({ qrCodeImageUrl, code }: Props) {
 			/>
 			<p className={styles["short-url"]}>
 				<span>
-					{/* {getBaseUrl()} */}/{<EmojiImage>{code}</EmojiImage>}
+					{new URL(window.location.href).origin}/{<EmojiImage>{code}</EmojiImage>}
 				</span>
 			</p>
 		</div>
