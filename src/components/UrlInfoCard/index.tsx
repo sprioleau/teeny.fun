@@ -56,7 +56,7 @@ export default function UrlInfoCard({
 
 	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
 
-	if (!isAuthLoaded || !userId) {
+	if (!isAuthLoaded) {
 		return null;
 	}
 

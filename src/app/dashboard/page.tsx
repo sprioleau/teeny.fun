@@ -1,16 +1,18 @@
 import HeroHeading from "@/components/HeroHeading";
 import Modal from "@/components/Modal";
-import PublicUrlList from "@/components/PublicUrlList";
 import UrlForm from "@/components/UrlForm";
 import UrlList from "@/components/UrlList";
 import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 
 import styles from "./index.module.scss";
 
-export default async function HomePage() {
+export default async function DashboardPage() {
 	const { userId: authenticatedUserId } = auth();
 
-	const isAuthenticated = Boolean(authenticatedUserId);
+	if (!authenticatedUserId) {
+		return redirect("/");
+	}
 
 	return (
 		<>
@@ -22,11 +24,10 @@ export default async function HomePage() {
 					<UrlForm />
 					{/* <Suspense fallback={<p>Loading...</p>}> */}
 					<UrlList />
-					<PublicUrlList />
 					{/* </Suspense> */}
 				</section>
 			</main>
-			<Modal isAuthenticated={isAuthenticated} />
+			<Modal isAuthenticated={Boolean(authenticatedUserId)} />
 		</>
 	);
 }

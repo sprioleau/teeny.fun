@@ -1,6 +1,7 @@
 import { relations } from "drizzle-orm";
-import { integer, serial, uuid } from "drizzle-orm/pg-core";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const users = pgTable("users", {
 	id: uuid("id").defaultRandom().primaryKey(),
@@ -8,6 +9,9 @@ export const users = pgTable("users", {
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
+
+export const userSelectSchema = createSelectSchema(users);
+export const userInsertSchema = createInsertSchema(users);
 
 export const metadata = pgTable("metadata", {
 	id: serial("id").primaryKey(),
@@ -17,6 +21,9 @@ export const metadata = pgTable("metadata", {
 	icon: text("icon"),
 	url: text("url"),
 });
+
+export const metadataSelectSchema = createSelectSchema(metadata);
+export const metadataInsertSchema = createInsertSchema(metadata);
 
 export const urls = pgTable("urls", {
 	id: serial("id").primaryKey(),
@@ -29,14 +36,23 @@ export const urls = pgTable("urls", {
 
 	userAuthProviderId: text("user_auth_provider_id").references(() => users.authProviderId),
 
-	userId: uuid("user_id")
-		.notNull()
-		.references(() => users.id),
+	userId: uuid("user_id").references(() => users.id),
 
 	metadataId: serial("metadata_id")
 		.notNull()
 		.references(() => metadata.id),
 });
+
+export const urlSelectSchema = createSelectSchema(urls);
+export const urlWithMetadataSelectSchema = urlSelectSchema
+	.merge(
+		z.object({
+			createdAt: z.coerce.date(),
+			updatedAt: z.coerce.date(),
+		})
+	)
+	.and(z.object({ metadata: metadataSelectSchema }));
+export const urlInsertSchema = createInsertSchema(urls);
 
 export const userRelations = relations(users, ({ many }) => ({
 	urls: many(urls),

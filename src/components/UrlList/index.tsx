@@ -3,18 +3,38 @@ import { db } from "@/db";
 import { currentUser } from "@clerk/nextjs/server";
 
 import styles from "./index.module.scss";
+import { Url } from "@/db/types";
+import { inArray, isNull } from "drizzle-orm";
 
 export default async function UrlList() {
 	const authenticatedUser = await currentUser();
 
 	if (!authenticatedUser) return null;
 
-	const urls = await db.query.urls.findMany({
-		where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUser.id),
-		with: {
-			metadata: true,
-		},
-	});
+	let urls: Url[] = [];
+
+	if (authenticatedUser.id) {
+		urls = await db.query.urls.findMany({
+			where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUser.id),
+			with: {
+				metadata: true,
+			},
+		});
+	} else {
+		urls = await db.query.urls.findMany({
+			// TODO: finish
+			where: (urls, { eq, and, or }) => and(isNull(urls.userId), inArray(urls.codePoints, [":"])),
+			with: {
+				metadata: true,
+			},
+		});
+	}
+	// const urls = await db.query.urls.findMany({
+	// 	where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUser.id),
+	// 	with: {
+	// 		metadata: true,
+	// 	},
+	// });
 
 	return (
 		<ul className={styles["url-list"]}>

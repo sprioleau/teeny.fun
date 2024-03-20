@@ -21,7 +21,10 @@ export default function SignInOutButtons() {
 			</ClerkLoading>
 			<ClerkLoaded>
 				<SignedOut>
-					<ClerkSignInButton mode="modal">
+					<ClerkSignInButton
+						mode="modal"
+						// afterSignInUrl="/dashboard"
+					>
 						<Button
 							icon={<AiOutlineUser />}
 							color="yellow"

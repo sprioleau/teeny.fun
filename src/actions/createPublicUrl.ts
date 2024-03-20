@@ -1,7 +1,8 @@
 "use server";
 
 import { db } from "@/db";
-import { users, metadata, urls } from "@/db/schema";
+import { metadata, urls, users } from "@/db/schema";
+import { Metadata, User } from "@/db/types";
 import { emojiToCodePoints, generateShortCode } from "@/utils";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
@@ -18,19 +19,30 @@ const metadataSchema = z
 	})
 	.optional();
 
-export default async function createUrl(formData: FormData) {
+export default async function createPublicUrl(formData: FormData) {
 	const destinationUrl = formData.get("destination-url");
 
 	if (!destinationUrl || typeof destinationUrl !== "string") {
 		throw new Error("Destination URL is required");
 	}
 
-	const { userId: authProviderId } = auth();
+	// const { userId: authProviderId } = auth();
 
-	if (!authProviderId) {
-		throw new Error("User is required");
-	}
+	// if (!authProviderId) {
+	// 	// TODO: Allow user to create URL anonymously
+	// 	throw new Error("User is required");
+	// }
 
+	// const dbUser = await getDbUser(authProviderId);
+
+	// Insert URL
+	const code = generateShortCode();
+
+	await createUrlWithMetadata({ destinationUrl, code, dbUser: null });
+}
+
+async function getDbUser(authProviderId: string) {
+	// Get User by Auth Provider ID
 	let dbUser = await db.query.users.findFirst({
 		where: (users, { eq }) => eq(users.authProviderId, authProviderId),
 	});
@@ -53,6 +65,18 @@ export default async function createUrl(formData: FormData) {
 		throw new Error("There was a problem adding user to DB");
 	}
 
+	return dbUser;
+}
+
+async function createUrlWithMetadata({
+	destinationUrl,
+	code,
+	dbUser,
+}: {
+	code: string;
+	destinationUrl: string;
+	dbUser: User | null;
+}) {
 	// Get URL Metadata
 	// TODO: Use a transaction
 	// TODO: abstract to function that includes fallbacks for title, image and icon, etc.
@@ -64,23 +88,40 @@ export default async function createUrl(formData: FormData) {
 	});
 
 	if (!parsedMetadata.success || !parsedMetadata?.data) {
+		// TODO: Handle error
 		throw new Error("Metadata parsing unsuccessful");
 	}
 
 	// Insert Metadata
 	const [persistedMetadata] = await db.insert(metadata).values(parsedMetadata.data).returning();
 
-	// Insert URL
-	const code = generateShortCode();
+	await insertUrl({
+		destinationUrl,
+		code,
+		dbUser,
+		metadata: persistedMetadata,
+	});
 
+	return persistedMetadata;
+}
+
+async function insertUrl({
+	destinationUrl,
+	code,
+	dbUser,
+	metadata,
+}: {
+	destinationUrl: string;
+	code: string;
+	dbUser: User | null;
+	metadata: Metadata;
+}) {
 	await db.insert(urls).values({
 		code,
 		codePoints: emojiToCodePoints(code),
 		destinationUrl,
-		userId: dbUser.id,
-		userAuthProviderId: dbUser.authProviderId,
-		metadataId: persistedMetadata?.id,
+		userId: dbUser?.id ?? null,
+		userAuthProviderId: dbUser?.authProviderId ?? null,
+		metadataId: metadata.id,
 	});
-
-	revalidatePath("/");
 }
