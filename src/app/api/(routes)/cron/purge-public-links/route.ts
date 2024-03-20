@@ -8,7 +8,7 @@ import { and, eq, isNull, lte, not } from "drizzle-orm";
 	Runs at 1:00PM UTC (9:00AM EST)
 */
 
-export const config = { runtime: "edge" };
+export const runtime = "edge";
 
 const MINUTES_UNTIL_RESET = 60 * 24; // 1 day
 const MILLISECONDS_PER_MINUTE = 1000 * 60; // Represents 1 minute in milliseconds

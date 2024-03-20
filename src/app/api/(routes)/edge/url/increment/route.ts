@@ -3,7 +3,7 @@ import { urls } from "@/db/schema";
 import { emojiToCodePoints } from "@/utils";
 import { eq, sql } from "drizzle-orm";
 
-export const config = { runtime: "edge" };
+export const runtime = "edge";
 
 // TODO: Validate with Zod
 export async function GET(request: Request) {
