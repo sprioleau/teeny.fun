@@ -27,5 +27,5 @@ export async function POST(request: Request) {
 		},
 	});
 
-	return Response.json({ publicUrls });
+	return Response.json({ publicUrls: publicUrls ?? [] }, { status: 200 });
 }

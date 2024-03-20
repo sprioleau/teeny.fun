@@ -5,3 +5,6 @@ Cannot use environment variables in drizle.config.ts
 
 Barrel files prevent next from properly splitting client and server code. So, server components and client components get exported from "src/components" and the DATABASE_URL ends up on the client.
 [https://github.com/vercel/next.js/discussions/50549](https://github.com/vercel/next.js/discussions/50549)
+
+Route Handlers throwing "Invalid URL" error
+[https://nextjs.org/docs/messages/invalid-page-config](https://nextjs.org/docs/messages/invalid-page-config)
