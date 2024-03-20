@@ -1,17 +1,17 @@
 import UrlInfoCard from "@/components/UrlInfoCard";
 import { db } from "@/db";
+import { UrlWithMetadata } from "@/db/types";
 import { currentUser } from "@clerk/nextjs/server";
+import { inArray, isNull } from "drizzle-orm";
 
 import styles from "./index.module.scss";
-import { Url } from "@/db/types";
-import { inArray, isNull } from "drizzle-orm";
 
 export default async function UrlList() {
 	const authenticatedUser = await currentUser();
 
 	if (!authenticatedUser) return null;
 
-	let urls: Url[] = [];
+	let urls: UrlWithMetadata[] = [];
 
 	if (authenticatedUser.id) {
 		urls = await db.query.urls.findMany({

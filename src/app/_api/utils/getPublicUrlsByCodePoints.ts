@@ -6,7 +6,7 @@ export default async function getPublicUrlsByCodePoints({
 }: {
 	codePointsArray: string[];
 }) {
-	const response = await fetch("/api/urls", {
+	const response = await fetch("/_api/urls", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
