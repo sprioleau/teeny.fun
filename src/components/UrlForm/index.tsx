@@ -1,48 +1,64 @@
-import { type Url } from "@prisma/client/edge";
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { FiArrowUpRight, FiLink2 } from "react-icons/fi";
-import { Button, Tooltip } from "@/components";
+"use client";
+
+import { createPrivateUrl } from "@/actions";
+import Button from "@/components/Button";
+import Tooltip from "@/components/Tooltip";
+import { DEFAULT_LOCAL_URLS_KEY } from "@/constants";
+import { useLocalStorage } from "@/hooks";
 import { SubmitIcon } from "@/icons";
+import { useAuth } from "@clerk/nextjs";
+import { FiArrowUpRight, FiLink2 } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+
 import styles from "./index.module.scss";
 
-type Props = {
-	destinationUrl: Url["destinationUrl"];
-	setDestinationUrl: React.Dispatch<React.SetStateAction<Url["destinationUrl"]>>;
-	disabled: boolean;
-	onSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
-};
+export default function UrlForm() {
+	// const { userId: authenticatedUserId } = auth();
+	const { userId: authenticatedUserId } = useAuth();
+	const [codePointsArray, setCodePointsArray] = useLocalStorage<string[]>(
+		DEFAULT_LOCAL_URLS_KEY,
+		[]
+	);
+	const router = useRouter();
 
-export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestinationUrl }: Props) {
-	const { data: session } = useSession();
-	const [formIsHovered, setFormIsHovered] = useState(false);
+	const shouldDisableForm = false;
+	// const shouldDisableForm = localUrls.length >= 4 && !session;
+
+	async function formSubmitAction(formData: FormData) {
+		const newUrl = await createPrivateUrl(formData);
+
+		setCodePointsArray([...new Set([...codePointsArray, newUrl.codePoints])]);
+
+		// revalidatePath("/");
+		router.refresh();
+	}
+	// async function formSubmitAction(formData: FormData) {
+	// 	"use server";
+	// 	return authenticatedUserId ? createPrivateUrl(formData) : createPublicUrl(formData);
+	// }
 
 	return (
 		<form
-			onSubmit={(e) => void onSubmit(e)}
+			action={formSubmitAction}
 			className={styles.form}
-			onMouseEnter={() => setFormIsHovered(true)}
-			onMouseLeave={() => setFormIsHovered(false)}
 		>
 			<span className={styles["link-icon"]}>
 				<FiLink2 />
 			</span>
 			<label
-				htmlFor="long-url"
+				htmlFor="destination-url"
 				className={styles.label}
 			>
 				Long URL
 			</label>
 			<input
 				type="text"
-				id="long-url"
-				name="long-url"
+				id="destination-url"
+				name="destination-url"
 				className={styles.input}
 				required
-				disabled={disabled}
+				disabled={shouldDisableForm}
 				placeholder="Paste in your link"
-				value={destinationUrl}
-				onChange={(e) => setDestinationUrl(e.target.value)}
 			/>
 			<Button
 				type="submit"
@@ -50,10 +66,10 @@ export default function UrlForm({ onSubmit, disabled, destinationUrl, setDestina
 				className={styles["submit-button"]}
 				icon={<SubmitIcon />}
 			/>
-			{!session && (
+			{!Boolean(authenticatedUserId) && (
 				<Tooltip
 					className={styles["tooltip"]}
-					isVisible={disabled && formIsHovered}
+					isVisible={shouldDisableForm}
 				>
 					<main className={styles["tooltip-main"]}>
 						<p>

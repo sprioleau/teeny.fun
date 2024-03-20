@@ -1,43 +1,39 @@
-import { type Url } from "@prisma/client/edge";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { FiArrowLeft } from "react-icons/fi";
+"use client";
+
+import { updateShortcodeById } from "@/actions";
+import Button from "@/components/Button";
+import EmojiImage from "@/components/EmojiImage";
+import TopEmojisPicker from "@/components/TopEmojisPicker";
+import type { Url } from "@/db/types";
 import useModal from "@/hooks/useModal";
-import { api } from "@/utils/api";
+import { useState } from "react";
+import { useFormStatus } from "react-dom";
+import { FiArrowLeft } from "react-icons/fi";
+
 import styles from "./index.module.scss";
-import Button from "../Button";
-import EmojiImage from "../EmojiImage";
-import TopEmojisPicker from "../TopEmojisPicker";
 
 type Props = {
 	id: Url["id"];
 };
 
-export default function EditShortcodeModal({ id }: Props) {
+export default function EditShortcodeModal({ id: urlId }: Props) {
 	const [emojiStringArray, setEmojiStringArray] = useState<string[]>([]);
 	const { close: closeModal } = useModal();
 
-	const ctx = api.useContext();
+	const { pending: isFormPending } = useFormStatus();
 
-	const { mutateAsync: updateCodeById } = api.url.updateCodeById.useMutation({
-		onSuccess(_data, _variables, _context) {
-			void ctx.url.invalidate();
-			toast.success("Successfully updated");
+	async function handleSubmit(formData: FormData) {
+		if (emojiStringArray.length < 3 || emojiStringArray.length > 6) return;
+
+		try {
+			await updateShortcodeById(formData);
+			setEmojiStringArray([]);
 			closeModal();
-		},
-		onError(error) {
-			if (!error?.shape) return;
-			toast.error(error.message);
-		},
-	});
-
-	async function handleSubmit() {
-		if (emojiStringArray.length < 3 || emojiStringArray.length >= 6) return;
-
-		await updateCodeById({
-			id,
-			code: emojiStringArray.join(""),
-		});
+			console.log("Shortcode updated");
+		} catch (caughtError) {
+			// TODO: Handle error
+			console.error(caughtError);
+		}
 	}
 
 	function handleRemoveEmoji() {
@@ -52,7 +48,10 @@ export default function EditShortcodeModal({ id }: Props) {
 
 	return (
 		<div className={styles["main"]}>
-			<div className={styles["form"]}>
+			<form
+				className={styles["form"]}
+				action={handleSubmit}
+			>
 				<div className={styles["emoji-string-display"]}>
 					{emojiStringArray.length === 0 && <p>Select 3-6 emojis</p>}
 					{emojiStringArray.map((emoji, index) => (
@@ -73,14 +72,28 @@ export default function EditShortcodeModal({ id }: Props) {
 							<FiArrowLeft />
 						</Button>
 					)}
+					<input
+						type="hidden"
+						hidden
+						aria-hidden
+						value={urlId}
+						name="url-id"
+					/>
+					<input
+						type="hidden"
+						hidden
+						aria-hidden
+						value={emojiStringArray.join("")}
+						name="code"
+					/>
 					<Button
-						onClick={() => void handleSubmit()}
-						disabled={emojiStringArray.length < 3}
+						type="submit"
+						disabled={emojiStringArray.length < 3 || isFormPending}
 					>
 						Submit
 					</Button>
 				</div>
-			</div>
+			</form>
 			<div className={styles["top-emojis-picker"]}>
 				<TopEmojisPicker onEmojiClick={handleAddEmoji} />
 			</div>

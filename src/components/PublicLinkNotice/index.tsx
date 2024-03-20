@@ -1,13 +1,25 @@
-import Link from "next/link";
+import { ClerkLoaded, SignUpButton as ClerkSignUpButton, SignedOut, useAuth } from "@clerk/nextjs";
+import { HiOutlineRocketLaunch } from "react-icons/hi2";
+import Button from "../Button";
+
 import styles from "./index.module.scss";
 
 export default function PublicLinkNotice() {
 	return (
-		<div className={styles["main"]}>
-			<p>
-				Note: Public links will be automatically-deleted after 24 hours.{" "}
-				<Link href="/auth/signin">Create a free account</Link> to keep your links forever.
-			</p>
-		</div>
+		<ClerkLoaded>
+			<SignedOut>
+				<div className={styles["main"]}>
+					<p>Public links will be automatically-deleted after 24 hours. </p>
+					<ClerkSignUpButton mode="modal">
+						<Button
+							icon={<HiOutlineRocketLaunch />}
+							color="blue"
+						>
+							Create a free account
+						</Button>
+					</ClerkSignUpButton>
+				</div>
+			</SignedOut>
+		</ClerkLoaded>
 	);
 }

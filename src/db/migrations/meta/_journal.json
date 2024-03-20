@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1710339347609,
+      "tag": "0000_jittery_madripoor",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1710344278889,
+      "tag": "0001_chemical_weapon_omega",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1710588440748,
+      "tag": "0002_bouncy_sage",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1710803833157,
+      "tag": "0003_breezy_dormammu",
+      "breakpoints": true
+    }
+  ]
+}

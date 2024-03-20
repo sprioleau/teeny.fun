@@ -1,12 +1,15 @@
 import Twemoji from "react-twemoji";
+
 import styles from "./index.module.scss";
 
 type Props = {
-	children: React.ReactNode;
+	children: string;
 	className?: string;
 };
 
 export default function EmojiImage({ children, className }: Props) {
+	if (!children || typeof children !== "string") return null;
+
 	return (
 		<span className={[styles["main"], className].join(" ").trim()}>
 			<Twemoji

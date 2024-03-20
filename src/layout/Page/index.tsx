@@ -1,5 +1,6 @@
-import { useSession } from "next-auth/react";
 import React from "react";
+import { auth } from "@clerk/nextjs/server";
+
 import styles from "./index.module.scss";
 
 type Props = {
@@ -7,10 +8,10 @@ type Props = {
 };
 
 export default function Page({ children }: Props) {
-	const { data: session } = useSession();
+	const { userId } = auth();
 
 	return (
-		<section className={[styles.page, session ? styles["authenticated"] : ""].join(" ")}>
+		<section className={[styles.page, userId ? styles["authenticated"] : ""].join(" ")}>
 			{children}
 		</section>
 	);

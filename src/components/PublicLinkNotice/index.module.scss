@@ -1,14 +1,19 @@
-@import "@/styles/mixins";
+@import "../../styles/mixins";
 
 .main {
 	@include double-drop-shadow;
 	@include border;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	gap: 0.5em;
 	border-radius: var(--border-radius);
 	background-color: var(--color-off-white);
 	font-size: 0.8em;
 	padding: 0.75em 1em;
 	color: rgba(var(--color-black-rgb), 0.8);
-	margin-top: 1em;
 
 	a {
 		color: var(--color-pink-a11y);

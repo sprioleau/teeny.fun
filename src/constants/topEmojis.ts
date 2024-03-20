@@ -1,6 +1,6 @@
 // Source: https://www.makeuseof.com/top-emojis-explained-cheat-sheet/
 // Removed emojis with multiple skin tones
-export default [
+export const TOP_EMOJIS = [
 	"😂",
 	"❤️",
 	"🤣",

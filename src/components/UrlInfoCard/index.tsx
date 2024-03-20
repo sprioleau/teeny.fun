@@ -1,23 +1,25 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 
-import { type Url } from "@prisma/client/edge";
-import { useSession } from "next-auth/react";
+import { deleteUrlById } from "@/actions";
+import Button from "@/components/Button";
+import EditShortcodeModal from "@/components/EditShortcodeModal";
+import EmojiImage from "@/components/EmojiImage";
+import QrCodeModal from "@/components/QrCodeModal";
+import Tooltip from "@/components/Tooltip";
+import type { Url, UrlWithMetadata } from "@/db/types";
+import useModal from "@/hooks/useModal";
+import { copyText, formatQuantityString, generateQRCode } from "@/utils";
+import { useAuth } from "@clerk/nextjs";
 import { useEffect, useMemo, useState } from "react";
-import toast from "react-hot-toast";
 import { BiEditAlt } from "react-icons/bi";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiOutlineTrash, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
-import useModal from "@/hooks/useModal";
-import { type UrlWithMetadata } from "@/pages";
-import { copyText, formatQuantityString, generateQRCode, getShortUrl } from "@/utils";
-import { api } from "@/utils/api";
+import getShortUrl from "@/utils/getShortUrl";
+
 import styles from "./index.module.scss";
-import Button from "../Button";
-import EditShortcodeModal from "../EditShortcodeModal";
-import EmojiImage from "../EmojiImage";
-import QrCodeModal from "../QrCodeModal";
-import Tooltip from "../Tooltip";
 
 type Props = {
 	url: UrlWithMetadata;
@@ -28,7 +30,7 @@ type Props = {
 };
 
 export default function UrlInfoCard({
-	url: { id, code, metadata, visits, destinationUrl },
+	url: { id: urlId, code, metadata, visits, destinationUrl },
 	style = {},
 	isPublic = false,
 	isProjectRepo = false,
@@ -39,15 +41,7 @@ export default function UrlInfoCard({
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
 
 	const { open: openModal } = useModal();
-	const { data: session } = useSession();
-	const ctx = api.useContext();
-
-	const { mutateAsync: deleteById } = api.url.deleteById.useMutation({
-		onSuccess(_data, _variables, _context) {
-			void ctx.url.invalidate();
-			toast.success("Successfully deleted");
-		},
-	});
+	const { isLoaded: isAuthLoaded, userId } = useAuth();
 
 	useEffect(() => {
 		if (!qrCodeImageUrl) return;
@@ -60,8 +54,16 @@ export default function UrlInfoCard({
 		);
 	}, [qrCodeImageUrl, openModal, code]);
 
-	function handleOpenEditShortcodeModal(id: Url["id"]) {
-		openModal(<EditShortcodeModal id={id} />);
+	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
+
+	if (!isAuthLoaded) {
+		return null;
+	}
+
+	function handleCopyShortUrl() {
+		setCopyTooltipIsVisible(true);
+		copyText(shortUrl);
+		setTimeout(() => setCopyTooltipIsVisible(false), 1500);
 	}
 
 	async function handleGenerateQRCode(url: string) {
@@ -69,16 +71,8 @@ export default function UrlInfoCard({
 		setQRCodeImageUrl(qrCode);
 	}
 
-	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
-
-	function handleCopyShortUrl() {
-		setCopyTooltipIsVisible(true);
-		void copyText(shortUrl);
-		setTimeout(() => setCopyTooltipIsVisible(false), 1500);
-	}
-
-	function handleDeletePrivateUrl() {
-		void deleteById({ id });
+	function handleOpenEditShortcodeModal(id: Url["id"]) {
+		openModal(<EditShortcodeModal id={id} />);
 	}
 
 	return (
@@ -169,16 +163,25 @@ export default function UrlInfoCard({
 								color="yellow"
 								title="Edit shortcode"
 								icon={<BiEditAlt />}
-								onClick={() => handleOpenEditShortcodeModal(id)}
+								onClick={() => handleOpenEditShortcodeModal(urlId)}
 							/>
 						)}
-						{session && !isProjectRepo && (
-							<Button
-								color="yellow"
-								title="Delete URL"
-								icon={<HiOutlineTrash />}
-								onClick={handleDeletePrivateUrl}
-							/>
+						{userId && !isProjectRepo && (
+							<form action={deleteUrlById}>
+								<input
+									type="hidden"
+									hidden
+									aria-hidden
+									name="url-id"
+									value={urlId}
+								/>
+								<Button
+									color="yellow"
+									title="Delete URL"
+									icon={<HiOutlineTrash />}
+									type="submit"
+								/>
+							</form>
 						)}
 					</div>
 				)}

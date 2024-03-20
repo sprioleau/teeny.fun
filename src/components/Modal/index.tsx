@@ -1,14 +1,18 @@
+"use client";
+
 import FocusTrap from "focus-trap-react";
-import { useSession } from "next-auth/react";
+import useModal from "@/hooks/useModal";
 import { useEffect } from "react";
 import { MdOutlineClose } from "react-icons/md";
-import useModal from "@/hooks/useModal";
-
-import styles from "./index.module.scss";
 import Button from "../Button";
 
-export default function Modal() {
-	const { data: session } = useSession();
+import styles from "./index.module.scss";
+
+type Props = {
+	isAuthenticated: boolean;
+};
+
+export default function Modal({ isAuthenticated }: Props) {
 	const { close: closeModal, modalContent } = useModal();
 
 	useEffect(() => {
@@ -27,7 +31,7 @@ export default function Modal() {
 		<FocusTrap>
 			<div
 				className={styles["backdrop"]}
-				data-is-authenticated={Boolean(session?.user?.id)}
+				data-is-authenticated={isAuthenticated}
 				onClick={closeModal}
 			>
 				<div
