@@ -4,6 +4,7 @@ import { Url } from "@/db/types";
 import { emojiToCodePoints } from "@/utils";
 import { eq, sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
+import { z } from "zod";
 
 export const congifg = { runtime: "edge" };
 
@@ -16,13 +17,21 @@ export const HOME_HOSTNAMES = new Set([
 // TODO: Update
 export default async function LinkMiddleware(request: NextRequest) {
 	const { domain, code } = parse(request);
-	console.log("🚀 ~ LinkMiddleware ~ code:", code);
 
-	if (!domain || !code || code.length === 0) {
+	const codeSchema = z.string().emoji("Only emojis are allowed").min(3).max(6);
+
+	const parsedCode = codeSchema.safeParse(code);
+
+	// If pathname is not a valid shortcode, go to next middleware
+	if (!parsedCode.success) {
 		return NextResponse.next();
 	}
 
-	const { data: urlData, error } = await getUrlAndIncrementHits(code);
+	if (!domain || !parsedCode.success) {
+		return NextResponse.next();
+	}
+
+	const { data: urlData, error } = await getUrlAndIncrementHits(parsedCode.data);
 
 	if (error || !urlData) {
 		console.error(error);
