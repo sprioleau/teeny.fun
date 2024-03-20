@@ -23,7 +23,7 @@ export default function SignInOutButtons() {
 				<SignedOut>
 					<ClerkSignInButton
 						mode="modal"
-						// afterSignInUrl="/dashboard"
+						afterSignInUrl="/dashboard"
 					>
 						<Button
 							icon={<AiOutlineUser />}
@@ -34,7 +34,7 @@ export default function SignInOutButtons() {
 					</ClerkSignInButton>
 				</SignedOut>
 				<SignedIn>
-					<ClerkSignOutButton>
+					<ClerkSignOutButton redirectUrl="/">
 						<Button icon={<UserAvatar />}>Sign Out</Button>
 					</ClerkSignOutButton>
 				</SignedIn>
