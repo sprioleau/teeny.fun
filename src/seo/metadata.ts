@@ -37,10 +37,10 @@ export const homepageMetadata: Metadata = {
 	// referrer: "origin-when-cross-origin",
 	icons: [
 		{
-			rel: "icon",
-			type: "image/png",
+			rel: "icon shortcut",
+			type: "image/x-icon",
 			sizes: "150x150",
-			url: "/favicon.png",
+			url: "/favicon.ico",
 		},
 	],
 	// manifest: "/manifest.json",
