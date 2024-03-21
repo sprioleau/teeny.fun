@@ -6,15 +6,16 @@ import Tooltip from "@/components/Tooltip";
 import { DEFAULT_LOCAL_URLS_KEY } from "@/constants";
 import { useLocalStorage } from "@/hooks";
 import { SubmitIcon } from "@/icons";
-import { useAuth } from "@clerk/nextjs";
+import { ClerkLoaded, SignUpButton as ClerkSignUpButton, SignedOut, useAuth } from "@clerk/nextjs";
 import { FiArrowUpRight, FiLink2 } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 
 import styles from "./index.module.scss";
 
 export default function UrlForm() {
-	// const { userId: authenticatedUserId } = auth();
 	const { userId: authenticatedUserId } = useAuth();
+
+	// TODO: Use localforage and make use of IndexedDB
 	const [codePointsArray, setCodePointsArray] = useLocalStorage<string[]>(
 		DEFAULT_LOCAL_URLS_KEY,
 		[]
@@ -22,20 +23,15 @@ export default function UrlForm() {
 	const router = useRouter();
 
 	const shouldDisableForm = false;
-	// const shouldDisableForm = localUrls.length >= 4 && !session;
+	// const shouldDisableForm = publicUrls.length >= 4 && !authenticatedUserId;
 
 	async function formSubmitAction(formData: FormData) {
 		const newUrl = await createPrivateUrl(formData);
 
 		setCodePointsArray([...new Set([...codePointsArray, newUrl.codePoints])]);
 
-		// revalidatePath("/");
 		router.refresh();
 	}
-	// async function formSubmitAction(formData: FormData) {
-	// 	"use server";
-	// 	return authenticatedUserId ? createPrivateUrl(formData) : createPublicUrl(formData);
-	// }
 
 	return (
 		<form
@@ -66,6 +62,8 @@ export default function UrlForm() {
 				className={styles["submit-button"]}
 				icon={<SubmitIcon />}
 			/>
+			{/* TODO: Add condition of publicUrls.length >= 4; bring in useQuery to get publicUrls */}
+			{/* TODO: Extract to separate component */}
 			{!Boolean(authenticatedUserId) && (
 				<Tooltip
 					className={styles["tooltip"]}
@@ -76,13 +74,21 @@ export default function UrlForm() {
 							Maximum number of links reached. Either delete existing links or create a free
 							account.
 						</p>
-						<Button
-							color="blue"
-							href="/auth/signin"
-							icon={<FiArrowUpRight />}
-						>
-							start for free
-						</Button>
+						<ClerkLoaded>
+							<SignedOut>
+								<div className={styles["main"]}>
+									<p>Public links will be automatically-deleted after 24 hours. </p>
+									<ClerkSignUpButton mode="modal">
+										<Button
+											color="blue"
+											icon={<FiArrowUpRight />}
+										>
+											Start for free
+										</Button>
+									</ClerkSignUpButton>
+								</div>
+							</SignedOut>
+						</ClerkLoaded>
 					</main>
 				</Tooltip>
 			)}
