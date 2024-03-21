@@ -8,3 +8,10 @@ Barrel files prevent next from properly splitting client and server code. So, se
 
 Route Handlers throwing "Invalid URL" error
 [https://nextjs.org/docs/messages/invalid-page-config](https://nextjs.org/docs/messages/invalid-page-config)
+
+Clerk - Deploying to production
+_This fixed the "Clerk: Failed to load Clerk" error in production_
+[https://clerk.com/docs/deployments/overview](https://clerk.com/docs/deployments/overview)
+
+Next.js App Router Metadata (favicon)
+[https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons)
