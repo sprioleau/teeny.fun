@@ -12,7 +12,7 @@ const baseOgConfig = {
 	description,
 	images: [
 		{
-			url: "/images/social-card.png",
+			url: "/_static/images/social-card.png",
 			width: 1200,
 			height: 630,
 			alt: description,
@@ -34,7 +34,7 @@ export const homepageMetadata: Metadata = {
 	description,
 	applicationName: "teeny.fun",
 	generator: "Next.js",
-	referrer: "origin-when-cross-origin",
+	// referrer: "origin-when-cross-origin",
 	icons: [
 		{
 			rel: "icon",
