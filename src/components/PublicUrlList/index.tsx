@@ -1,6 +1,6 @@
 "use client";
 
-import { getPublicUrlsByCodePoints } from "@/app/_api/utils";
+import { getPublicUrlsByCodePoints } from "@/app/(api)/utils";
 import UrlInfoCard from "@/components/UrlInfoCard";
 import { DEFAULT_LOCAL_URLS_KEY } from "@/constants";
 import { UrlWithMetadata } from "@/db/types";

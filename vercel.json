@@ -1,7 +1,7 @@
 {
 	"crons": [
 		{
-			"path": "/_api/cron/purge-public-links",
+			"path": "/cron/purge-public-links",
 			"schedule": "0 13 * * *"
 		}
 	]
