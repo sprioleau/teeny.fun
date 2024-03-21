@@ -17,34 +17,36 @@ Use [teeny.fun][deployed-url] to generate emoji-powered short links. Login to cu
 Clone this repo
 
 ```bash
-git clone https://github.com/sprioleau/teeny.fun.git
+git clone https://github.com/sprioleau/teeny.fun-v2.git
 ```
 
 Install via npm
 
 ```bash
-npm install
+pnpm install
 ```
 
 Run developemnt server
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
-## 🛠 Built With
+<!-- ## 🛠 Built With
 
-This app was botstrapped using [Create T3 App](https://create.t3.gg/)⭐️, which accelerated its development. It was important to have type safety across the network chasm and within a single repository, so I reached for the T3 stack and I was not disappointed. The specific tools I used are below.
+This app was botstrapped using [Create T3 App](https://create.t3.gg/)⭐️, which accelerated its development. It was important to have type safety across the network chasm and within a single repository, so I reached for the T3 stack and I was not disappointed. The specific tools I used are below. -->
 
 ### T3 Stack Technology
 
-| Technology                             | Used For                                                    |
-| :------------------------------------- | :---------------------------------------------------------- |
-| TypeScript                             | -                                                           |
-| [tRPC](https://trpc.io/)               | End-to-end type safety across the network chasm             |
-| [Next.js](https://nextjs.org/docs)     | Server/client communication, routing, server-side rendering |
-| [Next Auth](https://next-auth.js.org/) | User authentication                                         |
-| [Prisma](https://www.prisma.io/)       | PostgreSQL database                                         |
+| Technology                          | Used For                                                |
+| :---------------------------------- | :------------------------------------------------------ |
+| TypeScript                          | -                                                       |
+| [React](https://nextjs.org/docs)    | Server Components, HTML Streaming                       |
+| [Next.js](https://nextjs.org/docs)  | HTML Streaming Server/client communication, routing,    |
+| [Clerk](https://clerk.com)          | User authentication                                     |
+| [Drizzle](https://orm.drizzle.team) | Object-relational mapper with support for PostgreSQL    |
+| [Neon](https://neon.tech)           | Serverless PostgreSQL database                          |
+| [Vercel](https://www.vercel.com)    | Deployment host, middlewares, Cron jobs, edge functions |
 
 <!-- ## ⬆️ Future Updates
 
@@ -63,10 +65,6 @@ This app was botstrapped using [Create T3 App](https://create.t3.gg/)⭐️, whi
 Issues, and feature requests are welcome!
 
 Give a ⭐️ if you like this project!
-
-<!-- ## Acknowledgements
-
-- Inspired by [Brittany Chiang](https://github.com/bchiang7/v4) -->
 
 <!-- Author Details -->
 
