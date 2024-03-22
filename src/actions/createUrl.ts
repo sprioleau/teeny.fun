@@ -4,10 +4,11 @@ import { getUserByAuthProviderId } from "@/db/utils";
 import { generateShortCode, getParsedFormData } from "@/utils";
 import createUrlWithMetadata from "@/utils/db/createUrlWithMetadata";
 import { auth } from "@clerk/nextjs/server";
+import { revalidatePath } from "next/cache";
 import { createUrlSchema } from "./schemas";
 
-export default async function createPrivateUrl(formData: FormData) {
-	const { "destination-url": destinationUrl } = getParsedFormData({
+export default async function createUrl(formData: FormData) {
+	const { "destination-url": destinationUrl, clientKey } = getParsedFormData({
 		formData,
 		schema: createUrlSchema,
 	});
@@ -18,15 +19,15 @@ export default async function createPrivateUrl(formData: FormData) {
 
 	const { userId: authProviderId } = auth();
 
-	// if (!authProviderId) {
-	// 	// TODO: Allow user to create URL anonymously
-	// 	throw new Error("User is required");
-	// }
-
 	const dbUser = await getUserByAuthProviderId(authProviderId);
 
 	// Insert URL
-	const newUrl = await createUrlWithMetadata({ destinationUrl, code: generateShortCode(), dbUser });
+	await createUrlWithMetadata({
+		destinationUrl,
+		code: generateShortCode(),
+		dbUser,
+		clientKey,
+	});
 
-	return newUrl;
+	revalidatePath("/");
 }

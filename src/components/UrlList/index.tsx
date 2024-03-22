@@ -5,8 +5,10 @@ import { currentUser } from "@clerk/nextjs/server";
 import { inArray, isNull } from "drizzle-orm";
 
 import styles from "./index.module.scss";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function UrlList() {
+	noStore();
 	const authenticatedUser = await currentUser();
 
 	if (!authenticatedUser) return null;
@@ -23,7 +25,7 @@ export default async function UrlList() {
 	} else {
 		urls = await db.query.urls.findMany({
 			// TODO: finish
-			where: (urls, { eq, and, or }) => and(isNull(urls.userId), inArray(urls.codePoints, [":"])),
+			where: (urls, { and }) => and(isNull(urls.userId), inArray(urls.codePoints, [":"])),
 			with: {
 				metadata: true,
 			},

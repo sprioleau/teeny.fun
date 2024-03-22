@@ -15,11 +15,11 @@ export const userInsertSchema = createInsertSchema(users);
 
 export const metadata = pgTable("metadata", {
 	id: serial("id").primaryKey(),
+	url: text("url").unique().notNull(),
 	title: text("title"),
 	description: text("description"),
 	image: text("image"),
 	icon: text("icon"),
-	url: text("url"),
 });
 
 export const metadataSelectSchema = createSelectSchema(metadata);
@@ -27,6 +27,7 @@ export const metadataInsertSchema = createInsertSchema(metadata);
 
 export const urls = pgTable("urls", {
 	id: serial("id").primaryKey(),
+	clientKey: text("client_key"),
 	destinationUrl: text("destination_url").notNull(),
 	code: text("code").notNull(),
 	codePoints: text("code_points").unique().notNull(),

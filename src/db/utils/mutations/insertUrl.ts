@@ -8,11 +8,13 @@ export default async function insertUrl({
 	code,
 	metadataId,
 	dbUser = null,
+	clientKey,
 }: {
 	destinationUrl: string;
 	code: string;
 	metadataId: Metadata["id"];
 	dbUser?: User | null;
+	clientKey: string | null;
 }) {
 	return await db
 		.insert(urls)
@@ -21,6 +23,7 @@ export default async function insertUrl({
 			codePoints: emojiToCodePoints(code),
 			destinationUrl,
 			userId: dbUser?.id ?? null,
+			clientKey,
 			userAuthProviderId: dbUser?.authProviderId ?? null,
 			metadataId,
 		})

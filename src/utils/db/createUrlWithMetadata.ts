@@ -13,16 +13,23 @@ const metadataSchema = z
 		icon: z.string(),
 		url: z.string(),
 	})
-	.partial();
+	.partial({
+		title: true,
+		description: true,
+		image: true,
+		icon: true,
+	});
 
 export default async function createUrlWithMetadata({
 	destinationUrl,
 	code,
 	dbUser,
+	clientKey,
 }: {
 	code: string;
 	destinationUrl: string;
 	dbUser: User | null;
+	clientKey: string;
 }) {
 	// Get URL Metadata
 	// TODO: Use a transaction
@@ -31,7 +38,7 @@ export default async function createUrlWithMetadata({
 	const fetchedMetadata = await urlMetadata(destinationUrl);
 	const parsedMetadata = metadataSchema.safeParse({
 		...fetchedMetadata,
-		icon: fetchedMetadata.favicons?.[0]?.href,
+		icon: getFaviconUrl({ iconUrl: fetchedMetadata.favicons?.[0]?.href, destinationUrl }),
 	});
 
 	if (!parsedMetadata.success || !parsedMetadata?.data) {
@@ -40,14 +47,39 @@ export default async function createUrlWithMetadata({
 	}
 
 	// Insert Metadata
-	const [persistedMetadata] = await db.insert(metadata).values(parsedMetadata.data).returning();
+	const [persistedMetadata] = await db
+		.insert(metadata)
+		.values(parsedMetadata.data)
+		.onConflictDoUpdate({ target: metadata.url, set: parsedMetadata.data })
+		.returning();
 
 	const [insertedUrl] = await insertUrl({
 		destinationUrl,
 		code,
 		dbUser,
+		clientKey: Boolean(clientKey) ? clientKey : null, // Store
 		metadataId: persistedMetadata.id,
 	});
 
 	return insertedUrl;
+}
+
+function getFaviconUrl({
+	iconUrl,
+	destinationUrl,
+}: {
+	iconUrl: string | null;
+	destinationUrl: string;
+}) {
+	if (!iconUrl) return null;
+
+	if (iconUrl.startsWith("http")) return iconUrl;
+
+	try {
+		const urlObject = new URL(iconUrl, destinationUrl);
+		return urlObject.href;
+	} catch (error) {
+		console.log(error);
+		return null;
+	}
 }

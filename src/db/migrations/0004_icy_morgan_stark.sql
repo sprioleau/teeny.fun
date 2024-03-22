@@ -1,0 +1,1 @@
+ALTER TABLE "urls" ADD COLUMN "client_key" text;

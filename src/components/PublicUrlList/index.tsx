@@ -2,7 +2,7 @@
 
 import { getPublicUrlsByCodePoints } from "@/app/(api)/utils";
 import UrlInfoCard from "@/components/UrlInfoCard";
-import { DEFAULT_LOCAL_URLS_KEY } from "@/constants";
+import { DEFAULT_LOCAL_STORE_CLIENT_KEY } from "@/constants";
 import { UrlWithMetadata } from "@/db/types";
 import { useLocalStorage } from "@/hooks";
 import { useEffect, useState } from "react";
@@ -12,12 +12,13 @@ import styles from "./index.module.scss";
 
 export default function PublicUrlList() {
 	const [publicUrls, setPublicUrls] = useState<UrlWithMetadata[]>([]);
-	const [codePointsArray] = useLocalStorage<string[]>(DEFAULT_LOCAL_URLS_KEY, []);
+	const [clientKey] = useLocalStorage<string>(DEFAULT_LOCAL_STORE_CLIENT_KEY, "");
 
 	useEffect(() => {
-		if (codePointsArray.length === 0) return;
-		getPublicUrlsByCodePoints({ codePointsArray }).then(setPublicUrls);
-	}, [codePointsArray]);
+		// if (codePointsArray.length === 0) return;
+		if (!clientKey) return;
+		getPublicUrlsByCodePoints({ clientKey }).then(setPublicUrls);
+	}, [clientKey]);
 
 	return (
 		<>
