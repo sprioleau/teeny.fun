@@ -15,3 +15,6 @@ _This fixed the "Clerk: Failed to load Clerk" error in production_
 
 Next.js App Router Metadata (favicon)
 [https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons](https://nextjs.org/docs/app/api-reference/file-conventions/metadata/app-icons)
+
+Next.js App Router Favion not being recognized
+[https://github.com/vercel/next.js/issues/52813](https://github.com/vercel/next.js/issues/52813)
