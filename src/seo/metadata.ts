@@ -34,15 +34,11 @@ export const homepageMetadata: Metadata = {
 	description,
 	applicationName: "teeny.fun",
 	generator: "Next.js",
-	// referrer: "origin-when-cross-origin",
-	icons: [
-		{
-			rel: "icon shortcut",
-			type: "image/x-icon",
-			sizes: "150x150",
-			url: "/favicon.ico",
-		},
-	],
+	referrer: "origin-when-cross-origin",
+	icons: {
+		icon: "/favicon.ico",
+		shortcut: "/_static/images/favicon.png",
+	},
 	// manifest: "/manifest.json",
 	keywords,
 	authors: [{ name: fullName, url: baseUrl }],
