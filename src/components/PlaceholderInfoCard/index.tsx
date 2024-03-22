@@ -15,13 +15,14 @@ export default function PlaceholderInfoCard() {
 				updatedAt: new Date(),
 				userId: "user",
 				metadataId: 0,
+				clientKey: "clientKey",
 				metadata: {
 					id: 0,
 					title: null,
 					description: null,
 					image: null,
 					icon: null,
-					url: null,
+					url: "https://your-destination-url.com",
 				},
 			}}
 			isPlaceholder
