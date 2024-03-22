@@ -3,9 +3,9 @@ import { db } from "@/db";
 import { UrlWithMetadata } from "@/db/types";
 import { currentUser } from "@clerk/nextjs/server";
 import { inArray, isNull } from "drizzle-orm";
+import { unstable_noStore as noStore } from "next/cache";
 
 import styles from "./index.module.scss";
-import { unstable_noStore as noStore } from "next/cache";
 
 export default async function UrlList() {
 	noStore();

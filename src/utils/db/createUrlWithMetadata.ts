@@ -10,7 +10,7 @@ const metadataSchema = z
 		title: z.string(),
 		description: z.string(),
 		image: z.string(),
-		icon: z.string(),
+		icon: z.string().nullable(),
 		url: z.string(),
 	})
 	.partial({
@@ -41,8 +41,9 @@ export default async function createUrlWithMetadata({
 		icon: getFaviconUrl({ iconUrl: fetchedMetadata.favicons?.[0]?.href, destinationUrl }),
 	});
 
-	if (!parsedMetadata.success || !parsedMetadata?.data) {
+	if (!parsedMetadata.success) {
 		// TODO: Handle error
+		console.error(parsedMetadata.error.issues);
 		throw new Error("Metadata parsing unsuccessful");
 	}
 

@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import LoadingIcon from "../LoadingIcon";
 
 import styles from "./index.module.scss";
 
 export type ButtonColor = "yellow" | "pink" | "blue";
 
 type Props = {
+	isLoading?: boolean;
 	as?: "button" | "a";
 	href?: string;
 	icon?: ReactNode;
@@ -23,6 +25,7 @@ const externalLinkAttributes: Pick<React.ComponentPropsWithoutRef<"a">, "target"
 };
 
 export default function Button({
+	isLoading,
 	as: Tag = "button",
 	href,
 	icon,
@@ -56,7 +59,7 @@ export default function Button({
 			{...additionalAttributes}
 			{...rest}
 		>
-			{icon && <span className={styles.icon}>{icon}</span>}
+			{icon && <span className={styles.icon}>{isLoading ? <LoadingIcon /> : icon}</span>}
 			{Tag === "a" ? (
 				<>
 					<span style={{ display: "flex", alignItems: "baseline" }}>{children}</span>

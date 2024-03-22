@@ -13,6 +13,7 @@ export default function Navigation() {
 				</Link>
 			</div>
 			<div className={styles.buttons}>
+				{/* TODO: Use signIn function to connect clientKey to user */}
 				<SignInOutButtons />
 			</div>
 		</nav>

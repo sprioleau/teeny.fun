@@ -8,16 +8,15 @@ import {
 	SignedIn,
 	SignedOut,
 } from "@clerk/nextjs";
-import { AiOutlineLoading, AiOutlineUser } from "react-icons/ai";
-
-import styles from "./index.module.scss";
+import { AiOutlineUser } from "react-icons/ai";
+import LoadingIcon from "../LoadingIcon";
 
 export default function SignInOutButtons() {
 	return (
 		<>
 			<ClerkLoading>
 				{/* TODO: Animate if not alread done */}
-				<AiOutlineLoading className={styles["loading-icon"]} />
+				<LoadingIcon />
 			</ClerkLoading>
 			<ClerkLoaded>
 				<SignedOut>

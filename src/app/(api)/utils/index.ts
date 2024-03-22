@@ -1,1 +1,1 @@
-export { default as getPublicUrlsByCodePoints } from "./getPublicUrlsByCodePoints";
+export { default as getPublicUrlsByClientKey } from "./getPublicUrlsByClientKey";
