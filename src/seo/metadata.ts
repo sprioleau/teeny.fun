@@ -40,7 +40,7 @@ export const homepageMetadata: Metadata = {
 			rel: "icon shortcut",
 			type: "image/x-icon",
 			sizes: "150x150",
-			url: "/icon.ico",
+			url: "/favicon.ico",
 		},
 	],
 	// manifest: "/manifest.json",
