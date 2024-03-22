@@ -14,6 +14,8 @@ import styles from "./index.module.scss";
 export default function PublicUrlList() {
 	noStore();
 	const [publicUrls, setPublicUrls] = useState<UrlWithMetadata[]>([]);
+
+	// TODO: Use cookies to get/set clientKey
 	const [clientKey] = useLocalStorage<string>(DEFAULT_LOCAL_STORE_CLIENT_KEY, "");
 
 	useEffect(() => {

@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { isNull } from "drizzle-orm";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge";
 
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
@@ -20,5 +21,5 @@ export async function GET(request: Request) {
 		},
 	});
 
-	return Response.json({ publicUrls: publicUrls ?? [] }, { status: 200 });
+	return Response.json({ publicUrls }, { status: 200 });
 }
