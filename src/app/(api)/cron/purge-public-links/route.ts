@@ -13,7 +13,16 @@ export const runtime = "edge";
 const MINUTES_UNTIL_RESET = 60 * 24; // 1 day
 const MILLISECONDS_PER_MINUTE = 1000 * 60; // Represents 1 minute in milliseconds
 
-export async function GET() {
+export async function GET(request: Request) {
+	const authorizationHeader = request.headers.get("Authorization");
+
+	// Reference: https://vercel.com/docs/cron-jobs/manage-cron-jobs#securing-cron-jobs
+	if (authorizationHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+		return new Response("Unauthorized", {
+			status: 401,
+		});
+	}
+
 	const millisecondsToExpire = MILLISECONDS_PER_MINUTE * MINUTES_UNTIL_RESET;
 	const dateExpired = new Date(Date.now() - millisecondsToExpire);
 
