@@ -1,27 +1,26 @@
-"use client";
-
-import { getPublicUrlsByClientKey } from "@/app/(api)/utils";
 import UrlInfoCard from "@/components/UrlInfoCard";
-import { DEFAULT_LOCAL_STORE_CLIENT_KEY } from "@/constants";
-import { UrlWithMetadata } from "@/db/types";
-import { useLocalStorage } from "@/hooks";
-import { unstable_noStore as noStore } from "next/cache";
-import { useEffect, useState } from "react";
+import { PERSISTED_CLIENT_KEY } from "@/constants";
+import { db } from "@/db";
+import { isNull } from "drizzle-orm/expressions";
+import { cookies } from "next/headers";
 import PublicLinkNotice from "../PublicLinkNotice";
 
 import styles from "./index.module.scss";
 
-export default function PublicUrlList() {
-	noStore();
-	const [publicUrls, setPublicUrls] = useState<UrlWithMetadata[]>([]);
+export default async function PublicUrlList() {
+	const clientKey = cookies().get(PERSISTED_CLIENT_KEY)?.value;
 
-	// TODO: Use cookies to get/set clientKey
-	const [clientKey] = useLocalStorage<string>(DEFAULT_LOCAL_STORE_CLIENT_KEY, "");
+	if (!clientKey || typeof clientKey !== "string") {
+		return null;
+	}
 
-	useEffect(() => {
-		if (!clientKey) return;
-		getPublicUrlsByClientKey({ clientKey }).then(setPublicUrls);
-	}, [clientKey]);
+	const publicUrls = await db.query.urls.findMany({
+		where: (urls, { and, eq }) =>
+			and(isNull(urls.userAuthProviderId), eq(urls.clientKey, clientKey)),
+		with: {
+			metadata: true,
+		},
+	});
 
 	return (
 		<>

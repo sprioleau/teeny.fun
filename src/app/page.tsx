@@ -10,8 +10,6 @@ import styles from "./index.module.scss";
 export default async function HomePage() {
 	const { userId: authenticatedUserId } = auth();
 
-	const isAuthenticated = Boolean(authenticatedUserId);
-
 	return (
 		<>
 			<main className={styles.main}>
@@ -26,7 +24,7 @@ export default async function HomePage() {
 					{/* </Suspense> */}
 				</section>
 			</main>
-			<Modal isAuthenticated={isAuthenticated} />
+			<Modal isAuthenticated={Boolean(authenticatedUserId)} />
 		</>
 	);
 }

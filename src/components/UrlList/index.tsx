@@ -1,9 +1,11 @@
 import UrlInfoCard from "@/components/UrlInfoCard";
+import { PERSISTED_CLIENT_KEY } from "@/constants";
 import { db } from "@/db";
 import { UrlWithMetadata } from "@/db/types";
 import { currentUser } from "@clerk/nextjs/server";
-import { inArray, isNull } from "drizzle-orm";
+import { isNull } from "drizzle-orm";
 import { unstable_noStore as noStore } from "next/cache";
+import { cookies } from "next/headers";
 
 import styles from "./index.module.scss";
 
@@ -15,28 +17,20 @@ export default async function UrlList() {
 
 	let urls: UrlWithMetadata[] = [];
 
-	if (authenticatedUser.id) {
-		urls = await db.query.urls.findMany({
-			where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUser.id),
-			with: {
-				metadata: true,
-			},
-		});
-	} else {
-		urls = await db.query.urls.findMany({
-			// TODO: finish
-			where: (urls, { and }) => and(isNull(urls.userId), inArray(urls.codePoints, [":"])),
-			with: {
-				metadata: true,
-			},
-		});
-	}
-	// const urls = await db.query.urls.findMany({
-	// 	where: (urls, { eq }) => eq(urls.userAuthProviderId, authenticatedUser.id),
-	// 	with: {
-	// 		metadata: true,
-	// 	},
-	// });
+	const clientKey = cookies().get(PERSISTED_CLIENT_KEY)?.value ?? "";
+
+	urls = await db.query.urls.findMany({
+		where: (urls, { eq, and }) =>
+			and(
+				authenticatedUser.id
+					? eq(urls.userAuthProviderId, authenticatedUser.id)
+					: isNull(urls.userAuthProviderId),
+				eq(urls.clientKey, clientKey)
+			),
+		with: {
+			metadata: true,
+		},
+	});
 
 	return (
 		<ul className={styles["url-list"]}>

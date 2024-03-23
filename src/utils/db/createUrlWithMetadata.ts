@@ -54,6 +54,10 @@ export default async function createUrlWithMetadata({
 		.onConflictDoUpdate({ target: metadata.url, set: parsedMetadata.data })
 		.returning();
 
+	if (!clientKey || typeof clientKey !== "string") {
+		return Response.json({ error: "Invalid client key" }, { status: 400 });
+	}
+
 	const [insertedUrl] = await insertUrl({
 		destinationUrl,
 		code,
