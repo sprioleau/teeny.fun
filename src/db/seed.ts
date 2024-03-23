@@ -27,6 +27,7 @@ async function seed() {
 				{
 					title: "S. Prioleau",
 					description: "Personal Website of San'Quan Prioleau, Senior Frontend Engineer",
+					url: "https://sprioleau.dev",
 				},
 			])
 			.returning();
