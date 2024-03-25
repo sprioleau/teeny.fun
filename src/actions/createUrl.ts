@@ -1,7 +1,7 @@
 "use server";
 
 import { getUserByAuthProviderId } from "@/db/utils";
-import { generateShortCode, getParsedFormData } from "@/utils";
+import { getParsedFormData } from "@/utils";
 import createUrlWithMetadata from "@/utils/db/createUrlWithMetadata";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
@@ -12,7 +12,7 @@ import { cookies } from "next/headers";
 export default async function createUrl(formData: FormData) {
 	const clientKey = cookies().get(PERSISTED_CLIENT_KEY)?.value ?? crypto.randomUUID();
 
-	const { "destination-url": destinationUrl } = getParsedFormData({
+	const { "destination-url": destinationUrl, code } = getParsedFormData({
 		formData,
 		schema: createUrlSchema,
 	});
@@ -28,7 +28,7 @@ export default async function createUrl(formData: FormData) {
 	// Insert URL
 	await createUrlWithMetadata({
 		destinationUrl,
-		code: generateShortCode(),
+		code,
 		dbUser,
 		clientKey,
 	});
