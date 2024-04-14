@@ -121,7 +121,7 @@ export default function UrlForm({ urls }: Props) {
 					icon={isPending ? <LoadingIcon /> : <SubmitIcon />}
 				/>
 			</form>
-			<PublicLinkNotice />
+			{optimisticUrls.length > 0 && <PublicLinkNotice />}
 			{optimisticUrls?.length > 0 && (
 				<ul className={styles["url-list"]}>
 					{optimisticUrls.map((url) => (
