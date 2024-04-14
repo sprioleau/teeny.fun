@@ -1,4 +1,4 @@
-import Twemoji from "react-twemoji";
+import { Twemoji } from "react-emoji-render";
 
 import styles from "./index.module.scss";
 
@@ -13,15 +13,13 @@ export default function EmojiImage({ children, className }: Props) {
 	return (
 		<span className={[styles["main"], className].join(" ").trim()}>
 			<Twemoji
-				tag="span"
+				text={children}
 				options={{
-					ext: ".svg",
-					folder: "svg",
-					className: "twemoji",
+					protocol: "https",
+					ext: "svg",
 				}}
-			>
-				{children}
-			</Twemoji>
+				svg
+			/>
 		</span>
 	);
 }
