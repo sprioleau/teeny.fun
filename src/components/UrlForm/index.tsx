@@ -2,11 +2,12 @@
 
 import { createUrl } from "@/actions";
 import { createUrlSchema } from "@/actions/schemas";
+import { ERROR_MESSAGES } from "@/constants";
 import { UrlWithMetadata } from "@/db/types";
 import { SubmitIcon } from "@/icons";
 import { emojiToCodePoints, generateShortCode, getParsedFormData } from "@/utils";
 import { useAuth } from "@clerk/nextjs";
-import { useOptimistic, useRef } from "react";
+import { useOptimistic, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { FiLink2 } from "react-icons/fi";
 import Button from "../Button";
@@ -25,6 +26,7 @@ export default function UrlForm({ urls }: Props) {
 
 	const formRef = useRef<HTMLFormElement>(null);
 	const { pending: isPending } = useFormStatus();
+	const [errorMessage, setErrorMessage] = useState<string | undefined>();
 	const [optimisticUrls, addOptimisticUrl] = useOptimistic(
 		urls,
 		(currentState, { destinationUrl, code }) => {
@@ -63,22 +65,32 @@ export default function UrlForm({ urls }: Props) {
 	async function handleSubmit(formData: FormData) {
 		if (hasReachedPublicUrlLimit) return;
 
-		const { "destination-url": destinationUrl, code } = getParsedFormData({
-			formData,
-			schema: createUrlSchema,
-		});
+		try {
+			const { "destination-url": destinationUrl, code } = getParsedFormData({
+				formData,
+				schema: createUrlSchema,
+			});
 
-		// Add optimistic URL
-		addOptimisticUrl({
-			destinationUrl,
-			code,
-		});
+			setErrorMessage(undefined);
 
-		// Reset form
-		formRef.current?.reset();
+			// Add optimistic URL
+			addOptimisticUrl({
+				destinationUrl,
+				code,
+			});
 
-		// Create URL
-		await createUrl(formData);
+			// Reset form
+			formRef.current?.reset();
+
+			// Create URL
+			await createUrl(formData);
+		} catch (caughtError) {
+			if (caughtError instanceof Error && caughtError.message === ERROR_MESSAGES.INVALID_URL) {
+				setErrorMessage(caughtError.message);
+			} else {
+				setErrorMessage("An error occurred. Please try again later.");
+			}
+		}
 	}
 
 	return (
@@ -121,6 +133,7 @@ export default function UrlForm({ urls }: Props) {
 					icon={isPending ? <LoadingIcon /> : <SubmitIcon />}
 				/>
 			</form>
+			{errorMessage && <p>{errorMessage}</p>}
 			{optimisticUrls.length > 0 && <PublicLinkNotice />}
 			{optimisticUrls?.length > 0 && (
 				<ul className={styles["url-list"]}>
