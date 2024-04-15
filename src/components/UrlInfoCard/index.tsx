@@ -11,13 +11,14 @@ import Tooltip from "@/components/Tooltip";
 import type { Url, UrlWithMetadata } from "@/db/types";
 import useModal from "@/hooks/useModal";
 import { copyText, formatQuantityString, generateQRCode } from "@/utils";
-import { useAuth } from "@clerk/nextjs";
+// import { useAuth } from "@clerk/nextjs";
+import getShortUrl from "@/utils/getShortUrl";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { FiArrowUpRight, FiBarChart } from "react-icons/fi";
 import { HiOutlineClock, HiOutlineTrash, HiQrcode } from "react-icons/hi";
 import { TbCopy } from "react-icons/tb";
-import getShortUrl from "@/utils/getShortUrl";
 
 import styles from "./index.module.scss";
 
@@ -39,9 +40,10 @@ export default function UrlInfoCard({
 	const fallbackFaviconSource = "_static/images/favicon.png";
 	const [qrCodeImageUrl, setQRCodeImageUrl] = useState<string | undefined>();
 	const [copyTooltipIsVisible, setCopyTooltipIsVisible] = useState(false);
+	const router = useRouter();
 
 	const { open: openModal } = useModal();
-	const { isLoaded: isAuthLoaded, userId } = useAuth();
+	// const { isLoaded: isAuthLoaded, userId } = useAuth();
 
 	useEffect(() => {
 		if (!qrCodeImageUrl) return;
@@ -56,9 +58,13 @@ export default function UrlInfoCard({
 
 	const shortUrl = useMemo(() => getShortUrl({ code }), [code]);
 
-	if (!isAuthLoaded) {
-		return null;
+	function handleRefreshPage() {
+		router.refresh();
 	}
+
+	// if (!isAuthLoaded) {
+	// 	return null;
+	// }
 
 	function handleCopyShortUrl() {
 		setCopyTooltipIsVisible(true);
@@ -96,6 +102,7 @@ export default function UrlInfoCard({
 							className={styles["short-url"]}
 							target="_blank"
 							href={decodeURIComponent(code)}
+							onClick={handleRefreshPage}
 							rel="noreferrer"
 							color="yellow"
 							title="Visit URL"
@@ -134,6 +141,7 @@ export default function UrlInfoCard({
 							className={styles["visit-button"]}
 							target="_blank"
 							href={code}
+							onClick={handleRefreshPage}
 							rel="noreferrer"
 							color="yellow"
 							title="Visit URL"
@@ -166,7 +174,7 @@ export default function UrlInfoCard({
 								onClick={() => handleOpenEditShortcodeModal(urlId)}
 							/>
 						)}
-						{userId && !isProjectRepo && (
+						{!isProjectRepo && (
 							<form action={deleteUrlById}>
 								<input
 									type="hidden"
