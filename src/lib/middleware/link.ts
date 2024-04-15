@@ -1,10 +1,10 @@
+import { codeSchema } from "@/actions/schemas";
 import { db } from "@/db";
 import { urls } from "@/db/schema";
 import { Url } from "@/db/types";
 import { emojiToCodePoints } from "@/utils";
 import { eq, sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
-import { z } from "zod";
 
 export const congifg = { runtime: "edge" };
 
@@ -17,8 +17,6 @@ export const HOME_HOSTNAMES = new Set([
 // TODO: Update
 export default async function LinkMiddleware(request: NextRequest) {
 	const { domain, code } = parse(request);
-
-	const codeSchema = z.string().emoji("Only emojis are allowed").min(3).max(6);
 
 	const parsedCode = codeSchema.safeParse(code);
 
