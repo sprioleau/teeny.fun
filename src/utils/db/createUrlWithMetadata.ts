@@ -23,12 +23,12 @@ const metadataSchema = z
 export default async function createUrlWithMetadata({
 	destinationUrl,
 	code,
-	dbUser,
+	// dbUser,
 	clientKey,
 }: {
 	code: string;
 	destinationUrl: string;
-	dbUser: User | null;
+	// dbUser: User | null;
 	clientKey: string;
 }) {
 	// Get URL Metadata
@@ -61,7 +61,7 @@ export default async function createUrlWithMetadata({
 	const [insertedUrl] = await insertUrl({
 		destinationUrl,
 		code,
-		dbUser,
+		// dbUser,
 		clientKey: Boolean(clientKey) ? clientKey : null, // Store
 		metadataId: persistedMetadata.id,
 	});

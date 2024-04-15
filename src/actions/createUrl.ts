@@ -1,9 +1,8 @@
 "use server";
 
-import { getUserByAuthProviderId } from "@/db/utils";
 import { getParsedFormData } from "@/utils";
 import createUrlWithMetadata from "@/utils/db/createUrlWithMetadata";
-import { auth } from "@clerk/nextjs/server";
+// import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { createUrlSchema } from "./schemas";
 import { PERSISTED_CLIENT_KEY } from "@/constants";
@@ -21,15 +20,14 @@ export default async function createUrl(formData: FormData) {
 		throw new Error("Destination URL is required");
 	}
 
-	const { userId: authProviderId } = auth();
-
-	const dbUser = await getUserByAuthProviderId(authProviderId);
+	// const { userId: authProviderId } = auth();
+	// const dbUser = await getUserByAuthProviderId(authProviderId);
 
 	// Insert URL
 	await createUrlWithMetadata({
 		destinationUrl,
 		code,
-		dbUser,
+		// dbUser,
 		clientKey,
 	});
 

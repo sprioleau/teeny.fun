@@ -1,14 +1,20 @@
 import HeroHeading from "@/components/HeroHeading";
 import Modal from "@/components/Modal";
 import UrlForm from "@/components/UrlForm";
-import { getUrlsByAuthenticatedUserId } from "@/db/utils";
-import { auth } from "@clerk/nextjs/server";
+import { PERSISTED_CLIENT_KEY } from "@/constants";
+import { getUrlsByClientKey } from "@/db/utils";
+import { cookies } from "next/headers";
 
 import styles from "./index.module.scss";
 
 export default async function HomePage() {
-	const { userId: authenticatedUserId } = auth();
-	const urls = await getUrlsByAuthenticatedUserId(authenticatedUserId);
+	const clientKey = cookies().get(PERSISTED_CLIENT_KEY)?.value;
+	const urls = await getUrlsByClientKey(clientKey);
+	const isAuthenticated = false;
+	// const isAuthenticated = Boolean(authenticatedUserId);
+
+	// const { userId: authenticatedUserId } = auth();
+	// const urls = await getUrlsByAuthenticatedUserId(authenticatedUserId);
 
 	return (
 		<>
@@ -20,7 +26,7 @@ export default async function HomePage() {
 					<UrlForm urls={urls} />
 				</section>
 			</main>
-			<Modal isAuthenticated={Boolean(authenticatedUserId)} />
+			<Modal isAuthenticated={isAuthenticated} />
 		</>
 	);
 }
