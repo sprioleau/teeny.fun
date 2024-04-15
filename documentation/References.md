@@ -18,3 +18,6 @@ Next.js App Router Metadata (favicon)
 
 Next.js App Router Favion not being recognized
 [https://github.com/vercel/next.js/issues/52813](https://github.com/vercel/next.js/issues/52813)
+
+Zod | Transform strings to normalize URLs
+[https://github.com/colinhacks/zod/issues/3323#issuecomment-1992883201](https://github.com/colinhacks/zod/issues/3323#issuecomment-1992883201)
