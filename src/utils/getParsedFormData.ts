@@ -11,7 +11,7 @@ export default function getParsedFormData<Schema extends ZodType>({
 	const parsedFormData = schema.safeParse(formDataObject);
 
 	if (!parsedFormData.success) {
-		throw new Error("Invalid form data");
+		throw new Error(parsedFormData.error.issues[0].message);
 	}
 
 	return parsedFormData.data;
