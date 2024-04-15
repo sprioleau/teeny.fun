@@ -29,7 +29,6 @@ export default function EditShortcodeModal({ id: urlId }: Props) {
 			await updateShortcodeById(formData);
 			setEmojiStringArray([]);
 			closeModal();
-			console.log("Shortcode updated");
 		} catch (caughtError) {
 			// TODO: Handle error
 			console.error(caughtError);
