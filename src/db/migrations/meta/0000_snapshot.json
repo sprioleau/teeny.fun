@@ -1,5 +1,5 @@
 {
-  "id": "1c7bbd4d-40fb-47f7-8a4f-0876c6fa9c98",
+  "id": "9ec3baae-bf32-4121-a119-05c098e3699d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -12,6 +12,12 @@
           "name": "id",
           "type": "serial",
           "primaryKey": true,
+          "notNull": true
+        },
+        "url": {
+          "name": "url",
+          "type": "text",
+          "primaryKey": false,
           "notNull": true
         },
         "title": {
@@ -37,18 +43,20 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
-        },
-        "url": {
-          "name": "url",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "metadata_url_unique": {
+          "name": "metadata_url_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "url"
+          ]
+        }
+      }
     },
     "urls": {
       "name": "urls",
@@ -59,6 +67,12 @@
           "type": "serial",
           "primaryKey": true,
           "notNull": true
+        },
+        "client_key": {
+          "name": "client_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "destination_url": {
           "name": "destination_url",
@@ -82,7 +96,7 @@
           "name": "visits",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "default": 0
         },
         "created_at": {
@@ -99,17 +113,11 @@
           "notNull": true,
           "default": "now()"
         },
-        "user_auth_provider_id": {
-          "name": "user_auth_provider_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
         "user_id": {
           "name": "user_id",
           "type": "uuid",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "metadata_id": {
           "name": "metadata_id",
@@ -120,19 +128,6 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "urls_user_auth_provider_id_users_auth_provider_id_fk": {
-          "name": "urls_user_auth_provider_id_users_auth_provider_id_fk",
-          "tableFrom": "urls",
-          "tableTo": "users",
-          "columnsFrom": [
-            "user_auth_provider_id"
-          ],
-          "columnsTo": [
-            "auth_provider_id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
         "urls_user_id_users_id_fk": {
           "name": "urls_user_id_users_id_fk",
           "tableFrom": "urls",
@@ -182,24 +177,6 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "auth_provider_id": {
-          "name": "auth_provider_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp",
@@ -218,22 +195,7 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "users_auth_provider_id_unique": {
-          "name": "users_auth_provider_id_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "auth_provider_id"
-          ]
-        },
-        "users_email_unique": {
-          "name": "users_email_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
-        }
-      }
+      "uniqueConstraints": {}
     }
   },
   "enums": {},

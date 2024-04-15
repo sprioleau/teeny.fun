@@ -11,14 +11,14 @@ async function seed() {
 		await db.delete(metadata);
 
 		// Insert Initial User
-		const [initialUser] = await db
-			.insert(users)
-			.values([
-				{
-					authProviderId: process.env.INITIAL_USER_AUTH_PROVIDER_ID!,
-				},
-			])
-			.returning();
+		// const [initialUser] = await db
+		// 	.insert(users)
+		// 	.values([
+		// 		{
+		// 			authProviderId: process.env.INITIAL_USER_AUTH_PROVIDER_ID!,
+		// 		},
+		// 	])
+		// 	.returning();
 
 		// Insert Initial Metadata
 		const [initialUrlMetadata] = await db
@@ -38,8 +38,8 @@ async function seed() {
 				code: "🙂🙂🙂",
 				codePoints: emojiToCodePoints("🙂🙂🙂"),
 				destinationUrl: "https://sprioleau.dev",
-				userId: initialUser.id,
-				userAuthProviderId: initialUser.authProviderId,
+				// userId: initialUser.id,
+				// userAuthProviderId: initialUser.authProviderId,
 				metadataId: initialUrlMetadata.id,
 			},
 		]);

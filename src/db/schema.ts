@@ -5,7 +5,7 @@ import { z } from "zod";
 
 export const users = pgTable("users", {
 	id: uuid("id").defaultRandom().primaryKey(),
-	authProviderId: text("auth_provider_id").notNull().unique(),
+	// authProviderId: text("auth_provider_id").notNull().unique(),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -35,7 +35,7 @@ export const urls = pgTable("urls", {
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at").notNull().defaultNow(),
 
-	userAuthProviderId: text("user_auth_provider_id").references(() => users.authProviderId),
+	// userAuthProviderId: text("user_auth_provider_id").references(() => users.authProviderId),
 
 	userId: uuid("user_id").references(() => users.id),
 
