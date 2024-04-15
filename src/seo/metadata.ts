@@ -36,7 +36,7 @@ export const homepageMetadata: Metadata = {
 	generator: "Next.js",
 	referrer: "origin-when-cross-origin",
 	icons: {
-		icon: "/favicon.ico",
+		icon: "/_static/images/favicon.ico",
 		shortcut: {
 			url: "/_static/images/favicon.png",
 			type: "image/png",
