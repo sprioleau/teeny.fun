@@ -1,5 +1,5 @@
 import Logo from "@/components/Logo";
-import SignInOutButtons from "@/components/SignInOutButtons";
+// import SignInOutButtons from "@/components/SignInOutButtons";
 import Link from "next/link";
 
 import styles from "./index.module.scss";
@@ -12,10 +12,9 @@ export default function Navigation() {
 					<Logo />
 				</Link>
 			</div>
-			<div className={styles.buttons}>
-				{/* TODO: Use signIn function to connect clientKey to user */}
+			{/* <div className={styles.buttons}>
 				<SignInOutButtons />
-			</div>
+			</div> */}
 		</nav>
 	);
 }
